@@ -1,0 +1,7 @@
+<div ...attributes class="relative grid grid-cols-5 gap-5">
+  {{#each @cards as |card|}}
+    <Game::Card @card={{card}} @onChange={{@onChange}} />
+  {{/each}}
+</div>
+
+{{yield}}

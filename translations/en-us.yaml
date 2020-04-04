@@ -1,0 +1,15 @@
+index:
+  title: Start Game
+  label:
+    token: "Game token"
+  action:
+    new: New Game
+    continue: Continue
+  text:
+    or: "or"
+
+GameTally:
+  text:
+    isLead: Leader
+    teamA: Team Red
+    teamB: Team Blue

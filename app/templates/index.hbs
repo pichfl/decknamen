@@ -1,0 +1,15 @@
+<h1 class="text-gray-100 text-4xl mt-10 text-center uppercase">Decknamen</h1>
+
+<form {{on "submit" this.startGame}}>
+  <p>
+    <label for="token">{{t "index.label.token"}}</label>
+    <input class="form-input" type="text" value={{this.token}}>
+    <button type="submit" class="button">{{t "index.action.continue"}}</button>
+  </p>
+</form>
+
+{{t "index.text.or"}}
+
+<button type="button" class="button" {{on "click" this.startGame}}>{{t "index.action.new"}}</button>
+
+{{outlet}}

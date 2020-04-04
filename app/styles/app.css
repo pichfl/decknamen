@@ -1,0 +1,23 @@
+@tailwind base;
+
+html,
+body {
+  @apply bg-gray-800 text-gray-400;
+}
+
+label {
+  @apply block;
+}
+
+@tailwind components;
+
+.button {
+  @apply bg-gray-700 text-white font-bold py-2 px-4 border border-gray-600 rounded;
+}
+
+.button:focus,
+.button:hover {
+  @apply bg-gray-600 border-gray-500;
+}
+
+@tailwind utilities;
