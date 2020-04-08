@@ -1,0 +1,91 @@
+<div class="container flex flex-col min-h-calc p-5 justify-center items-center">
+  <h1 class="text-gray-400 text-xl font-bold tracking-widest mt-auto mb-0 text-center uppercase">{{t "lobbyIndex.title"}}</h1>
+
+  <p class="mb-10 text-center text-gray-500">
+    {{t "lobbyIndex.text.help"}}
+  </p>
+
+  <Lobby::Group @title={{t "lobbyIndex.text.headlineTeamA"}} @titleColor="text-red-700">
+    <ul>
+      {{#if this.leadTeamA}}
+        <li class="pb-4">
+          <Lobby::Player
+            @player={{this.leadTeamA}}
+            @onUpdateUser={{this.updateUser}}
+          />
+        </li>
+      {{/if}}
+
+      {{#each this.playersTeamA as |player|}}
+        <li class="pb-2">
+          <Lobby::Player
+            @player={{player}}
+            @otherPlayers={{this.playrTeamA}}
+            @onUpdateUser={{this.updateUser}}
+            @otherTeam={{this.TEAMS.TEAM_B}}
+          />
+        </li>
+      {{else}}
+        <li class="-mt-2 pb-2 text-gray-700">
+          {{t "lobbyIndex.text.addTeamMembers"}}
+        </li>
+      {{/each}}
+    </ul>
+  </Lobby::Group>
+
+  <Lobby::Group @title={{t "lobbyIndex.text.headlineTeamB"}} @titleColor="text-blue-700">
+    <ul>
+      {{#if this.leadTeamB}}
+        <li class="pb-2">
+          <Lobby::Player
+            @player={{this.leadTeamB}}
+            @onUpdateUser={{this.updateUser}}
+          />
+        </li>
+      {{/if}}
+
+      {{#each this.playersTeamB as |player|}}
+        <li class="pb-2">
+          <Lobby::Player
+            @player={{player}}
+            @otherPlayers={{this.playrTeamB}}
+            @onUpdateUser={{this.updateUser}}
+            @otherTeam={{this.TEAMS.TEAM_A}}
+          />
+        </li>
+      {{else}}
+        <li class="-mt-2 pb-2 text-gray-700">
+          {{t "lobbyIndex.text.addTeamMembers"}}
+        </li>
+      {{/each}}
+    </ul>
+  </Lobby::Group>
+
+  {{#if this.playersWaiting}}
+    <Lobby::Group @title={{t "lobbyIndex.text.headlineWaiting"}} @titleColor="text-gray-700">
+      <ul>
+        {{#each this.playersWaiting as |player|}}
+          <li class="pb-2">
+            <Lobby::Player
+              @player={{player}}
+              @onUpdateUser={{this.updateUser}}
+            />
+          </li>
+        {{/each}}
+      </ul>
+    </Lobby::Group>
+  {{/if}}
+
+  <div class="mb-auto py-5">
+    <button
+      type="button"
+      class="button-lg"
+      disabled={{not this.canContinue}}
+      {{on "click" this.startGame}}
+    >
+      {{t "lobbyIndex.action.start"}}
+    </button>
+  </div>
+</div>
+
+{{outlet}}

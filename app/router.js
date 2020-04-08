@@ -6,6 +6,11 @@ export default class Router extends EmberRouter {
   rootURL = config.rootURL;
 }
 
-Router.map(function() {
+Router.map(function () {
   this.route('game');
+  this.route('lobby', {
+    path: ':lobby_id',
+  }, function() {
+    this.route('game');
+  });
 });

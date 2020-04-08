@@ -1,14 +1,18 @@
 <button type="button" disabled={{this.isDisabled}}
   class="
     relative
-    h-32
-    rounded-lg
-    border-4
+    h-16
+    lg:h-32
+    rounded-md
+    md:rounded-lg
+    border-2
+    md:border-4
     flex
     justify-center
     items-center
     focus:outline-none
     focus:border-gray-600
+    text-gray-100
     {{if
       this.isSelected
       (if
@@ -28,7 +32,11 @@
     }}
     {{if
       this.isUncovered
-      (if this.player.isLead "border-gray-800 opacity-25")
+      (if
+        this.player.isLead
+        "border-gray-800 opacity-25"
+        "border-gray-800"
+      )
     }}
     {{if this.isHighlighted "shadow-lg"}}
     {{if this.isDisabled "cursor-default"}}
@@ -39,7 +47,9 @@
     <div class="
       font-bold
       uppercase
-      md:text-lg
+      text-sm
+      tracking-tight
+      md:tracking-normal
       lg:text-xl
     ">
       {{@card.word}}

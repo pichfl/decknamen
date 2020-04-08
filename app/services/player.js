@@ -1,8 +1,10 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { /* CARD_STATES, CARD_TYPES, */ TEAMS } from 'game/utils/enums';
 
 export default class PlayerService extends Service {
-  isLead = true;
+  @service user;
+
+  isLead = false;
 
   team = 0;
 

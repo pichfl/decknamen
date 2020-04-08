@@ -1,15 +1,41 @@
+application:
+  title: Decknamen
+
 index:
-  title: Start Game
   label:
-    token: "Game token"
+    token: Game token
   action:
-    new: New Game
+    new: Start new Game
     continue: Continue
   text:
-    or: "or"
+    or: or
+
+lobbyIndex:
+  title: Lobby
+  text:
+    help: Select team leaders & change your name
+    addTeamMembers: Add team members from the waiting list
+    headlineTeamA: Team Red
+    headlineTeamB: Team Blue
+    headlineWaiting: Waiting List
+    unknownPlayer: Unknown player
+  action:
+    changeName: Edit
+    saveName: Save
+    switchTeam: Switch
+    promote: Make lead
+    demote: Make member
+    start: Start Game
+
+lobbyGame:
+  title: "{team} ({tally})"
 
 GameTally:
   text:
     isLead: Leader
     teamA: Team Red
     teamB: Team Blue
+
+Teams:
+  teamA: "Team Red"
+  teamB: "Team Blue"

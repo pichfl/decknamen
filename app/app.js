@@ -10,3 +10,10 @@ export default class App extends Application {
 }
 
 loadInitializers(App, config.modulePrefix);
+
+window.addEventListener('resize', () => {
+  document.documentElement.style.setProperty(
+    '--vh',
+    `${window.innerHeight * 0.01}px`
+  );
+});

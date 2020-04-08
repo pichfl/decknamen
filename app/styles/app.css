@@ -5,19 +5,39 @@ body {
   @apply bg-gray-800 text-gray-400;
 }
 
+body {
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
 label {
-  @apply block;
+  @apply block uppercase text-sm font-bold tracking-wider py-1;
 }
 
 @tailwind components;
 
 .button {
-  @apply bg-gray-700 text-white font-bold py-2 px-4 border border-gray-600 rounded;
+  @apply bg-indigo-700 text-white font-bold py-1 px-3 border border-indigo-600 rounded;
+}
+
+.button-lg {
+  @apply bg-indigo-700 text-white font-bold py-2 px-8 border border-indigo-600 rounded;
 }
 
 .button:focus,
-.button:hover {
-  @apply bg-gray-600 border-gray-500;
+.button:hover,
+.button-lg:focus,
+.button-lg:hover {
+  @apply bg-indigo-600 border-indigo-500;
+}
+
+.button:focus,
+.button-lg:focus {
+  @apply outline-none shadow-outline;
+}
+
+.button:disabled,
+.button-lg:disabled {
+  @apply bg-gray-800 border-gray-600 text-gray-600 opacity-50;
 }
 
 @tailwind utilities;

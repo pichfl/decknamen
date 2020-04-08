@@ -1,23 +1,25 @@
-<header ...attributes class="text-lg lg:text-xl font-bold bg-gray-900 rounded-lg px-8 py-6 mx-auto flex items-center">
-  <h2 class="mr-8">
+<aside ...attributes class="font-bold bg-gray-900 rounded-lg md:flex items-center justify-center">
+  <h2 class="p-4 text-center">
     {{this.player.name}}
   </h2>
 
-  <p class="mr-8">
-    <span class="py-2 px-3 rounded-sm {{if this.player.inTeamA "bg-red-700" "bg-blue-700"}}">
-      {{#if this.player.isLead}}
-        <FaIcon @icon="user-tie" /> {{t "GameTally.text.isLead"}}
+  <p class="p-4 text-center">
+    <span class="py-2 px-3 rounded {{if this.player.inTeamA "bg-red-700" "bg-blue-700"}}">
+      {{#if this.player.lead}}
+        <FaIcon @icon="crown" /> {{t "GameTally.text.isLead"}}
       {{/if}}
 
-      {{t (if this.player.inTeamA "GameTally.text.teamA" "GameTally.text.teamB")}}
+      {{t (if this.player.inTeamA "Teams.teamA" "Teams.teamB")}}
     </span>
   </p>
 
-  <p>3/{{this.totalTeamCards}} cards left</p>
+  <p class="p-4 text-center">
+    {{this.uncoveredTeamCards}}/{{this.totalTeamCards}} cards left
+  </p>
 
   {{#if hasBlock}}
-    <p class="ml-8">
+    <p class="p-4 text-center">
       {{yield}}
     </p>
   {{/if}}
-</header>
+</aside>

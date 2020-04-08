@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { CARD_STATES, CARD_TYPES, TEAMS } from 'game/utils/enums';
+import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 import { action } from '@ember/object';
 
 export default class GameCardComponent extends Component {
@@ -43,10 +43,6 @@ export default class GameCardComponent extends Component {
       if (this.isSelected) {
         return true;
       }
-
-      // if (this.type === CARD_TYPES.TEAM_A && this.player.team === TEAMS.TEAM_A) {
-      //   return true;
-      // }
     }
 
     return false;

@@ -1,0 +1,97 @@
+{{#if (and this.isEditMode (eq @player.id this.user.id))}}
+  <form class="flex -mx-3" {{on "submit" this.updateUserName}}>
+    <p class="w-full">
+      <input
+        class="form-input w-full block"
+        type="text"
+        autocomplete="given-name"
+        value={{this.user.name}}
+      >
+    </p>
+
+    <p class="ml-2">
+      <button type="submit" class="button-lg">
+        {{t "lobbyIndex.action.saveName"}}
+      </button>
+    </p>
+  </form>
+{{else}}
+  <div class="py-2">
+    <div class="py-px flex justify-between">
+      <span class={{if (not @player.name) "text-gray-600"}}>
+        <span>
+          {{#if @player.lead}}
+            <FaIcon @icon="crown" class="mr-2 text-orange-400" />
+          {{/if}}
+
+          {{if @player.name @player.name (t "lobbyIndex.text.unknownPlayer")}}
+        </span>
+
+        {{#if (eq @player.id this.user.id)}}
+          <button
+            type="button"
+            class="ml-2 text-indigo-500"
+            {{on "click" (fn (mut this.isEditMode) true)}}
+          >
+            {{t "lobbyIndex.action.changeName"}}
+          </button>
+        {{/if}}
+      </span>
+
+      <span>
+        {{#if (is-empty @player.team)}}
+          <button
+            type="button"
+            class="text-red-500 mr-2"
+            {{on "click" (fn this.updateUser (hash team=this.TEAMS.TEAM_A))}}
+          >
+            Red
+          </button>
+
+          <button
+            type="button"
+            class="text-blue-500" {{on "click" (fn this.updateUser (hash
+              team=this.TEAMS.TEAM_B))
+            }}
+          >
+            Blue
+          </button>
+        {{else}}
+          {{#if (not @player.lead)}}
+            <button
+              type="button"
+              class="text-indigo-500 mr-2"
+              {{on "click" (fn this.updateUser (hash
+                lead=true
+              ))}}
+            >
+              {{t "lobbyIndex.action.promote"}}
+            </button>
+
+            <button
+              type="button"
+              class="text-indigo-500"
+              {{on "click" (fn this.updateUser (hash
+                team=@otherTeam)
+              )}}
+            >
+              {{t "lobbyIndex.action.switchTeam"}}
+            </button>
+          {{else}}
+            <button
+              type="button"
+              class="text-indigo-500"
+              {{on "click" (fn this.updateUser (hash
+                lead=false
+              ))}}
+            >
+              {{t "lobbyIndex.action.demote"}}
+            </button>
+          {{/if}}
+        {{/if}}
+      </span>
+    </div>
+  </div>
+{{/if}}
+
+{{yield}}
