@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:api": "cd api; yarn dev",
+    "dev:frontend": "cd frontend; yarn start"
+  }
+}
