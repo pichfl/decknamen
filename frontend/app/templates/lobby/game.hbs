@@ -1,21 +1,19 @@
 <div class="flex flex-col min-h-calc p-2 lg:p-5 justify-center overflow-hidden">
   <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}} class="mt-auto mb-5">
     <button type="button" class="button">
-      Skip Turn
+      End Turn
     </button>
 
-    <button type="button" class="button ml-2">
+    <button type="button" class="button ml-2 bg-red-700 border-red-600 hover:bg-red-600 hover:border-red-500">
       End Game
     </button>
   </Game::Tally>
 
   <div class="mb-auto relative grid grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-5">
     {{#each this.cards as |card|}}
-      <Game::Card @card={{card}} @onChange={{this.onChange}} />
+      <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
     {{/each}}
   </div>
 </div>
-
-
 
 {{outlet}}
