@@ -20,13 +20,11 @@ export default class LobbyRoute extends Route {
     const players = await this.connection.syncPlayers(lobbyId, {
       [this.user.id]: {
         ...this.user.data,
-        // team: undefined,
-        team: TEAMS.TEAM_A,
-        lead: true,
+        team: undefined,
       },
 
       foo: { ...fakePlayer('foo') },
-      bar: { ...fakePlayer('bar'), lead: true, team: TEAMS.TEAM_B },
+      bar: { ...fakePlayer('bar'), team: TEAMS.TEAM_B },
       baz: fakePlayer('baz'),
       bat: fakePlayer('bat'),
     });

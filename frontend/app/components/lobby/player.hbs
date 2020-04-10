@@ -58,15 +58,17 @@
           </button>
         {{else}}
           {{#if (not @player.lead)}}
-            <button
-              type="button"
-              class="text-indigo-500 mr-2"
-              {{on "click" (fn this.updateUser (hash
-                lead=true
-              ))}}
-            >
-              {{t "lobbyIndex.action.promote"}}
-            </button>
+            {{#if (not @teamHasLead)}}
+              <button
+                type="button"
+                class="text-indigo-500 mr-2"
+                {{on "click" (fn this.updateUser (hash
+                  lead=true
+                ))}}
+              >
+                {{t "lobbyIndex.action.promote"}}
+              </button>
+            {{/if}}
 
             <button
               type="button"

@@ -20,7 +20,7 @@
         <li class="pb-2">
           <Lobby::Player
             @player={{player}}
-            @otherPlayers={{this.playrTeamA}}
+            @teamHasLead={{this.leadTeamA}}
             @onUpdateUser={{this.updateUser}}
             @otherTeam={{this.TEAMS.TEAM_B}}
           />
@@ -48,7 +48,7 @@
         <li class="pb-2">
           <Lobby::Player
             @player={{player}}
-            @otherPlayers={{this.playrTeamB}}
+            @teamHasLead={{this.leadTeamB}}
             @onUpdateUser={{this.updateUser}}
             @otherTeam={{this.TEAMS.TEAM_A}}
           />
