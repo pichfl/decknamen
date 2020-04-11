@@ -59,8 +59,9 @@ export default class LobbyIndexController extends Controller {
   @action
   async updateUser(user, newData, persist) {
     let target = newData;
+    const players = JSON.parse(JSON.stringify(this.lobby.players));
 
-    if (user.id === this.user.data.id && persist) {
+    if (persist && user.id === this.user.data.id) {
       this.user.data = {
         ...this.user.data,
         ...newData,
@@ -70,15 +71,15 @@ export default class LobbyIndexController extends Controller {
     }
 
     Object.keys(target).forEach((key) => {
-      set(this.lobby.players[user.id], key, target[key]);
+      set(players[user.id], key, target[key]);
     });
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, this.lobby.players);
+    await this.connection.syncPlayers(this.lobby.lobbyId, players);
   }
 
   @action
   async setTeam(player, team) {
-    this.lobby.players = {
+    const players = {
       ...this.lobby.players,
       [player.id]: {
         ...player,
@@ -86,12 +87,12 @@ export default class LobbyIndexController extends Controller {
       },
     };
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, this.lobby.players);
+    await this.connection.syncPlayers(this.lobby.lobbyId, players);
   }
 
   @action
   async toggleLead(player) {
-    this.lobby.players = {
+    const players = {
       ...this.lobby.players,
       [player.id]: {
         ...player,
@@ -99,7 +100,7 @@ export default class LobbyIndexController extends Controller {
       },
     };
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, this.lobby.players);
+    await this.connection.syncPlayers(this.lobby.lobbyId, players);
   }
 
   @action

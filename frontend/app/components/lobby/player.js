@@ -8,12 +8,15 @@ export default class LobbyPlayerComponent extends Component {
   @service user;
 
   @tracked isEditMode = false;
+  @tracked isSaving = false;
 
   TEAMS = TEAMS;
 
   @action
   async updateUserName(event) {
     event.preventDefault();
+
+    this.isSaving = true;
 
     await this.args.onUpdateUser(
       this.args.player,
@@ -24,6 +27,7 @@ export default class LobbyPlayerComponent extends Component {
     );
 
     this.isEditMode = false;
+    this.isSaving = false;
   }
 
   @action

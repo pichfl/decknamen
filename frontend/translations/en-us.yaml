@@ -37,5 +37,5 @@ GameTally:
     teamB: Team Blue
 
 Teams:
-  teamA: "Team Red"
-  teamB: "Team Blue"
+  teamA: Red
+  teamB: Blue

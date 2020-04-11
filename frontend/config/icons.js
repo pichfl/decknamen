@@ -1,3 +1,9 @@
 module.exports = () => ({
-  'pro-duotone-svg-icons': ['user-edit', 'save', 'user-tie', 'crown'],
+  'pro-duotone-svg-icons': [
+    'crown',
+    'save',
+    'spinner-third',
+    'user-edit',
+    'user-tie',
+  ],
 });

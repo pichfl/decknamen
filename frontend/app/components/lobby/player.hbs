@@ -10,9 +10,9 @@
     </p>
 
     <p class="ml-2">
-      <button type="submit" class="button-lg">
+      <Button @type="submit" class="button-lg" @isLoading={{this.isSaving}}>
         {{t "lobbyIndex.action.saveName"}}
-      </button>
+      </Button>
     </p>
   </form>
 {{else}}
@@ -40,55 +40,42 @@
 
       <span>
         {{#if (is-empty @player.team)}}
-          <button
+          <Button
             type="button"
             class="text-red-500 mr-2"
-            {{on "click" (fn this.updateUser (hash team=this.TEAMS.TEAM_A))}}
+            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
           >
-            Red
-          </button>
+            {{t "Teams.teamA"}}
+          </Button>
 
-          <button
+          <Button
             type="button"
-            class="text-blue-500" {{on "click" (fn this.updateUser (hash
-              team=this.TEAMS.TEAM_B))
-            }}
+            class="text-blue-500"
+            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
           >
-            Blue
-          </button>
+            {{t "Teams.teamB"}}
+          </Button>
         {{else}}
           {{#if (not @player.lead)}}
             {{#if (not @teamHasLead)}}
-              <button
-                type="button"
+              <Button
                 class="text-indigo-500 mr-2"
-                {{on "click" (fn this.updateUser (hash
-                  lead=true
-                ))}}
+                @onClick={{fn this.updateUser (hash lead=true)}}
               >
                 {{t "lobbyIndex.action.promote"}}
-              </button>
+              </Button>
             {{/if}}
 
-            <button
-              type="button"
+            <Button
               class="text-indigo-500"
-              {{on "click" (fn this.updateUser (hash
-                team=@otherTeam)
-              )}}
+              @onClick={{fn this.updateUser (hash team=@otherTeam)}}
             >
               {{t "lobbyIndex.action.switchTeam"}}
-            </button>
+            </Button>
           {{else}}
-            <button
-              type="button"
-              class="text-indigo-500"
-              {{on "click" (fn this.updateUser (hash
-                lead=false
-              ))}}
-            >
+            <Button class="text-indigo-500" @onClick={{fn this.updateUser (hash lead=false)}}>
               {{t "lobbyIndex.action.demote"}}
-            </button>
+            </Button>
           {{/if}}
         {{/if}}
       </span>
