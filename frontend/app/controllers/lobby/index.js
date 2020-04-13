@@ -1,13 +1,11 @@
-import Controller, { inject as controller } from '@ember/controller';
+import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action, set } from '@ember/object';
 import { TEAMS } from 'game/utils/enums';
 
 export default class LobbyIndexController extends Controller {
-  @controller lobby;
-
-  @service connection;
+  @service socket;
   @service user;
 
   @tracked isEditMode = false;
@@ -15,7 +13,7 @@ export default class LobbyIndexController extends Controller {
   TEAMS = TEAMS;
 
   get playersList() {
-    return Object.values(this.lobby.players);
+    return Object.values(this.socket.players);
   }
 
   get leadTeamA() {
@@ -59,7 +57,7 @@ export default class LobbyIndexController extends Controller {
   @action
   async updateUser(user, newData, persist) {
     let target = newData;
-    const players = JSON.parse(JSON.stringify(this.lobby.players));
+    const players = this.socket.players;
 
     if (persist && user.id === this.user.data.id) {
       this.user.data = {
@@ -74,33 +72,33 @@ export default class LobbyIndexController extends Controller {
       set(players[user.id], key, target[key]);
     });
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, players);
+    await this.socket.syncPlayers(players);
   }
 
   @action
   async setTeam(player, team) {
     const players = {
-      ...this.lobby.players,
+      ...this.socket.players,
       [player.id]: {
         ...player,
         team,
       },
     };
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, players);
+    await this.socket.syncPlayers(players);
   }
 
   @action
   async toggleLead(player) {
     const players = {
-      ...this.lobby.players,
+      ...this.socket.players,
       [player.id]: {
         ...player,
         lead: !player.lead,
       },
     };
 
-    await this.connection.syncPlayers(this.lobby.lobbyId, players);
+    await this.socket.syncPlayers(players);
   }
 
   @action

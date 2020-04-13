@@ -2,64 +2,46 @@ const io = require('./src/io.js');
 
 io.attach(3000);
 
-const joinRoom = async (socket, room) => new Promise((resolve) => socket.join(room, resolve));
-
 let store = {};
 
 io.on('connection', async (socket) => {
-  let _roomGame;
-  let _roomPlayers;
+  let room;
   let _sender;
 
-  socket.on('rooms.create', async ({ id, sender }, ack) => {
-    _roomGame = `${id}.game`;
-    _roomPlayers = `${id}.players`;
+  socket.on('room.join', async ({ id, sender }, ack) => {
     _sender = sender;
+    _room = id;
+    store[room] = store[room] || {};
 
-    await joinRoom(socket, _roomGame);
-    await joinRoom(socket, _roomPlayers);
+    await new Promise((resolve) => socket.join(_room, resolve));
 
-    ack({
-      game: _roomGame,
-      players: _roomPlayers,
-    });
+    ack(_room);
   });
 
-  socket.on('sync.game', ({ sender, room, data }, ack) => {
-    if (!sender || !room || room !== _roomGame) {
+  socket.on('room.sync', ({ sender, room, data }, ack) => {
+    if (!sender || !room || room !== _room) {
       return;
     }
 
-    _dataGame = { ..._dataGame, ...data };
+    // TODO: Better merge strategy?
+    store[room] = { ...store[room], ...data };
 
-    io.to(_roomGame).emit('sync.game', { sender, data: _dataGame });
+    setTimeout(() => {
+      io.to(_room).emit('room.sync', store[room]);
 
-    ack(_dataGame);
-  });
-
-  socket.on('sync.players', ({ sender, room, data }, ack) => {
-    if (!sender || !room || room !== _roomPlayers) {
-      return;
-    }
-
-    store[_roomPlayers] = { ...store[_roomPlayers], ...data };
-
-    io.to(_roomPlayers).emit('sync.players', { sender, data: store[_roomPlayers] });
-
-    ack(store[_roomPlayers]);
+      ack(store[room]);
+    }, 500);
   });
 
   socket.on('disconnect', () => {
-    if (!_sender) {
+    if (!_sender || !store[_room] || store[_room].locked) {
       return;
     }
 
-    const players = { ...store[_roomPlayers] };
+    if (store && store[_room] && store[_room].players) {
+      delete store[_room].players[_sender];
+    }
 
-    delete players[_sender];
-
-    store[_roomPlayers] = players;
-
-    io.to(_roomPlayers).emit('sync.players', { sender: _sender, data: store[_roomPlayers] });
+    io.to(_room).emit('room.sync', store[_room]);
   });
 });

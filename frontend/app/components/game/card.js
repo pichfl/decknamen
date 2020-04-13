@@ -4,7 +4,7 @@ import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 import { action } from '@ember/object';
 
 export default class GameCardComponent extends Component {
-  @service player;
+  @service user;
 
   get state() {
     return this.args.card.state;
@@ -23,7 +23,7 @@ export default class GameCardComponent extends Component {
   }
 
   get isDisabled() {
-    if (this.player.isLead && this.args.card.selected === false) {
+    if (this.user.isLead && this.args.card.selected === false) {
       return true;
     }
 
@@ -84,10 +84,13 @@ export default class GameCardComponent extends Component {
   onClick(event) {
     event.preventDefault();
 
-    if (this.player.isLead) {
+    if (this.user.isLead) {
       this.args.onChange({
         ...this.args.card,
-        state: this.args.card.state === CARD_STATES.COVERED ? CARD_STATES.UNCOVERED : CARD_STATES.COVERED,
+        state:
+          this.args.card.state === CARD_STATES.COVERED
+            ? CARD_STATES.UNCOVERED
+            : CARD_STATES.COVERED,
         selected: false,
       });
 

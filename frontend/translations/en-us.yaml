@@ -22,7 +22,7 @@ lobbyIndex:
   action:
     changeName: Edit
     saveName: Save
-    switchTeam: Switch
+    switchTeam: Switch team
     promote: Make lead
     demote: Make member
     start: Start Game

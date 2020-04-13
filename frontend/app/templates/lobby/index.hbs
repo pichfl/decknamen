@@ -8,7 +8,7 @@
   <Lobby::Group @title={{t "lobbyIndex.text.headlineTeamA"}} @titleColor="text-red-700">
     <ul>
       {{#if this.leadTeamA}}
-        <li class="pb-4">
+        <li class="pb-2">
           <Lobby::Player
             @player={{this.leadTeamA}}
             @onUpdateUser={{this.updateUser}}
@@ -77,14 +77,13 @@
   {{/if}}
 
   <div class="mb-auto py-5">
-    <button
-      type="button"
+    <Button
       class="button-lg"
-      disabled={{not this.canContinue}}
-      {{on "click" this.startGame}}
+      @disabled={{not this.canContinue}}
+      @onClick={{this.startGame}}
     >
       {{t "lobbyIndex.action.start"}}
-    </button>
+    </Button>
   </div>
 </div>
 

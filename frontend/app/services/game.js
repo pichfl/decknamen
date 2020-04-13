@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 
 export default class GameService extends Service {
-  @service connection;
+  @service state;
   @service words;
 
   @tracked state;

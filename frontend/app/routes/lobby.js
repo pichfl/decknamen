@@ -9,15 +9,15 @@ const fakePlayer = (id) => ({
 });
 
 export default class LobbyRoute extends Route {
-  @service connection;
+  @service socket;
   @service intl;
   @service user;
 
-  async model({ lobby_id: lobbyId }) {
-    await this.connection.connect();
-    await this.connection.createRooms(lobbyId);
+  async model({ lobby_id: room }) {
+    await this.socket.connect(room);
+    await this.socket.syncPlayers({
+      ...this.socket.players,
 
-    const players = await this.connection.syncPlayers(lobbyId, {
       [this.user.id]: {
         ...this.user.data,
         team: undefined,
@@ -30,17 +30,7 @@ export default class LobbyRoute extends Route {
     });
 
     return {
-      lobbyId,
-      players,
+      room,
     };
-  }
-
-  async setupController(controller, { players, lobbyId }) {
-    controller.players = players;
-    controller.lobbyId = lobbyId;
-
-    this.connection.subscribe('sync.players', ({ data }) => {
-      controller.players = { ...data };
-    });
   }
 }

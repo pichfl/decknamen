@@ -19,9 +19,11 @@
   <div class="py-2">
     <div class="py-px flex justify-between">
       <span class={{if (not @player.name) "text-gray-600"}}>
-        <span>
+        <span class="relative">
           {{#if @player.lead}}
-            <FaIcon @icon="crown" class="mr-2 text-orange-400" />
+            <span class="absolute top-0 left-0 -ml-8 -mt-1 rounded-full w-6 h-6 bg-gray-200 flex items-center justify-center">
+              <FaIcon @icon="user-tie" class="text-gray-900" />
+            </span>
           {{/if}}
 
           {{if @player.name @player.name (t "lobbyIndex.text.unknownPlayer")}}
@@ -62,19 +64,19 @@
                 class="text-indigo-500 mr-2"
                 @onClick={{fn this.updateUser (hash lead=true)}}
               >
-                {{t "lobbyIndex.action.promote"}}
+                <FaIcon @icon="user-tie" @title={{t "lobbyIndex.action.promote"}} />
               </Button>
             {{/if}}
 
             <Button
-              class="text-indigo-500"
+              class="text-indigo-500 inline-block"
               @onClick={{fn this.updateUser (hash team=@otherTeam)}}
             >
-              {{t "lobbyIndex.action.switchTeam"}}
+              <FaIcon @icon="exchange" @rotation={{90}} @title={{t "lobbyIndex.action.switchTeam"}} />
             </Button>
           {{else}}
             <Button class="text-indigo-500" @onClick={{fn this.updateUser (hash lead=false)}}>
-              {{t "lobbyIndex.action.demote"}}
+              <FaIcon @icon="level-down" @title={{t "lobbyIndex.action.demote"}} />
             </Button>
           {{/if}}
         {{/if}}

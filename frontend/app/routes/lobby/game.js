@@ -3,7 +3,6 @@ import { inject as service } from '@ember/service';
 import { TEAMS } from 'game/utils/enums';
 
 export default class LobbyGameRoute extends Route {
-  @service connection;
   @service intl;
   @service game;
 

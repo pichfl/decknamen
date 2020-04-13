@@ -1,7 +1,12 @@
 import Service from '@ember/service';
 import { nanoid } from 'nanoid';
+import { /* CARD_STATES, CARD_TYPES, */ TEAMS } from 'game/utils/enums';
 
 export default class UserService extends Service {
+  get inTeamA() {
+    return this.team === TEAMS.A;
+  }
+
   get id() {
     return this.data.id;
   }
