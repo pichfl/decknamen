@@ -29,7 +29,7 @@ localState = {
   */
 
 export default class SocketService extends Service {
-  socket = io(ENV.APP.server.replace('localhost', window.location.hostname), {
+  socket = io(ENV.APP.server, {
     autoConnect: false,
   });
 

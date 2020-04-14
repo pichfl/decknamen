@@ -18,7 +18,8 @@ module.exports = function (environment) {
     },
 
     APP: {
-      server: 'http://localhost:3000/',
+      // server: 'http://localhost:3000/',
+      server: 'https://decknamen.herokuapp.com',
     },
 
     fontawesome: {
