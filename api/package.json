@@ -1,5 +1,5 @@
 {
-  "name": "websocketgroup",
+  "name": "api",
   "version": "1.0.0",
   "description": "Connects",
   "main": "index.js",
