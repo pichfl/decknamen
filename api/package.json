@@ -11,6 +11,7 @@
   "author": "Florian Pichler <@pichfl>",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.15",
     "micro": "^9.3.4",
     "socket.io": "^2.3.0"
   },
