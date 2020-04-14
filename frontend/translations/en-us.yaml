@@ -18,6 +18,7 @@ lobbyIndex:
     headlineTeamA: Team Red
     headlineTeamB: Team Blue
     headlineWaiting: Waiting List
+    headlineWords: Words
     unknownPlayer: Unknown player
   action:
     changeName: Edit
@@ -26,9 +27,11 @@ lobbyIndex:
     promote: Make lead
     demote: Make member
     start: Start Game
+  placeholder:
+    selectWords: Select words
 
 lobbyGame:
-  title: "{team} ({tally})"
+  title: '{team} ({tally})'
 
 GameTally:
   text:

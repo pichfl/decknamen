@@ -7,8 +7,11 @@ import { TEAMS } from 'game/utils/enums';
 export default class LobbyIndexController extends Controller {
   @service socket;
   @service user;
+  @service words;
 
+  @tracked isLoading = false;
   @tracked isEditMode = false;
+  @tracked isSelectingWords = false;
 
   TEAMS = TEAMS;
 
@@ -103,8 +106,24 @@ export default class LobbyIndexController extends Controller {
   }
 
   @action
-  async startGame() {
-    // TODO Seal game
+  async selectWords(event) {
+    this.isSelectingWords = true;
+    await this.socket.selectWords(event.target.value);
+    this.isSelectingWords = false;
+  }
+
+  @action
+  async startGame(event) {
+    event.preventDefault();
+
+    this.isLoading = true;
+
+    const words = (
+      [...event.target.elements].find((element) => element.type === 'textarea')
+        ?.value || ''
+    ).split(',');
+
+    await this.socket.startGame(words);
 
     this.transitionToRoute('lobby.game');
   }

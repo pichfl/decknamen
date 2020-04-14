@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import ENV from 'game/config/environment';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
+import { sampleSize, difference, random, shuffle } from 'lodash-es';
+import { CARD_STATES, CARD_TYPES } from '../utils/enums';
 
 /*
 
@@ -37,28 +39,36 @@ export default class SocketService extends Service {
   @tracked room = undefined;
   @tracked current = {};
 
-  @task(function* (data = {}) {
+  @task(function* (payload = {}) {
     const state = {
       players: {
-        ...data.players,
+        ...payload.players,
       },
-      locked: data.locked || false,
-      cards: data.cards ? [data.cards] : this.current?.cards || [],
+      words: payload.words || '',
+      cards: payload.cards ? payload.cards : this.current?.cards || undefined,
     };
 
-    const response = yield this.emit('room.sync', {
+    const { data } = yield this.emit('room.sync', {
       room: this.room,
       data: state,
     });
 
-    this.current = response;
+    this.current = data;
 
-    return response;
+    return data;
   })
   syncTask;
 
   get players() {
-    return JSON.parse(JSON.stringify(this.current.players || {}));
+    return JSON.parse(JSON.stringify(this.current?.players || {}));
+  }
+
+  get cards() {
+    return JSON.parse(JSON.stringify(this.current?.cards || []));
+  }
+
+  get words() {
+    return `${this.current?.words || ''}`;
   }
 
   async syncPlayers(players) {
@@ -68,16 +78,29 @@ export default class SocketService extends Service {
     });
   }
 
-  async connect(id) {
+  async syncCards(cards) {
+    return this.syncTask.perform({
+      ...this.current,
+      cards,
+    });
+  }
+
+  async connect(room, player) {
     return new Promise((resolve) => {
       this.socket.open();
       this.socket.on('connect', async () => {
-        this.room = await this.emit('room.join', {
-          id,
+        const { id, data } = await this.emit('room.join', {
+          room,
           sender: this.user.id,
+          player,
         });
 
-        await this.syncTask.perform();
+        if (id !== room) {
+          throw new Error('Out of sync');
+        }
+
+        this.room = room;
+        this.current = data;
 
         this.subscribe('room.sync', (data) => {
           this.current = data;
@@ -87,6 +110,55 @@ export default class SocketService extends Service {
 
         resolve();
       });
+    });
+  }
+
+  async selectWords(id) {
+    await this.syncTask.perform({
+      ...this.current,
+      words: id,
+    });
+  }
+
+  async startGame(words) {
+    const selectedWords = sampleSize(words, 25);
+
+    // Create cards
+    let cards = selectedWords.map((word) => ({
+      type: CARD_TYPES.BYSTANDER,
+      word,
+      fail: false,
+      state: CARD_STATES.COVERED,
+      selected: false,
+    }));
+
+    // Pick starting team
+    const { TEAM_A, TEAM_B } = CARD_TYPES;
+    const firstTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
+    const secondTeam = firstTeam === TEAM_A ? TEAM_B : TEAM_A;
+
+    const firstTeamCards = sampleSize(cards, 9);
+
+    cards = difference(cards, firstTeamCards);
+
+    firstTeamCards.forEach((card) => {
+      card.type = firstTeam;
+    });
+
+    const secondTeamCards = sampleSize(cards, 8);
+
+    cards = difference(cards, secondTeamCards);
+
+    secondTeamCards.forEach((card) => {
+      card.type = secondTeam;
+    });
+
+    cards[random(0, cards.length - 1)].fail = true;
+
+    cards = shuffle([...cards, ...firstTeamCards, ...secondTeamCards]);
+
+    await this.syncTask.perform({
+      cards,
     });
   }
 
@@ -102,18 +174,18 @@ export default class SocketService extends Service {
 
   subscriptions = new Map();
 
-  subscribe(name, callback) {
-    if (this.subscriptions.has(name)) {
-      this.subscriptions.get(name).add(callback);
+  subscribe(keyword, callback) {
+    if (this.subscriptions.has(keyword)) {
+      this.subscriptions.get(keyword).add(callback);
     } else {
-      this.subscriptions.set(name, new Set([callback]));
-      this.socket.on(name, (...args) => {
-        this.subscriptions.get(name).forEach((val) => val(...args));
+      this.subscriptions.set(keyword, new Set([callback]));
+      this.socket.on(keyword, (...args) => {
+        this.subscriptions.get(keyword).forEach((val) => val(...args));
       });
     }
   }
 
-  unsubscribe(name, callback) {
-    this.subscriptions.get(name).remove(callback);
+  unsubscribe(keyword, callback) {
+    this.subscriptions.get(keyword).delete(callback);
   }
 }

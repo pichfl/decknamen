@@ -6,6 +6,7 @@ import { action } from '@ember/object';
 
 export default class LobbyPlayerComponent extends Component {
   @service user;
+  @service socket;
 
   @tracked isEditMode = false;
   @tracked isSaving = false;
@@ -21,7 +22,7 @@ export default class LobbyPlayerComponent extends Component {
     await this.args.onUpdateUser(
       this.args.player,
       {
-        name: event.target.children[0].children[0].value,
+        name: event.target.elements[0].value,
       },
       true
     );
