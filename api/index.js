@@ -1,21 +1,41 @@
 const io = require('./src/io.js');
+const _ = require('lodash');
 
 io.attach(3000);
 
 let store = {};
 
+function mergeRoom(room = {}, data = {}) {
+  // do not accept changes to the players if cards were generated
+  if (data.words && data.cards) {
+    delete data.players;
+  }
+
+  const result = _.merge({}, room, data);
+
+  if (Array.isArray(data.cards)) {
+    result.cards = data.cards;
+  }
+
+  return result;
+}
+
 io.on('connection', async (socket) => {
-  let room;
+  let _room;
   let _sender;
 
-  socket.on('room.join', async ({ id, sender }, ack) => {
+  socket.on('room.join', async ({ room, sender, player }, ack) => {
     _sender = sender;
-    _room = id;
+    _room = room;
     store[room] = store[room] || {};
 
     await new Promise((resolve) => socket.join(_room, resolve));
 
-    ack(_room);
+    store[room] = mergeRoom(store[room], { players: { [player.id]: player } });
+
+    io.to(_room).emit('room.sync', store[_room]);
+
+    ack({ id: room, data: store[room] });
   });
 
   socket.on('room.sync', ({ sender, room, data }, ack) => {
@@ -23,18 +43,15 @@ io.on('connection', async (socket) => {
       return;
     }
 
-    // TODO: Better merge strategy?
-    store[room] = { ...store[room], ...data };
+    store[room] = mergeRoom(store[room], data);
 
-    setTimeout(() => {
-      io.to(_room).emit('room.sync', store[room]);
+    io.to(room).emit('room.sync', store[room]);
 
-      ack(store[room]);
-    }, 500);
+    ack({ id: room, data: store[room] });
   });
 
   socket.on('disconnect', () => {
-    if (!_sender || !store[_room] || store[_room].locked) {
+    if (!_sender || !store[_room] || store[_room].words) {
       return;
     }
 
