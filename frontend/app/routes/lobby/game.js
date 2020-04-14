@@ -4,7 +4,7 @@ import { TEAMS } from 'game/utils/enums';
 
 export default class LobbyGameRoute extends Route {
   @service intl;
-  @service game;
+  @service socket;
 
   titleToken() {
     return this.intl.t('lobbyGame.title', {
@@ -17,7 +17,12 @@ export default class LobbyGameRoute extends Route {
     });
   }
 
-  setupController(controller) {
-    controller.cards = this.game.setup();
+  beforeModel() {
+    console.log(this.socket.cards, this.socket.players);
+
+    // TODO: FIX ME
+    // if (this.socket.cards.length === 0) {
+    //   this.replaceWith('lobby.index');
+    // }
   }
 }
