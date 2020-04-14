@@ -3,5 +3,8 @@
   "workspaces": [
     "api",
     "game"
-  ]
+  ],
+  "engines": {
+    "node": "12"
+  }
 }

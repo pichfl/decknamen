@@ -1,7 +1,7 @@
 const io = require('./src/io.js');
 const _ = require('lodash');
 
-io.attach(3000);
+io.attach(process.env.PORT || 3000);
 
 let store = {};
 
