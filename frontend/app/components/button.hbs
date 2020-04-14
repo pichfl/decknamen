@@ -8,6 +8,7 @@
   <span class={{if this.isLoading "opacity-0"}}>
     {{yield}}
   </span>
+
   {{#if this.isLoading}}
     <span class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
       <FaIcon @icon="spinner-third" @spin="true" class="text-gray-600" />

@@ -1,15 +1,15 @@
 <aside ...attributes class="font-bold bg-gray-900 rounded-lg md:flex items-center justify-center">
   <h2 class="p-4 text-center">
-    {{this.player.name}}
+    {{this.user.name}}
   </h2>
 
   <p class="p-4 text-center">
-    <span class="py-2 px-3 rounded {{if this.player.inTeamA "bg-red-700" "bg-blue-700"}}">
-      {{#if this.player.lead}}
-        <FaIcon @icon="crown" /> {{t "GameTally.text.isLead"}}
+    <span class="py-2 px-3 rounded {{if this.user.inTeamA "bg-red-700" "bg-blue-700"}}">
+      {{#if this.user.isLead}}
+        <FaIcon @icon="user-tie" /> {{t "GameTally.text.isLead"}}
       {{/if}}
 
-      {{t (if this.player.inTeamA "Teams.teamA" "Teams.teamB")}}
+      {{t (if this.user.inTeamA "Teams.teamA" "Teams.teamB")}}
     </span>
   </p>
 

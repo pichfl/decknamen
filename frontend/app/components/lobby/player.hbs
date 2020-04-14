@@ -40,47 +40,49 @@
         {{/if}}
       </span>
 
-      <span>
-        {{#if (is-empty @player.team)}}
-          <Button
-            type="button"
-            class="text-red-500 mr-2"
-            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
-          >
-            {{t "Teams.teamA"}}
-          </Button>
-
-          <Button
-            type="button"
-            class="text-blue-500"
-            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
-          >
-            {{t "Teams.teamB"}}
-          </Button>
-        {{else}}
-          {{#if (not @player.lead)}}
-            {{#if (not @teamHasLead)}}
-              <Button
-                class="text-indigo-500 mr-2"
-                @onClick={{fn this.updateUser (hash lead=true)}}
-              >
-                <FaIcon @icon="user-tie" @title={{t "lobbyIndex.action.promote"}} />
-              </Button>
-            {{/if}}
+      {{#if (not this.socket.words)}}
+        <span>
+          {{#if (is-empty @player.team)}}
+            <Button
+              type="button"
+              class="text-red-500 mr-2"
+              @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
+            >
+              {{t "Teams.teamA"}}
+            </Button>
 
             <Button
-              class="text-indigo-500 inline-block"
-              @onClick={{fn this.updateUser (hash team=@otherTeam)}}
+              type="button"
+              class="text-blue-500"
+              @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
             >
-              <FaIcon @icon="exchange" @rotation={{90}} @title={{t "lobbyIndex.action.switchTeam"}} />
+              {{t "Teams.teamB"}}
             </Button>
           {{else}}
-            <Button class="text-indigo-500" @onClick={{fn this.updateUser (hash lead=false)}}>
-              <FaIcon @icon="level-down" @title={{t "lobbyIndex.action.demote"}} />
-            </Button>
+            {{#if (not @player.lead)}}
+              {{#if (not @teamHasLead)}}
+                <Button
+                  class="text-indigo-500 mr-2"
+                  @onClick={{fn this.updateUser (hash lead=true)}}
+                >
+                  <FaIcon @icon="user-tie" @title={{t "lobbyIndex.action.promote"}} />
+                </Button>
+              {{/if}}
+
+              <Button
+                class="text-indigo-500 inline-block"
+                @onClick={{fn this.updateUser (hash team=@otherTeam)}}
+              >
+                <FaIcon @icon="exchange" @rotation={{90}} @title={{t "lobbyIndex.action.switchTeam"}} />
+              </Button>
+            {{else}}
+              <Button class="text-indigo-500" @onClick={{fn this.updateUser (hash lead=false)}}>
+                <FaIcon @icon="level-down" @title={{t "lobbyIndex.action.demote"}} />
+              </Button>
+            {{/if}}
           {{/if}}
-        {{/if}}
-      </span>
+        </span>
+      {{/if}}
     </div>
   </div>
 {{/if}}

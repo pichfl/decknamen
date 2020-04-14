@@ -50,7 +50,8 @@ export default class LobbyIndexController extends Controller {
       this.playersTeamA.length > 0 &&
       this.playersTeamB.length > 0 &&
       !!this.leadTeamA &&
-      !!this.leadTeamB
+      !!this.leadTeamB &&
+      this.user.isLead
     );
   }
 

@@ -1,10 +1,24 @@
-import Service from '@ember/service';
+import Service, { inject as service } from '@ember/service';
 import { nanoid } from 'nanoid';
-import { /* CARD_STATES, CARD_TYPES, */ TEAMS } from 'game/utils/enums';
+import { TEAMS } from 'game/utils/enums';
 
 export default class UserService extends Service {
+  @service socket;
+
+  get player() {
+    return this.socket.players[this.id];
+  }
+
+  get isLead() {
+    return this.player?.lead;
+  }
+
   get inTeamA() {
-    return this.team === TEAMS.A;
+    return this.player.team === TEAMS.TEAM_A;
+  }
+
+  get inTeamB() {
+    return this.player.team === TEAMS.TEAM_B;
   }
 
   get id() {

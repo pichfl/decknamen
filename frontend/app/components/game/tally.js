@@ -4,10 +4,7 @@ import { CARD_STATES } from 'game/utils/enums';
 
 export default class GameTallyComponent extends Component {
   @service user;
-
-  get player() {
-    return this.args.players[this.user.id];
-  }
+  @service socket;
 
   get cards() {
     return this.args.cards || [];

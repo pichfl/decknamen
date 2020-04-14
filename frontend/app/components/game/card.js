@@ -77,7 +77,9 @@ export default class GameCardComponent extends Component {
   }
 
   get leadClasses() {
-    return `${this.typeBackground} ${this.typeBorder}`;
+    return `${this.typeBackground} ${
+      this.args.card.selected ? 'border-white' : this.typeBorder
+    }`;
   }
 
   @action
@@ -103,7 +105,5 @@ export default class GameCardComponent extends Component {
         selected: !this.isSelected,
       });
     }
-
-    console.log(this.args.card.state);
   }
 }
