@@ -2,6 +2,8 @@ import Service, { inject as service } from '@ember/service';
 import { nanoid } from 'nanoid';
 import { TEAMS } from 'game/utils/enums';
 
+const { TEAM_A, TEAM_B } = TEAMS;
+
 export default class UserService extends Service {
   @service socket;
 
@@ -10,15 +12,19 @@ export default class UserService extends Service {
   }
 
   get isLead() {
-    return this.player?.lead;
+    return this.player?.lead || false;
+  }
+
+  get team() {
+    return this.player.team;
   }
 
   get inTeamA() {
-    return this.player.team === TEAMS.TEAM_A;
+    return this.team === TEAM_A;
   }
 
   get inTeamB() {
-    return this.player.team === TEAMS.TEAM_B;
+    return this.team === TEAM_B;
   }
 
   get id() {

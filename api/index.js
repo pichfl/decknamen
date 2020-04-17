@@ -27,11 +27,17 @@ io.on('connection', async (socket) => {
   socket.on('room.join', async ({ room, sender, player }, ack) => {
     _sender = sender;
     _room = room;
-    store[room] = store[room] || {};
+    store[room] = store[room] || { players: {} };
 
     await new Promise((resolve) => socket.join(_room, resolve));
 
-    store[room] = mergeRoom(store[room], { players: { [player.id]: player } });
+    const { id, name } = player;
+
+    if (store[room].players[id]) {
+      store[room].players[id].name = name;
+    } else {
+      store[room].players[id] = { id, name };
+    }
 
     io.to(_room).emit('room.sync', store[_room]);
 
@@ -51,7 +57,7 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('disconnect', () => {
-    if (!_sender || !store[_room] || store[_room].words) {
+    if (!_sender || !store[_room] || store[_room].words || store[_room].cards) {
       return;
     }
 

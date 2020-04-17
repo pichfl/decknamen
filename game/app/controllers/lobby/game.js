@@ -6,24 +6,24 @@ import { inject as service } from '@ember/service';
 
 export default class LobbyGameController extends Controller {
   @service socket;
+  @service user;
 
   @tracked cards = [];
 
-  get currentTeam() {
-    return TEAMS.TEAM_A;
+  TEAMS = TEAMS;
+
+  @action
+  async onCardChange(card) {
+    await this.socket.changeCard(card);
   }
 
   @action
-  onCardChange(card) {
-    const cards = [...this.socket.cards];
-    const oldIndex = cards.findIndex((c) => c.word === card.word);
+  async doEndTurn() {
+    await this.socket.endTurn();
+  }
 
-    cards.forEach((card) => {
-      card.selected = false;
-    });
-
-    cards[oldIndex] = card;
-
-    this.socket.syncCards(cards);
+  @action
+  async doEndGame() {
+    await this.socket.endGame();
   }
 }

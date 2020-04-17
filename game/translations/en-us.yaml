@@ -20,6 +20,7 @@ lobbyIndex:
     headlineWaiting: Waiting List
     headlineWords: Words
     unknownPlayer: Unknown player
+    wordCount: "{count} words"
   action:
     changeName: Edit
     saveName: Save
@@ -31,13 +32,12 @@ lobbyIndex:
     selectWords: Select words
 
 lobbyGame:
-  title: '{team} ({tally})'
+  title: "{team} teams turn"
 
 GameTally:
   text:
-    isLead: Leader
-    teamA: Team Red
-    teamB: Team Blue
+    turn: "{team} teams turn"
+    stats: ({current}/{total} found)
 
 Teams:
   teamA: Red

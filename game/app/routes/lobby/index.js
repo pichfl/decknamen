@@ -5,14 +5,16 @@ export default class LobbyIndexRoute extends Route {
   @service intl;
   @service socket;
 
-  titleToken() {
-    return this.intl.t('lobbyIndex.title');
+  beforeModel() {
+    if (this.socket.cards?.length) {
+      this.replaceWith('lobby.game');
+    }
   }
 
   activate() {
     this._onRoomSync = (data) => {
-      if (data.cards?.length ?? 0 > 0) {
-        this.transitionTo('lobby.game');
+      if (Number(data.cards?.length) > 0) {
+        this.replaceWith('lobby.game');
       }
     };
 

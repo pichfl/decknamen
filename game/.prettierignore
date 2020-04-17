@@ -3,5 +3,6 @@ node_modules
 public
 tmp
 vendor
+public
 
 app/styles/_variables.scss

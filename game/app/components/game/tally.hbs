@@ -1,24 +1,27 @@
-<aside ...attributes class="font-bold bg-gray-900 rounded-lg md:flex items-center justify-center">
-  <h2 class="p-4 text-center">
+<aside ...attributes class="font-bold bg-gray-900 rounded-lg flex flex-wrap md:flex-no-wrap items-center md:justify-between">
+  <h2 class="p-4 w-1/2 md:w-auto {{if this.user.inTeamA "text-red-500" "text-blue-500"}}">
+    {{#if this.user.isLead}}
+      <FaIcon @icon="user-tie" />
+    {{/if}}
+
     {{this.user.name}}
   </h2>
 
-  <p class="p-4 text-center">
-    <span class="py-2 px-3 rounded {{if this.user.inTeamA "bg-red-700" "bg-blue-700"}}">
-      {{#if this.user.isLead}}
-        <FaIcon @icon="user-tie" /> {{t "GameTally.text.isLead"}}
-      {{/if}}
-
-      {{t (if this.user.inTeamA "Teams.teamA" "Teams.teamB")}}
-    </span>
-  </p>
-
-  <p class="p-4 text-center">
-    {{this.uncoveredTeamCards}}/{{this.totalTeamCards}} cards left
+  <p class="p-4 text-right md:text-center w-1/2 md:w-auto">
+    {{#if (is-team-a this.socket.turn)}}
+      <span class="text-red-500">
+        {{t "GameTally.text.turn" team=(t "Teams.teamA")}}
+      </span>
+    {{else}}
+      <span class="text-blue-500">
+        {{t "GameTally.text.turn" team=(t "Teams.teamB")}}
+      </span>
+    {{/if}}
+    {{t "GameTally.text.stats" current=this.socket.uncoveredCards total=this.socket.totalCards}}
   </p>
 
   {{#if hasBlock}}
-    <p class="p-4 text-center">
+    <p class="p-4 text-center w-full md:w-auto">
       {{yield}}
     </p>
   {{/if}}

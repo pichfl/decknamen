@@ -54,7 +54,8 @@ export default class LobbyIndexController extends Controller {
       this.playersTeamB.length > 0 &&
       !!this.leadTeamA &&
       !!this.leadTeamB &&
-      this.user.isLead
+      this.user.isLead &&
+      this.socket.words !== ''
     );
   }
 
@@ -108,7 +109,9 @@ export default class LobbyIndexController extends Controller {
   @action
   async selectWords(event) {
     this.isSelectingWords = true;
+
     await this.socket.selectWords(event.target.value);
+
     this.isSelectingWords = false;
   }
 

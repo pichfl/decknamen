@@ -86,24 +86,6 @@ export default class GameCardComponent extends Component {
   onClick(event) {
     event.preventDefault();
 
-    if (this.user.isLead) {
-      this.args.onChange({
-        ...this.args.card,
-        state:
-          this.args.card.state === CARD_STATES.COVERED
-            ? CARD_STATES.UNCOVERED
-            : CARD_STATES.COVERED,
-        selected: false,
-      });
-
-      return;
-    }
-
-    if (this.args.card.state === CARD_STATES.COVERED) {
-      this.args.onChange({
-        ...this.args.card,
-        selected: !this.isSelected,
-      });
-    }
+    this.args.onChange(this.args.card);
   }
 }

@@ -1,12 +1,16 @@
+{{title (t "lobbyGame.title" team=(t (if (eq this.socket.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")))}}
+
 <div class="container flex flex-col min-h-calc p-2 lg:p-5 justify-center overflow-hidden">
   <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}} class="mt-auto mb-5">
-    <button type="button" class="button">
+    <Button class="button" @disabled={{not-eq this.socket.turn this.user.team}} @onClick={{this.doEndTurn}}>
       End Turn
-    </button>
+    </Button>
 
-    <button type="button" class="button ml-2 bg-red-700 border-red-600 hover:bg-red-600 hover:border-red-500">
-      End Game
-    </button>
+    {{#if this.user.isLead}}
+      <Button @disabled={{not-eq this.socket.turn this.user.team}} @onClick={{this.doEndGame}} class="button ml-2 bg-gray-800 border-gray-700 text-gray-300">
+        End Game
+      </Button>
+    {{/if}}
   </Game::Tally>
 
   <div class="mb-auto relative grid grid-cols-3 lg:grid-cols-5 gap-2 lg:gap-5">

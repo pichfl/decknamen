@@ -6,27 +6,8 @@ import { task } from 'ember-concurrency';
 import { sampleSize, difference, random, shuffle } from 'lodash-es';
 import { CARD_STATES, CARD_TYPES } from '../utils/enums';
 
-/*
-
-localState = {
-    players: {
-      idstring: {
-        id: 'idstring',
-      },
-    },
-    step: 0,
-    cards: [
-      {
-        type: 0,
-        word: 'Foobar',
-        fail: false,
-        state: 0,
-        selected: false,
-      },
-    ],
-  };
-
-  */
+const { COVERED, UNCOVERED } = CARD_STATES;
+const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 
 export default class SocketService extends Service {
   socket = io(ENV.APP.server, {
@@ -46,6 +27,8 @@ export default class SocketService extends Service {
       },
       words: payload.words || '',
       cards: payload.cards ? payload.cards : this.current?.cards || undefined,
+      turn: payload.turn !== undefined ? payload.turn : undefined,
+      over: payload.over !== undefined ? payload.over : undefined,
     };
 
     const { data } = yield this.emit('room.sync', {
@@ -71,17 +54,31 @@ export default class SocketService extends Service {
     return `${this.current?.words || ''}`;
   }
 
+  get turn() {
+    return this.current.turn;
+  }
+
+  get totalCards() {
+    return this.cards.reduce(
+      (acc, card) => (card.type === this.turn ? ++acc : acc),
+      0
+    );
+  }
+
+  get uncoveredCards() {
+    return this.cards.reduce(
+      (acc, card) =>
+        card.type === this.turn && card.state !== CARD_STATES.COVERED
+          ? ++acc
+          : acc,
+      0
+    );
+  }
+
   async syncPlayers(players) {
     return this.syncTask.perform({
       ...this.current,
       players,
-    });
-  }
-
-  async syncCards(cards) {
-    return this.syncTask.perform({
-      ...this.current,
-      cards,
     });
   }
 
@@ -133,7 +130,6 @@ export default class SocketService extends Service {
     }));
 
     // Pick starting team
-    const { TEAM_A, TEAM_B } = CARD_TYPES;
     const firstTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
     const secondTeam = firstTeam === TEAM_A ? TEAM_B : TEAM_A;
 
@@ -153,13 +149,78 @@ export default class SocketService extends Service {
       card.type = secondTeam;
     });
 
-    cards[random(0, cards.length - 1)].fail = true;
+    cards[random(0, cards.length - 1)].type = ABORT;
 
     cards = shuffle([...cards, ...firstTeamCards, ...secondTeamCards]);
 
     await this.syncTask.perform({
       cards,
+      turn: firstTeam,
     });
+  }
+
+  async changeCard(card) {
+    let turn = this.turn;
+
+    const cards = this.cards.map((oldCard) => {
+      if (this.turn !== this.user.team) {
+        return oldCard;
+      }
+
+      if (oldCard.state === UNCOVERED) {
+        return oldCard;
+      }
+
+      if (oldCard.word !== card.word) {
+        return { ...oldCard, selected: false };
+      }
+
+      if (!this.user.isLead) {
+        return { ...oldCard, selected: !oldCard.selected };
+      }
+
+      if (card.type === ABORT) {
+        return {
+          ...oldCard,
+          state: UNCOVERED,
+          turn: undefined,
+          selected: false,
+        };
+      }
+
+      if (card.type === BYSTANDER || card.type !== turn) {
+        turn = turn === TEAM_A ? TEAM_B : TEAM_A;
+      }
+
+      return {
+        ...oldCard,
+        state: oldCard.state === COVERED ? UNCOVERED : COVERED,
+        selected: false,
+        turn,
+      };
+    });
+
+    return this.syncTask.perform({
+      ...this.current,
+      cards,
+      turn,
+    });
+  }
+
+  async endTurn() {
+    const { TEAM_A, TEAM_B } = CARD_TYPES;
+
+    await this.syncTask.perform({
+      turn: this.turn === TEAM_A ? TEAM_B : TEAM_A,
+    });
+  }
+
+  async endGame() {
+    await this.syncTask.perform({
+      over: true,
+    });
+
+    console.log(this.current);
   }
 
   async emit(eventName, data) {

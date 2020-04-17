@@ -1,28 +1,35 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { TEAMS } from 'game/utils/enums';
 
 export default class LobbyGameRoute extends Route {
-  @service intl;
   @service socket;
 
-  titleToken() {
-    return this.intl.t('lobbyGame.title', {
-      team: this.intl.t(
-        this.controller.currentTeam === TEAMS.TEAM_A
-          ? 'Teams.teamA'
-          : 'Teams.teamB'
-      ),
-      tally: `/`,
-    });
+  afterModel() {
+    if (this.socket.cards.length === 0) {
+      this.replaceWith('lobby.index');
+    }
+
+    if (this.socket.current?.over === true) {
+      this.replaceWith('game.over');
+    }
   }
 
-  beforeModel() {
-    console.log(this.socket.cards, this.socket.players);
+  activate() {
+    this._onRoomSync = (data) => {
+      if (Number(data.cards?.length) === 0) {
+        this.replaceWith('lobby.index');
+      }
 
-    // TODO: FIX ME
-    // if (this.socket.cards.length === 0) {
-    //   this.replaceWith('lobby.index');
-    // }
+      if (data.over === true) {
+        this.replaceWith('game.over');
+      }
+    };
+
+    this.socket.subscribe('room.sync', this._onRoomSync);
+  }
+
+  deactivate() {
+    this.controller.isLoading = false;
+    this.socket.unsubscribe('room.sync', this._onRoomSync);
   }
 }

@@ -1,3 +1,5 @@
+{{title (t "lobbyIndex.title")}}
+
 <form class="container flex flex-col min-h-calc p-5 justify-center items-center" {{on "submit" this.startGame}}>
   <h1 class="text-gray-400 text-xl font-bold tracking-widest mt-auto mb-0 text-center uppercase">{{t "lobbyIndex.title"}}</h1>
 
@@ -74,24 +76,30 @@
         {{/each}}
       </ul>
     </Lobby::Group>
-  {{else}}
+  {{else if this.user.isLead}}
     <Lobby::Group @title={{t "lobbyIndex.text.headlineWords"}} @titleColor="text-gray-600">
       <fieldset class="pb-2" disabled={{this.isSelectingWords}}>
-        <p class="pb-2">
-          <select class="form-select block w-full" {{on "change" this.selectWords}}>
-            <option>{{t "lobbyIndex.placeholder.selectWords"}}</option>
-            {{#each this.words.list as |list|}}
-              <option value={{list.id}} selected={{eq list.id this.socket.current.words}}>{{list.title}}</option>
-            {{/each}}
-          </select>
-        </p>
+        {{#if this.user.isLead}}
+          <p class="pb-2">
+            <select class="form-select block w-full" {{on "change" this.selectWords}}>
+              <option value="">{{t "lobbyIndex.placeholder.selectWords"}}</option>
+              {{#each this.words.list as |list|}}
+                <option value={{list.id}} selected={{eq list.id this.socket.words}}>{{list.title}} ({{t "lobbyIndex.text.wordCount" count=list.list.length}})</option>
+              {{/each}}
+            </select>
+          </p>
+        {{/if}}
 
-        {{#if this.socket.current.words}}
+        {{#if this.socket.words}}
           <p class="mt-2">
-            <textarea class="form-textarea w-full h-32">{{get (get this.words.byId this.socket.current.words) "words"}}</textarea>
+            <textarea class="form-textarea w-full h-32">{{get (get this.words.byId this.socket.words) "plain"}}</textarea>
           </p>
         {{/if}}
       </fieldset>
+    </Lobby::Group>
+  {{else if this.socket.words}}
+    <Lobby::Group @title={{t "lobbyIndex.text.headlineWords"}} @titleColor="text-gray-600">
+      <p class="pb-4">{{get (get this.words.byId this.socket.words) "title"}} <span class="text-gray-600">{{t "lobbyIndex.text.wordCount" count=(get (get this.words.byId this.socket.words) "list.length")}}</span></p>
     </Lobby::Group>
   {{/if}}
 
