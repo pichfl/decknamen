@@ -1,90 +1,84 @@
-{{#if (and this.isEditMode (eq @player.id this.user.id))}}
-  <form class="flex -mx-3" {{on "submit" this.updateUserName}}>
-    <p class="w-full">
-      <input
-        class="form-input w-full block"
-        type="text"
-        autocomplete="given-name"
-        value={{this.user.name}}
-      >
-    </p>
+<li local-class="player">
+  {{#if @player.lead}}
+    <span local-class="leader">
+      <FaIcon @icon="user-tie" />
+    </span>
+  {{/if}}
 
-    <p class="ml-2">
-      <Button @type="submit" class="button-lg" @isLoading={{this.isSaving}}>
-        {{t "lobbyIndex.action.saveName"}}
-      </Button>
-    </p>
-  </form>
-{{else}}
-  <div class="py-2">
-    <div class="py-px flex justify-between">
-      <span class={{if (not @player.name) "text-gray-600"}}>
-        <span class="relative">
-          {{#if @player.lead}}
-            <span class="absolute top-0 left-0 -ml-8 -mt-1 rounded-full w-6 h-6 bg-gray-200 flex items-center justify-center">
-              <FaIcon @icon="user-tie" class="text-gray-900" />
-            </span>
-          {{/if}}
+  {{#if this.isEditMode}}
+    <form local-class="form" {{on "submit" this.updateUserName}}>
+      <Ui::Input
+        @type="text"
+        @autocomplete="given-name"
+        @value={{this.user.name}}
+      />
+      <Ui::FormActions>
+        <Ui::Button @type="submit" @isLoading={{this.isSaving}}>
+          {{t "LobbyPlayer.action.confirmNameChange"}}
+        </Ui::Button>
+      </Ui::FormActions>
+    </form>
+  {{else}}
+    <div>
+      {{if @player.name @player.name (t "LobbyPlayer.text.unknownPlayer")}}
 
-          {{if @player.name @player.name (t "lobbyIndex.text.unknownPlayer")}}
-        </span>
-
-        {{#if (eq @player.id this.user.id)}}
-          <button
-            type="button"
-            class="ml-2 text-indigo-500"
-            {{on "click" (fn (mut this.isEditMode) true)}}
-          >
-            {{t "lobbyIndex.action.changeName"}}
-          </button>
-        {{/if}}
-      </span>
-
-      {{#if (not this.socket.words)}}
-        <span>
-          {{#if (is-empty @player.team)}}
-            <Button
-              type="button"
-              class="text-red-500 mr-2"
-              @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
-            >
-              {{t "Teams.teamA"}}
-            </Button>
-
-            <Button
-              type="button"
-              class="text-blue-500"
-              @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
-            >
-              {{t "Teams.teamB"}}
-            </Button>
-          {{else}}
-            {{#if (not @player.lead)}}
-              {{#if (not @teamHasLead)}}
-                <Button
-                  class="text-indigo-500 mr-2"
-                  @onClick={{fn this.updateUser (hash lead=true)}}
-                >
-                  <FaIcon @icon="user-tie" @title={{t "lobbyIndex.action.promote"}} />
-                </Button>
-              {{/if}}
-
-              <Button
-                class="text-indigo-500 inline-block"
-                @onClick={{fn this.updateUser (hash team=@otherTeam)}}
-              >
-                <FaIcon @icon="exchange" @rotation={{90}} @title={{t "lobbyIndex.action.switchTeam"}} />
-              </Button>
-            {{else}}
-              <Button class="text-indigo-500" @onClick={{fn this.updateUser (hash lead=false)}}>
-                <FaIcon @icon="level-down" @title={{t "lobbyIndex.action.demote"}} />
-              </Button>
-            {{/if}}
-          {{/if}}
-        </span>
+      {{#if (eq @player.id this.user.id)}}
+        <Ui::Button @style="link" @onClick={{fn (mut this.isEditMode) true}}>
+          <FaIcon @icon="pencil" @title={{t "LobbyPlayer.action.changeName"}} />
+        </Ui::Button>
       {{/if}}
     </div>
-  </div>
-{{/if}}
 
-{{yield}}
+    {{#if (not this.socket.cards)}}
+      <div>
+        {{#if (is-empty @player.team)}}
+          <Ui::Button
+            local-class="team-a"
+            @style="link"
+            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
+          >
+            {{t "Teams.teamA"}}
+          </Ui::Button>
+
+          <Ui::Button
+            local-class="team-b"
+            @style="link"
+            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
+          >
+            {{t "Teams.teamB"}}
+          </Ui::Button>
+        {{else}}
+          {{#if (not @player.lead)}}
+            {{#if (not @teamHasLead)}}
+              <Ui::Button
+                @style="link"
+                @onClick={{fn this.updateUser (hash lead=true)}}
+                title={{t "LobbyPlayer.action.promote"}}
+              >
+                <FaIcon @icon="user-tie" />
+              </Ui::Button>
+            {{/if}}
+
+            <Ui::Button
+              @style="link"
+              @onClick={{fn this.updateUser (hash team=@otherTeam)}}
+              title={{t "LobbyPlayer.action.switchTeam"}}
+            >
+              <FaIcon @icon="exchange" @rotation={{90}} />
+            </Ui::Button>
+          {{else}}
+            <Ui::Button
+              @style="link"
+              @onClick={{fn this.updateUser (hash lead=false)}}
+              title={{t "LobbyPlayer.action.demote"}}
+            >
+              <FaIcon @icon="level-down" />
+            </Ui::Button>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
+  {{/if}}
+
+  {{yield}}
+</li>

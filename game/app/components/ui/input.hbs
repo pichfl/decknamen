@@ -1,0 +1,47 @@
+<p>
+  {{#if (eq @type "text")}}
+    {{#if @label}}
+      <label for={{this.elementId}}>
+        {{@label}}
+      </label>
+    {{/if}}
+
+    <input
+      ...attributes
+      local-class="input"
+      type="text"
+      value={{@value}}
+      autocomplete={{@autocomplete}}
+    />
+    {{yield}}
+  {{else if (eq @type "textarea")}}
+    {{#if @label}}
+      <label for={{this.elementId}}>
+        {{@label}}
+      </label>
+    {{/if}}
+
+    <textarea ...attributes local-class="input textarea" id={{this.elementId}}>
+      {{~@value~}}
+    </textarea>
+
+    {{yield}}
+  {{else if (eq @type "select")}}
+    {{#if @label}}
+      <label for={{this.elementId}}>
+        {{@label}}
+      </label>
+    {{/if}}
+
+    <select
+      local-class="input select"
+      name={{@name}}
+      id={{this.elementId}}
+      {{on "change" this.onChange}}
+    >
+      {{yield}}
+    </select>
+  {{else}}
+    {{yield}}
+  {{/if}}
+</p>

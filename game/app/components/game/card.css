@@ -1,0 +1,180 @@
+.card {
+  display: block;
+  position: relative;
+  padding-bottom: calc(9 / 16 * 100%);
+  font-size: 1.25rem;
+  font-weight: 700 !important;
+  border: 4px solid var(--metal-3);
+  background: var(--metal-2);
+  color: var(--metal-8);
+  border-radius: var(--spacing-sm);
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+}
+
+@media (max-width: 48rem) {
+  .card {
+    font-size: 0.8rem;
+  }
+}
+
+.card:disabled {
+  cursor: default;
+}
+
+.card:focus {
+  outline: none;
+  border-color: var(--metal-2);
+  box-shadow: 0 0 0 var(--spacing-xs) var(--cold-4);
+}
+
+.card.covered:not(.lead):hover {
+  background: var(--metal-1);
+  border-color: vaR(--metal-2);
+}
+
+.type-team-a {
+  background: var(--heat-5);
+  border-color: var(--heat-6);
+  color: var(--metal-1);
+  text-shadow: 0 1px 3px var(--heat-6);
+}
+
+.type-team-b {
+  background: var(--cold-5);
+  border-color: var(--cold-6);
+  color: var(--metal-1);
+  text-shadow: 0 1px 3px var(--cold-6);
+}
+
+.type-bystander {
+  background: var(--metal-4);
+  border-color: var(--metal-5);
+  color: var(--metal-1);
+  text-shadow: 0 1px 3px var(--metal-5);
+}
+
+.type-abort {
+  background: var(--metal-8);
+  border-color: var(--metal-7);
+  color: var(--metal-1);
+}
+
+.covered {
+  box-shadow: var(--shadow-md);
+}
+
+.uncovered {
+  border-color: var(--metal-6);
+  box-shadow: inset 0 0 0 4px var(--metal-6);
+}
+
+.uncovered.lead {
+  opacity: 0.5;
+}
+
+.selected.lead {
+  border-color: var(--metal-1);
+  box-shadow: var(--shadow-lg);
+}
+
+.selected.lead:focus {
+  box-shadow: var(--shadow-lg), 0 0 0 var(--spacing-xs) var(--cold-4);
+}
+
+.selected.player,
+.card.selected.player:hover {
+  background: var(--grass-4);
+  border-color: var(--grass-3);
+  color: var(--metal-1);
+  text-shadow: 0 1px 3px var(--grass-7);
+  box-shadow: var(--shadow-lg);
+}
+
+.selected.player:focus {
+  box-shadow: var(--shadow-lg), 0 0 0 var(--spacing-xs) var(--cold-4);
+}
+
+.selected.player .target {
+  color: var(--grass-3);
+}
+
+.inner {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.target {
+  position: absolute;
+  display: block;
+  color: var(--metal-1);
+  width: 1.5rem;
+  height: 0.75rem;
+}
+
+.target svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.left,
+.right {
+  width: 0.75rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 48rem) {
+  .target {
+    width: 1rem;
+    height: 0.5rem;
+  }
+
+  .left,
+  .right {
+    width: 0.5rem;
+    height: 1rem;
+  }
+}
+
+.left svg,
+.right svg {
+  width: auto;
+  height: 100%;
+}
+
+.target.top {
+  top: -1px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.target.right {
+  top: 50%;
+  right: -1px;
+  transform: translate(0%, -50%);
+}
+
+.target.bottom {
+  bottom: -1px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.target.left {
+  top: 50%;
+  left: -1px;
+  transform: translate(0%, -50%);
+}
+
+.word {
+  letter-spacing: 0.025rem;
+}

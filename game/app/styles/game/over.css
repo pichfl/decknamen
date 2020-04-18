@@ -1,0 +1,24 @@
+.message {
+  margin: var(--spacing-xl);
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.actions {
+  margin: var(--spacing-2xl) var(--spacing-xl) var(--spacing-xl);
+}
+
+.actions > * + * {
+  margin-top: var(--spacing-md);
+}
+
+.title {
+}
+
+.title.team-a span {
+  color: var(--heat-4);
+}
+
+.title.team-b span {
+  color: var(--cold-4);
+}

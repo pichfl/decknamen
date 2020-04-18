@@ -1,0 +1,21 @@
+.panel {
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  background: var(--metal-7);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--spacing-sm);
+}
+
+.title {
+  color: var(--metal-4);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  font-size: 0.875rem;
+}
+
+.title + * {
+  margin-top: var(--spacing-lg);
+}

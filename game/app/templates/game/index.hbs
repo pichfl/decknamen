@@ -1,0 +1,43 @@
+{{title
+  (t
+    "gamePlay.title"
+    team=(t
+      (if (eq this.socket.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")
+    )
+  )
+}}
+
+<Game::Tally
+  @cards={{this.cards}}
+  @players={{this.lobby.players}}
+  local-class="max"
+>
+  <Ui::Button
+    class="button"
+    @style="primary"
+    @disabled={{not-eq this.socket.turn this.user.team}}
+    @onClick={{this.doEndTurn}}
+  >
+    {{t "gamePlay.action.skip"}}
+  </Ui::Button>
+
+  {{#if this.user.isLead}}
+    <Ui::Button
+      @disabled={{not-eq this.socket.turn this.user.team}}
+      @onClick={{this.doEndGame}}
+      class="button ml-2 bg-gray-800 border-gray-700 text-gray-300"
+    >
+      {{t "gamePlay.action.end"}}
+    </Ui::Button>
+  {{/if}}
+</Game::Tally>
+
+<ul local-class="max cards">
+  {{#each this.socket.cards as |card|}}
+    <li>
+      <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
+    </li>
+  {{/each}}
+</ul>
+
+{{outlet}}

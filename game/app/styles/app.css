@@ -1,43 +1,104 @@
-@tailwind base;
+:root {
+  --metal-1: #fff;
+  --metal-2: #dbe0e7;
+  --metal-3: #a3acbe;
+  --metal-4: #67708b;
+  --metal-5: #4e5371;
+  --metal-6: #393a56;
+  --metal-7: #26243a;
+  --metal-8: #141020;
+
+  --grass-3: #7bcf5c;
+  --grass-4: #509b4b;
+  --grass-5: #2e6a42;
+  --grass-6: #1a453b;
+  --grass-7: #0f2738;
+
+  --cold-3: #41f3fc;
+  --cold-4: #13b2f2;
+  --cold-5: #0e82ce;
+  --cold-6: #0f4da3;
+  --cold-7: #0d2f6d;
+
+  --earth-2: #f0d2af;
+  --earth-3: #e5ae78;
+  --earth-4: #c58158;
+  --earth-5: #945542;
+  --earth-6: #623530;
+  --earth-7: #46211f;
+
+  --gold-3: #fbdf6b;
+  --gold-4: #f7ac37;
+  --gold-5: #e57028;
+  --gold-6: #97432a;
+
+  --heat-3: #fe979b;
+  --heat-4: #ed5259;
+  --heat-5: #c42c36;
+  --heat-6: #781f2c;
+
+  --magic-3: #e38dd6;
+  --magic-4: #b45eb3;
+  --magic-5: #7f3b86;
+  --magic-6: #4d2352;
+  --magic-7: #351428;
+
+  --spacing-0: 0;
+  --spacing-1: 1px;
+  --spacing-2: 2px;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 5rem;
+
+  --shadow-none: 0 0 0 0 rgba(0, 0, 0, 0);
+  --shadow-md: 0 var(--spacing-xs) var(--spacing-lg)
+    calc(-1 * var(--spacing-sm)) var(--metal-8);
+
+  --shadow-lg: 0 var(--spacing-xs) var(--spacing-2xl)
+    calc(-1 * var(--spacing-sm)) var(--metal-8);
+}
+
+@import-sanitize;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
 
 html,
 body {
-  @apply bg-gray-800 text-gray-400;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--metal-6);
+  color: var(--metal-1);
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
 body {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-content: stretch;
+  align-items: stretch;
   min-height: calc(var(--vh, 1vh) * 100);
+  padding: var(--spacing-md);
 }
 
-label {
-  @apply block uppercase text-sm font-bold tracking-wider py-1;
+@media (max-width: 48rem) {
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-@tailwind components;
-
-.button {
-  @apply bg-indigo-700 text-white font-bold py-1 px-3 border border-indigo-600 rounded;
+body > * {
+  width: 100%;
 }
-
-.button-lg {
-  @apply bg-indigo-700 text-white font-bold py-2 px-8 border border-indigo-600 rounded;
-}
-
-.button:focus,
-.button:hover,
-.button-lg:focus,
-.button-lg:hover {
-  @apply bg-indigo-600 border-indigo-500;
-}
-
-.button:focus,
-.button-lg:focus {
-  @apply outline-none shadow-outline;
-}
-
-.button:disabled,
-.button-lg:disabled {
-  @apply bg-gray-800 border-gray-600 text-gray-600 opacity-50;
-}
-
-@tailwind utilities;

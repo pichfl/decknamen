@@ -1,0 +1,95 @@
+.tally {
+}
+
+.tally .title {
+  max-width: 100%;
+  font-size: 3rem;
+  text-align: left;
+  padding-left: var(--spacing-lg);
+}
+
+.bar {
+  composes: panel from '../layout/panel.css';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.bar > strong {
+  display: block;
+  margin-left: 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.tally .bar {
+  margin-top: calc(-1 * var(--spacing-2xl) + var(--spacing-sm));
+  margin-bottom: var(--spacing-2xl);
+  max-width: 100%;
+}
+
+@media (max-width: 48rem) {
+  .tally .bar {
+    flex-flow: row wrap;
+  }
+
+  .tally .bar .actions {
+    width: 100%;
+    margin-top: var(--spacing-md);
+    margin-left: 0;
+  }
+
+  .tally .bar > strong {
+    display: block;
+    text-align: right;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.bar > * {
+  margin: 0;
+}
+
+.bar > * + * {
+  margin-left: var(--spacing-lg);
+}
+
+.tally .title {
+  text-shadow: 3px 5px 0px var(--metal-7);
+}
+
+.tally .team-a {
+  color: var(--heat-4);
+}
+
+.tally .team-b {
+  color: var(--cold-4);
+}
+
+.player {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--spacing-xs);
+  color: var(--metal-8);
+  word-break: break-all;
+}
+
+.tally .bg-a {
+  background: var(--heat-4);
+}
+
+.tally .bg-b {
+  background: var(--cold-4);
+}
+
+.actions {
+  display: flex;
+}
+
+.actions button {
+  white-space: nowrap;
+}
+
+.actions * + * {
+  margin-left: var(--spacing-md);
+}

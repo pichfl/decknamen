@@ -1,0 +1,21 @@
+.title {
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto var(--spacing-lg);
+  text-align: center;
+  font-size: 5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.1rem;
+  color: var(--metal-4);
+  line-height: 1;
+}
+
+.subtitle {
+  width: 100%;
+  max-width: 32rem;
+  margin: calc(-1 * var(--spacing-xl)) auto var(--spacing-xl);
+  text-align: center;
+  color: var(--metal-2);
+}

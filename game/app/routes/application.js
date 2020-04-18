@@ -7,8 +7,6 @@ export default class ApplicationRoute extends Route {
   @service words;
 
   async beforeModel() {
-    super.beforeModel(...arguments);
-
     this.user.restore();
 
     await this.intl.setLocale('en-us');

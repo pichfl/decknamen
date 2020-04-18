@@ -1,0 +1,25 @@
+.red h2 {
+  color: var(--heat-4);
+}
+
+.blue h2 {
+  color: var(--cold-4);
+}
+
+.actions {
+  max-width: 32rem;
+  margin: var(--spacing-lg) auto auto;
+  justify-content: center;
+}
+
+.actions button {
+  width: 50%;
+}
+
+.help {
+  color: var(--metal-3);
+}
+
+.fieldset > * + * {
+  margin-top: var(--spacing-lg);
+}

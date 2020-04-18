@@ -1,0 +1,35 @@
+.input {
+  display: block;
+  width: 100%;
+  max-width: 32rem;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: var(--spacing-2) solid var(--metal-1);
+  background: var(--metal-2);
+  text-align: left;
+  border-radius: var(--spacing-xs);
+  color: var(--metal-7);
+  font-weight: 400;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: default;
+  appearance: none;
+  line-height: var(--spacing-lg);
+}
+
+.input:focus {
+  box-shadow: 0 0 0 var(--spacing-xs) var(--cold-4);
+  border-color: var(--cold-5);
+  outline: none;
+}
+
+.textarea {
+  min-height: calc(5 * var(--spacing-lg));
+}
+
+.select {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2367708b"><path d="M15.3 9.3a1 1 0 0 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4l3.3 3.29 3.3-3.3z"/></svg>'),
+    linear-gradient(var(--metal-1), var(--metal-2));
+  background-size: var(--spacing-xl), cover;
+  background-position: right var(--spacing-xs) center, center;
+  background-repeat: no-repeat, repeat;
+}

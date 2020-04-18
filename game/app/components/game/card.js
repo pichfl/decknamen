@@ -2,6 +2,9 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 import { action } from '@ember/object';
+import styles from './card.css';
+
+const { TEAM_A, TEAM_B } = CARD_STATES;
 
 export default class GameCardComponent extends Component {
   @service user;
@@ -12,6 +15,20 @@ export default class GameCardComponent extends Component {
 
   get type() {
     return this.args.card.type;
+  }
+
+  get typeClass() {
+    switch (this.args.card.type) {
+      case CARD_TYPES.TEAM_A:
+        return styles['type-team-a'];
+      case CARD_TYPES.TEAM_B:
+        return styles['type-team-b'];
+      case CARD_TYPES.BYSTANDER:
+        return styles['type-bystander'];
+      case CARD_TYPES.ABORT:
+      default:
+        return styles['type-abort'];
+    }
   }
 
   get isCovered() {

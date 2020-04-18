@@ -7,9 +7,14 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('lobby', {
-    path: ':lobby_id',
-  }, function() {
-    this.route('game');
-  });
+  this.route(
+    'game',
+    {
+      path: ':room_id',
+    },
+    function () {
+      this.route('lobby');
+      this.route('over');
+    }
+  );
 });

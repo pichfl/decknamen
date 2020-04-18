@@ -1,6 +1,6 @@
 /*jshint node:true*/
 
-module.exports = function(/* environment */) {
+module.exports = function (/* environment */) {
   return {
     /**
      * The locales that the application needs to support.
@@ -120,6 +120,6 @@ module.exports = function(/* environment */) {
      */
     requiresTranslation(/* key, locale */) {
       return true;
-    }
+    },
   };
 };

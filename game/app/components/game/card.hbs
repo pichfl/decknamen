@@ -1,76 +1,45 @@
-<button type="button" disabled={{this.isDisabled}}
-  class="
-    relative
-    h-16
-    lg:h-32
-    rounded-md
-    md:rounded-lg
-    border-2
-    md:border-4
-    flex
-    justify-center
-    items-center
-    focus:outline-none
-    focus:border-gray-600
-    text-gray-100
-    {{if
-      this.isSelected
-      (if
-        this.user.isLead
-        this.leadClasses
-        "bg-green-300 text-green-900 border-green-400 focus:border-green-600"
-      )
-      (if
-        this.isCovered
-        (if
-          this.user.isLead
-          this.leadClasses
-          "bg-gray-300 text-gray-700 border-gray-500"
-        )
-        this.typeBackground
-      )
-    }}
-    {{if
-      this.isUncovered
-      (if
-        this.user.isLead
-        "border-gray-800 opacity-25"
-        "border-gray-800"
-      )
-    }}
-    {{if this.isHighlighted "shadow-lg"}}
-    {{if this.isDisabled "cursor-default"}}
+<button
+  type="button"
+  disabled={{this.isDisabled}}
+  class="{{if (or this.user.isLead this.isUncovered) this.typeClass}}"
+  local-class="
+  card
+  {{if this.user.isLead "lead" "player"}}
+   {{if this.isSelected "selected"}}
+   {{if this.isCovered "covered" "uncovered"}}
   "
   {{on "click" this.onClick}}
 >
-  {{#if (or this.isLead this.isCovered)}}
-    <div class="
-      font-bold
-      uppercase
-      text-sm
-      tracking-tight
-      md:tracking-normal
-      lg:text-xl
-    ">
-      {{@card.word}}
-    </div>
-
-    {{#if (and this.isSelected this.user.isLead)}}
-      <div class="-m-1
-        absolute
-        top-0
-        right-0
-        mt-2
-        mr-2
-        w-8
-        h-8
-        rounded-full
-        bg-gray-100
-        border-4
-        border-white
-      "></div>
-    {{/if}}
+  {{#if this.isSelected}}
+    <i local-class="target bottom">
+      <svg width="10" height="5" viewBox="0 0 10 5">
+        <path d="M 0,5 L 10,5 L 5,0 z" fill="currentColor"></path>
+      </svg>
+    </i>
+    <i local-class="target left">
+      <svg width="5" height="10" viewBox="0 0 5 10">
+        <path d="M 0,0 L 5,5 L 0,10 z" fill="currentColor"></path>
+      </svg>
+    </i>
+    <i local-class="target top">
+      <svg width="10" height="5" viewBox="0 0 10 5">
+        <path d="M 0,0 L 10,0 L 5,5 z" fill="currentColor"></path>
+      </svg>
+    </i>
+    <i local-class="target right">
+      <svg width="5" height="10" viewBox="0 0 5 10">
+        <path d="M 5,0 L 5,10 L 0,5 z" fill="currentColor"></path>
+      </svg>
+    </i>
   {{/if}}
+
+  <span local-class="inner">
+    {{#if (or this.isLead this.isCovered)}}
+      <span local-class="word">
+        {{@card.word}}
+      </span>
+    {{/if}}
+  </span>
 </button>
 
 {{yield}}

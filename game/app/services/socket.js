@@ -58,19 +58,73 @@ export default class SocketService extends Service {
     return this.current.turn;
   }
 
+  get totalCardsTeamA() {
+    return this.countTotalCardsByTeam(TEAM_A);
+  }
+
+  get totalCardsTeamB() {
+    return this.countTotalCardsByTeam(TEAM_B);
+  }
+
   get totalCards() {
+    return this.countTotalCardsByTeam(this.turn);
+  }
+
+  get uncoveredCards() {
+    return this.countUncoveredCardsByTeam(this.turn);
+  }
+
+  get winner() {
+    if (this.winnerTeamA) {
+      return TEAM_A;
+    }
+
+    if (this.winnerTeamB) {
+      return TEAM_B;
+    }
+
+    return undefined;
+  }
+
+  get winnerTeamA() {
+    return this.uncoveredCardsTeamA === this.totalCardsTeamA;
+  }
+
+  get winnerTeamB() {
+    return this.uncoveredCardsTeamB === this.totalCardsTeamB;
+  }
+
+  get failed() {
+    return this.cards.some(
+      (card) => card.type === ABORT && card.state === UNCOVERED
+    );
+  }
+
+  get over() {
+    return (
+      this.current.over || this.failed || this.winner !== undefined || false
+    );
+  }
+
+  get uncoveredCardsTeamA() {
+    return this.countUncoveredCardsByTeam(TEAM_A);
+  }
+
+  get uncoveredCardsTeamB() {
+    return this.countUncoveredCardsByTeam(TEAM_B);
+  }
+
+  countUncoveredCardsByTeam(team) {
     return this.cards.reduce(
-      (acc, card) => (card.type === this.turn ? ++acc : acc),
+      (acc, card) =>
+        card.type === team && card.state !== CARD_STATES.COVERED ? ++acc : acc,
       0
     );
   }
 
-  get uncoveredCards() {
+  countTotalCardsByTeam(team) {
     return this.cards.reduce(
-      (acc, card) =>
-        card.type === this.turn && card.state !== CARD_STATES.COVERED
-          ? ++acc
-          : acc,
+      (acc, card) => (card.type === team ? ++acc : acc),
       0
     );
   }
@@ -219,9 +273,11 @@ export default class SocketService extends Service {
     await this.syncTask.perform({
       over: true,
     });
-
-    console.log(this.current);
   }
+
+  async reset() {}
+
+  async deleteGame() {}
 
   async emit(eventName, data) {
     const sender = this.user.id;

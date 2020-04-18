@@ -1,28 +1,30 @@
-<aside ...attributes class="font-bold bg-gray-900 rounded-lg flex flex-wrap md:flex-no-wrap items-center md:justify-between">
-  <h2 class="p-4 w-1/2 md:w-auto {{if this.user.inTeamA "text-red-500" "text-blue-500"}}">
-    {{#if this.user.isLead}}
-      <FaIcon @icon="user-tie" />
-    {{/if}}
+<header ...attributes local-class="tally">
+  <Layout::Title
+    local-class="title {{if (is-team-a this.socket.turn) "team-a" "team-b"}}"
+    @title={{t "GameTally.text.turn" team=(if (is-team-a this.socket.turn) (t "Teams.teamA") (t "Teams.teamB"))}}
+  />
 
-    {{this.user.name}}
-  </h2>
+  <div local-class="bar">
+    <p local-class="player {{if (is-team-a this.user.team) "bg-a" "bg-b"}}">
+      {{#if this.user.isLead}}
+        <FaIcon @icon="user-tie" />
+        &nbsp;
+      {{/if}}
 
-  <p class="p-4 text-right md:text-center w-1/2 md:w-auto">
-    {{#if (is-team-a this.socket.turn)}}
-      <span class="text-red-500">
-        {{t "GameTally.text.turn" team=(t "Teams.teamA")}}
-      </span>
-    {{else}}
-      <span class="text-blue-500">
-        {{t "GameTally.text.turn" team=(t "Teams.teamB")}}
-      </span>
-    {{/if}}
-    {{t "GameTally.text.stats" current=this.socket.uncoveredCards total=this.socket.totalCards}}
-  </p>
+      <strong>{{this.user.name}}</strong>
+    </p>
 
-  {{#if hasBlock}}
-    <p class="p-4 text-center w-full md:w-auto">
+    <strong>
+      {{
+        t
+        "GameTally.text.stats"
+        current=this.socket.uncoveredCards
+        total=this.socket.totalCards
+      }}
+    </strong>
+
+    <p local-class="actions">
       {{yield}}
     </p>
-  {{/if}}
-</aside>
+  </div>
+</header>

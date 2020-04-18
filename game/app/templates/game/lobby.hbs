@@ -1,0 +1,122 @@
+{{title (t "gameLobby.title")}}
+
+<Layout::Title @title={{t "gameLobby.title"}}>
+  {{t "gameLobby.text.help"}}
+</Layout::Title>
+
+<Ui::Form @onSubmit={{this.startGame}}>
+  <Layout::Panel @title={{t "gameLobby.text.headlineTeamA"}} local-class="red">
+    <ul>
+      {{#if this.leadTeamA}}
+        <Lobby::Player
+          @player={{this.leadTeamA}}
+          @onUpdateUser={{this.updateUser}}
+        />
+      {{/if}}
+
+      {{#each this.playersTeamA as |player|}}
+        <Lobby::Player
+          @player={{player}}
+          @teamHasLead={{this.leadTeamA}}
+          @onUpdateUser={{this.updateUser}}
+          @otherTeam={{this.TEAMS.TEAM_B}}
+        />
+      {{else}}
+        <li local-class="help">
+          {{t "gameLobby.text.addTeamMembers"}}
+        </li>
+      {{/each}}
+    </ul>
+  </Layout::Panel>
+
+  <Layout::Panel @title={{t "gameLobby.text.headlineTeamB"}} local-class="blue">
+    <ul>
+      {{#if this.leadTeamB}}
+        <Lobby::Player
+          @player={{this.leadTeamB}}
+          @onUpdateUser={{this.updateUser}}
+        />
+      {{/if}}
+
+      {{#each this.playersTeamB as |player|}}
+        <Lobby::Player
+          @player={{player}}
+          @teamHasLead={{this.leadTeamB}}
+          @onUpdateUser={{this.updateUser}}
+          @otherTeam={{this.TEAMS.TEAM_A}}
+        />
+      {{else}}
+        <li local-class="help">
+          {{t "gameLobby.text.addTeamMembers"}}
+        </li>
+      {{/each}}
+    </ul>
+  </Layout::Panel>
+
+  {{#if this.playersWaiting}}
+    <Layout::Panel @title={{t "gameLobby.text.headlineWaiting"}}>
+      <ul>
+        {{#each this.playersWaiting as |player|}}
+          <Lobby::Player @player={{player}} @onUpdateUser={{this.updateUser}} />
+        {{/each}}
+      </ul>
+    </Layout::Panel>
+  {{else if this.user.isLead}}
+    <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
+      <fieldset local-class="fieldset" disabled={{this.isSelectingWords}}>
+        {{#if this.user.isLead}}
+          <Ui::Input @type="select" @onChange={{this.selectWords}}>
+            <option value="">
+              {{t "gameLobby.placeholder.selectWords"}}
+            </option>
+            {{#each this.words.list as |list|}}
+              <option
+                value={{list.id}}
+                selected={{eq list.id this.socket.words}}
+              >
+                {{list.title}} ({{
+                  t "gameLobby.text.wordCount" count=list.list.length
+                }})
+              </option>
+            {{/each}}
+          </Ui::Input>
+        {{/if}}
+
+        {{#if this.socket.words}}
+          <Ui::Input
+            @type="textarea"
+            @value={{get (get this.words.byId this.socket.words) "plain"}}
+          />
+        {{/if}}
+      </fieldset>
+    </Layout::Panel>
+  {{else if this.socket.words}}
+    <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
+      <p>
+        {{get (get this.words.byId this.socket.words) "title"}}
+        <span>
+          {{
+            t
+            "gameLobby.text.wordCount"
+            count=(get (get this.words.byId this.socket.words) "list.length")
+          }}
+        </span>
+      </p>
+    </Layout::Panel>
+  {{/if}}
+
+  {{#if this.user.isLead}}
+    <Ui::FormActions local-class="actions">
+      <Ui::Button
+        @style="primary"
+        @type="submit"
+        @disabled={{not this.canContinue}}
+        @isLoading={{or this.isLoading this.socket.cards}}
+      >
+        {{t "gameLobby.action.start"}}
+      </Ui::Button>
+    </Ui::FormActions>
+  {{/if}}
+</Ui::Form>
+
+{{outlet}}

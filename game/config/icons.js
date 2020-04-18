@@ -3,6 +3,7 @@ module.exports = () => ({
     'crown',
     'exchange',
     'level-down',
+    'pencil',
     'save',
     'spinner-third',
     'user-edit',

@@ -1,0 +1,28 @@
+.max {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1%;
+}
+
+.cards {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: start;
+  align-content: start;
+  justify-content: center;
+  list-style: none;
+  margin: 0 auto var(--spacing-lg);
+  padding: 0;
+}
+
+.cards > * {
+  width: 20%;
+  flex: 0 1 auto;
+  padding: 1%;
+}
+
+@media (max-width: 48rem) {
+  .cards > * {
+    width: 33%;
+  }
+}

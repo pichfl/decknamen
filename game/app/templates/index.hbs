@@ -1,31 +1,31 @@
-<div class="container flex flex-col min-h-calc p-5 justify-center items-center">
-  <h1 class="text-gray-100 text-xl font-bold tracking-widest mt-auto mb-10 text-center uppercase">{{t "application.title"}}</h1>
+<Layout::Title>
+  {{t "application.title"}}
+</Layout::Title>
 
-  <div class="w-full max-w-md mb-auto mx-auto p-6 py-4 bg-gray-900 rounded-lg shadow-lg">
-    <form {{on "submit" this.startGame}}>
-      <p>
-        <label for="token">{{t "index.label.token"}}</label>
-        <input class="form-input w-full" type="text" value="">
-      </p>
-      <p class="mt-3 text-center">
-        <button type="submit" class="button-lg w-full">{{t "index.action.continue"}}</button>
-      </p>
-    </form>
-
-    <p class="flex items-center my-5">
-      <span class="h-1 w-full bg-gray-800"></span>
-      <span class="px-4">
-        {{t "index.text.or"}}
-      </span>
-      <span class="h-1 w-full bg-gray-800"></span>
+<Layout::Panel>
+  <Ui::Form @onSubmit={{this.startGame}}>
+    <p>
+      <label for="token">
+        {{t "index.label.token"}}
+      </label>
+      <input class="form-input w-full" type="text" value="" />
     </p>
+    <Ui::FormActions>
+      <Ui::Button @type="submit">
+        {{t "index.action.continue"}}
+      </Ui::Button>
+    </Ui::FormActions>
+  </Ui::Form>
 
-    <p class="text-center mb-4">
-      <LinkTo class="button-lg inline-block w-full" @route="lobby" @model={{this.randomToken}}>
-        {{t "index.action.new"}}
-      </LinkTo>
-    </p>
-  </div>
+  <p local-class="or">
+    {{t "index.text.or"}}
+  </p>
 
-  {{outlet}}
-</div>
+  <p>
+    <Ui::Button @style="primary" @route="game" @model={{this.randomToken}}>
+      {{t "index.action.new"}}
+    </Ui::Button>
+  </p>
+</Layout::Panel>
+
+{{outlet}}

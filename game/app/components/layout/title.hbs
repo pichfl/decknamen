@@ -1,0 +1,9 @@
+<h1 ...attributes local-class="title">
+  {{@title}}
+</h1>
+
+{{#if hasBlock}}
+  <div local-class="subtitle">
+    {{yield}}
+  </div>
+{{/if}}

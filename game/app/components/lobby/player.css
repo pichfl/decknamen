@@ -1,0 +1,54 @@
+.form {
+  width: 100%;
+  margin: calc(-1 * (var(--spacing-sm) + var(--spacing-2))) 0;
+  display: flex;
+  flex-flow: nowrap row;
+  justify-content: stretch;
+}
+
+.form p {
+  width: 100%;
+}
+
+.form div {
+  margin-top: 0;
+  width: 25%;
+  margin-left: var(--spacing-md);
+}
+
+.form p * {
+  width: 100%;
+}
+
+.player {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.player + * {
+  margin-top: var(--spacing-lg);
+}
+
+.leader {
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * var(--spacing-sm));
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
+  transform: translate(-85%, -50%);
+  background: var(--metal-2);
+  color: var(--metal-8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+button.team-a {
+  color: var(--heat-4);
+}
+
+button.team-b {
+  color: var(--cold-4);
+}

@@ -1,0 +1,30 @@
+{{title this.documentTitle}}
+
+<Layout::Title @title={{this.pageTitle}} local-class="title {{if (is-team-a this.socket.winner) "team-a"}} {{if (is-team-b this.socket.winner) "team-b"}}" />
+
+<Layout::Panel>
+  {{#if (not (is-empty this.socket.winner))}}
+    <p local-class="message">
+      {{#if (eq this.user.team this.socket.winner)}}
+        {{t "gameOver.text.congratulations" name=this.user.name}}
+      {{else}}
+        {{t "gameOver.text.condolences" name=this.user.name}}
+      {{/if}}
+    </p>
+
+    <p local-class="actions">
+      <Ui::Button @style="primary">
+        {{t "gameOver.action.newGame"}}
+      </Ui::Button>
+      <Ui::Button>
+        {{t "gameOver.action.exit"}}
+      </Ui::Button>
+
+      <Ui::Button @style="link" @onClick={{this.undo}}>Undo</Ui::Button>
+    </p>
+  {{/if}}
+</Layout::Panel>
+
+
+
+{{outlet}}

@@ -10,34 +10,53 @@ index:
   text:
     or: or
 
-lobbyIndex:
+gameLobby:
   title: Lobby
   text:
-    help: Select team leaders & change your name
-    addTeamMembers: Add team members from the waiting list
+    help: Edit your name, select a team, team leaders and let them pick a list of words to start the game
+    addTeamMembers: To begin the game add team members from the waiting list
     headlineTeamA: Team Red
     headlineTeamB: Team Blue
     headlineWaiting: Waiting List
     headlineWords: Words
-    unknownPlayer: Unknown player
-    wordCount: "{count} words"
+    wordCount: '{count} words'
   action:
-    changeName: Edit
-    saveName: Save
-    switchTeam: Switch team
-    promote: Make lead
-    demote: Make member
     start: Start Game
   placeholder:
     selectWords: Select words
 
-lobbyGame:
-  title: "{team} teams turn"
+gamePlay:
+  title: '{team} teams turn'
+  action:
+    skip: Skip turn
+    end: Throw game
+    confirmEnd: Are you sure you want throw the game?
+
+gameOver:
+  title:
+    failed: Game Over
+    winner: '{team} wins!'
+  text:
+    congratulations: 'Congratulations, {name}!'
+    condolences: 'Better luck next time, {name}!'
+  action:
+    newGame: New game with same players
+    exit: Exit to start
+
+LobbyPlayer:
+  text:
+    unknownPlayer: 'Unknown player'
+  action:
+    confirmNameChange: Confirm
+    changeName: Edit
+    switchTeam: Switch team
+    promote: Make lead
+    demote: Make member
 
 GameTally:
   text:
-    turn: "{team} teams turn"
-    stats: ({current}/{total} found)
+    turn: '{team} teams turn'
+    stats: '{current}/{total} targets found'
 
 Teams:
   teamA: Red
