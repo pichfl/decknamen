@@ -1,0 +1,69 @@
+application:
+  title: Decknamen
+
+index:
+  label:
+    token: Token de juego
+  action:
+    new: Empezar nuevo Juego
+    continue: Continuar
+  text:
+    or: o
+
+gameLobby:
+  title: Lobby
+  text:
+    help: Edita tu nombre, selecciona un equipo, líder de equipo, y espera a que elijan una lista de palabras para empezar el juego
+    addTeamMembers: Para empezar el juego, añade a tus miembros de equipo desde la lista de espera
+    headlineTeamA: Equipo Rojo
+    headlineTeamB: Equipo Azul
+    headlineWaiting: Lista de Espera
+    headlineWords: Palabras
+    wordCount: '{count} palabras'
+  action:
+    start: Empezar Juego
+  placeholder:
+    selectWords: Selecciona palabras
+
+gamePlay:
+  title: 'Turno del equipo {team}'
+  action:
+    skip: Finalizar turno
+    end: Rendirse
+    confirmEnd: Estás seguro que quieres rendirte? tu equipo perderá el juego
+
+gameOver:
+  title:
+    failed: Game Over
+    winner: 'El equipo {team} ganó!'
+  text:
+    congratulations: 'Felicidades {name}, ganaste!'
+    condolences: 'Mejor suerte la próxima vez, {name}!'
+    failTeamA: 'El equipo Rojo perdió al seleccionar la carta negra.'
+    failTeamB: 'El equipo Azul perdió al seleccionar la carta negra.'
+    stats: Estadísticas del juego
+    statsTeamA: Rojo
+    statsTeamB: Azul
+    statsBystander: Otros
+    statsFail: Fallo
+  action:
+    newGame: Nuevo juego con los mismos jugadores
+    exit: Salir
+
+LobbyPlayer:
+  text:
+    unknownPlayer: 'Jugador desconocido'
+  action:
+    confirmNameChange: Confirmar
+    changeName: Editar
+    switchTeam: Cambiar equipo
+    promote: Promover a líder
+    demote: Convertir a miembro
+
+GameTally:
+  text:
+    stats: '{current}/{total} objetivos encontrados'
+
+Teams:
+  teamA: Rojo
+  teamB: Azul
