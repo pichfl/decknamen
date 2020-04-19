@@ -3,5 +3,8 @@
     "env": {
       "FONTAWESOME_NPM_AUTH_TOKEN": "@fontawesome-token"
     }
+  },
+  "github": {
+    "silent": true
   }
 }
