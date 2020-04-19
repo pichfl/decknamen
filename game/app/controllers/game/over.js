@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
 import { CARD_TYPES, CARD_STATES } from 'game/utils/enums';
 import styles from 'game/styles/game/over';
+import ENV from 'game/config/environment';
 
 const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 const { COVERED } = CARD_STATES;
@@ -12,6 +13,10 @@ export default class GameOverController extends Controller {
   @service socket;
   @service user;
   @service intl;
+
+  get isDevelopment() {
+    return ENV.environment === 'development';
+  }
 
   get documentTitle() {
     if (this.socket.winner !== undefined) {

@@ -1,0 +1,67 @@
+.bar {
+  composes: panel from '../layout/panel.css';
+  display: flex;
+  margin-top: var(--spacing-lg) !important;
+  margin-bottom: var(--spacing-md);
+  max-width: 100%;
+}
+
+.headline {
+  margin: 0 var(--spacing-sm) 0 0;
+  line-height: 1.5rem;
+}
+
+.team-a {
+  color: var(--heat-4);
+}
+
+.team-b {
+  color: var(--cold-4);
+}
+
+.team {
+  display: flex;
+}
+
+.team + .team {
+  margin-left: var(--spacing-lg);
+}
+
+.list {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5rem;
+}
+
+.list li {
+  display: inline;
+}
+
+.list svg {
+  color: var(--metal-3);
+}
+
+.list li:after {
+  content: ', ';
+  color: var(--metal-4);
+}
+
+.list li:last-child:after {
+  content: '';
+}
+
+.list li:nth-last-child(2):after {
+  content: ' & ';
+}
+
+@media (max-width: 48rem) {
+  .bar {
+    display: block;
+  }
+
+  .team + .team {
+    margin-left: 0;
+  }
+}

@@ -53,6 +53,10 @@
   margin-left: var(--spacing-lg);
 }
 
+.tally .title {
+  text-shadow: 3px 5px 0px var(--metal-7);
+}
+
 .tally .team-a {
   color: var(--heat-4);
 }

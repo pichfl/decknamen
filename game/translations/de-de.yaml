@@ -38,7 +38,7 @@ gameOver:
     winner: '{team} hat gewonnen!'
   text:
     congratulations: 'Herzlichen Glückwunsch {name}, ihr habt gewonnen!'
-    condolences: 'Schade. Vieleicht hast du beim nächsten Mal mehr Glück, {name}!'
+    condolences: 'Schade. Vielleicht hast du beim nächsten Mal mehr Glück, {name}!'
     failTeamA: 'Team Rot hat versagt und den schwarzen Begriff gewählt.'
     failTeamB: 'Team Blau hat versagt und den schwarzen Begriff gewählt'
     stats: Auswerrtung

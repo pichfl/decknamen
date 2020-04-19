@@ -84,9 +84,11 @@
         {{t "gameOver.action.exit"}}
       </Ui::Button>
 
-      <Ui::Button @style="link" @onClick={{this.undo}}>
-        Undo
-      </Ui::Button>
+      {{#if this.isDevelopment}}
+        <Ui::Button @style="link" @onClick={{this.undo}}>
+          Undo
+        </Ui::Button>
+      {{/if}}
     </p>
   </Layout::Panel>
 

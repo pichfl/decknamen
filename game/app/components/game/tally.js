@@ -4,8 +4,4 @@ import { inject as service } from '@ember/service';
 export default class GameTallyComponent extends Component {
   @service user;
   @service socket;
-
-  get cards() {
-    return this.socket.cards || [];
-  }
 }

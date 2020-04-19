@@ -7,35 +7,35 @@
   )
 }}
 
-<Game::Tally
-  @cards={{this.cards}}
-  @players={{this.lobby.players}}
-  local-class="max"
->
-  <Ui::Button
-    @style="primary"
-    @disabled={{not-eq this.socket.turn this.user.team}}
-    @onClick={{this.doEndTurn}}
-  >
-    {{t "gamePlay.action.skip"}}
-  </Ui::Button>
-
-  {{#if this.user.isLead}}
+<div local-class="max">
+  <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}}>
     <Ui::Button
+      @style="primary"
       @disabled={{not-eq this.socket.turn this.user.team}}
-      @onClick={{this.doEndGame}}
+      @onClick={{this.doEndTurn}}
     >
-      {{t "gamePlay.action.end"}}
+      {{t "gamePlay.action.skip"}}
     </Ui::Button>
-  {{/if}}
-</Game::Tally>
 
-<ul local-class="max cards">
-  {{#each this.socket.cards as |card|}}
-    <li>
-      <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
-    </li>
-  {{/each}}
-</ul>
+    {{#if this.user.isLead}}
+      <Ui::Button
+        @disabled={{not-eq this.socket.turn this.user.team}}
+        @onClick={{this.doEndGame}}
+      >
+        {{t "gamePlay.action.end"}}
+      </Ui::Button>
+    {{/if}}
+  </Game::Tally>
+
+  <ul local-class="cards">
+    {{#each this.socket.cards as |card|}}
+      <li>
+        <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
+      </li>
+    {{/each}}
+  </ul>
+
+  <Game::Team />
+</div>
 
 {{outlet}}
