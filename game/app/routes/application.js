@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import ENV from 'game/config/environment';
 
 export default class ApplicationRoute extends Route {
   @service intl;
@@ -9,7 +10,35 @@ export default class ApplicationRoute extends Route {
   async beforeModel() {
     this.user.restore();
 
-    await this.intl.setLocale('en-us');
+    await this.loadAndSetLanguage();
     await this.words.load();
+  }
+
+  async loadAndSetLanguage() {
+    let code = `${window.navigator.language}`.toLowerCase();
+
+    if (code.length === 2) {
+      code = `${code}-${code}`.toLowerCase();
+    }
+
+    if (!ENV.APP.locales.includes(code)) {
+      code = ENV.APP.locales[0];
+    }
+
+    let translationPath = `translations/${code}.json`;
+
+    if (ENV.environment === 'production') {
+      const assetMap = await fetch('/assets/assetMap.json');
+      const assetMapJSON = await assetMap.json();
+
+      translationPath = assetMapJSON.assets[translationPath];
+    }
+
+    const response = await fetch(`/${translationPath}`);
+    const language = await response.json();
+
+    this.intl.addTranslations(code, language);
+
+    await this.intl.setLocale(code);
   }
 }

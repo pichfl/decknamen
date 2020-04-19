@@ -39,8 +39,8 @@ gameOver:
   text:
     congratulations: 'Congratulations {name}, you won!'
     condolences: 'Better luck next time, {name}!'
-    failTeamA: 'The Red team failed by picking the black card.'
-    failTeamB: 'The Blue team failed by picking the black card.'
+    failTeamA: 'Team Red failed by picking the black card.'
+    failTeamB: 'Team Blue failed by picking the black card.'
     stats: Game statistics
     statsTeamA: Red
     statsTeamB: Blue

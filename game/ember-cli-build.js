@@ -15,6 +15,11 @@ module.exports = function (defaults) {
       ],
       headerModules: ['tix/styles/app.css'],
     },
+    fingerprint: {
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'json'],
+      generateAssetMap: true,
+      fingerprintAssetMap: true,
+    },
   });
 
   return app.toTree();

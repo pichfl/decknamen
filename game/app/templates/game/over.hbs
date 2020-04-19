@@ -9,7 +9,11 @@
   />
 
   <Layout::Panel>
-    <p local-class="message {{if (is-team-a this.socket.turn) "team-a" "team-b"}}">
+    <p
+      local-class="message {{
+        if (is-team-a this.socket.turn) "team-a" "team-b"
+      }}"
+    >
       {{#if (not (is-empty this.socket.winner))}}
         {{#if (eq this.user.team this.socket.winner)}}
           {{t "gameOver.text.congratulations" name=this.user.name}}
@@ -22,9 +26,23 @@
         {{/if}}
       {{else if this.socket.failed}}
         <span>
-          {{t (if (is-team-a this.socket.turn) "gameOver.text.failTeamA" "gameOver.text.failTeamB")}}
+          {{
+            t
+            (if
+              (is-team-a this.socket.turn)
+              "gameOver.text.failTeamA"
+              "gameOver.text.failTeamB"
+            )
+          }}
         </span>
-        {{t (if (not-eq this.user.team this.socket.turn) "gameOver.text.congratulations" "gameOver.text.condolences") name=this.user.name}}
+        {{t
+          (if
+            (not-eq this.user.team this.socket.turn)
+            "gameOver.text.congratulations"
+            "gameOver.text.condolences"
+          )
+          name=this.user.name
+        }}
         <br />
         {{#if (not-eq this.user.team this.socket.turn)}}
           <FaIcon @icon="trophy" @size="4x" local-class="icon party" />
@@ -57,7 +75,7 @@
   </Layout::Panel>
 
   <Layout::Panel>
-    <p local-class="actions" >
+    <p local-class="actions">
       <Ui::Button @style="primary" @onClick={{this.doReset}}>
         {{t "gameOver.action.newGame"}}
       </Ui::Button>

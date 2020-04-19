@@ -1,0 +1,69 @@
+application:
+  title: Decknamen
+
+index:
+  label:
+    token: Token
+  action:
+    new: Neue Spiel
+    continue: Fortfahren
+  text:
+    or: oder
+
+gameLobby:
+  title: Lobby
+  text:
+    help: Bearbeite deinen Namen, wähle ein Team und Teamleiter aus und entscheidet euch für eine Liste mit Begriffen
+    addTeamMembers: Um zu beginnen musst du noch Mitspielerinnen aus der Warteliste oder dem anderen Team verteilen
+    headlineTeamA: Team Rot
+    headlineTeamB: Team Blau
+    headlineWaiting: Warteliste
+    headlineWords: Begriffe
+    wordCount: '{count} Begriffe'
+  action:
+    start: Spiel starten
+  placeholder:
+    selectWords: Begriffe auswählen
+
+gamePlay:
+  title: 'Team {team} ist dran'
+  action:
+    skip: Passen
+    end: Abbrechen
+    confirmEnd: Bist du dir sicher, dass du das Spiel abbrechen willst?
+
+gameOver:
+  title:
+    failed: Spiel zu Ende
+    winner: '{team} hat gewonnen!'
+  text:
+    congratulations: 'Herzlichen Glückwunsch {name}, ihr habt gewonnen!'
+    condolences: 'Schade. Vieleicht hast du beim nächsten Mal mehr Glück, {name}!'
+    failTeamA: 'Team Rot hat versagt und den schwarzen Begriff gewählt.'
+    failTeamB: 'Team Blau hat versagt und den schwarzen Begriff gewählt'
+    stats: Auswerrtung
+    statsTeamA: Rot
+    statsTeamB: Blau
+    statsBystander: Unbeteiligt
+    statsFail: Tödlich
+  action:
+    newGame: Neues Spiel mit den gleichen Mitspielern
+    exit: Zurück zum Start
+
+LobbyPlayer:
+  text:
+    unknownPlayer: Unbekannt
+  action:
+    confirmNameChange: Okay
+    changeName: Bearbeiten
+    switchTeam: Team wechseln
+    promote: Zur Leiterin befördern
+    demote: Zur Mitspielerin machen
+
+GameTally:
+  text:
+    stats: '{current}/{total} Begriffe gefunden'
+
+Teams:
+  teamA: Rot
+  teamB: Blau
