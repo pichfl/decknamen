@@ -1,15 +1,10 @@
-<Layout::Title>
-  {{t "application.title"}}
-</Layout::Title>
+<Layout::Title @title={{t "application.title"}} />
 
 <Layout::Panel>
+  <!--
   <Ui::Form @onSubmit={{this.startGame}}>
-    <p>
-      <label for="token">
-        {{t "index.label.token"}}
-      </label>
-      <input class="form-input w-full" type="text" value="" />
-    </p>
+    <Ui::Input @label={{t "index.label.token"}} @type="text" @value="" />
+
     <Ui::FormActions>
       <Ui::Button @type="submit">
         {{t "index.action.continue"}}
@@ -20,8 +15,9 @@
   <p local-class="or">
     {{t "index.text.or"}}
   </p>
+  -->
 
-  <p>
+  <p local-class="actions">
     <Ui::Button @style="primary" @route="game" @model={{this.randomToken}}>
       {{t "index.action.new"}}
     </Ui::Button>

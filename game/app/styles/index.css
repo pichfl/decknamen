@@ -2,3 +2,7 @@
   text-align: center;
   margin: var(--spacing-md);
 }
+
+.actions {
+  padding: var(--spacing-xl);
+}

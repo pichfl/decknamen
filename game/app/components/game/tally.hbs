@@ -1,7 +1,16 @@
 <header ...attributes local-class="tally">
   <Layout::Title
     local-class="title {{if (is-team-a this.socket.turn) "team-a" "team-b"}}"
-    @title={{t "GameTally.text.turn" team=(if (is-team-a this.socket.turn) (t "Teams.teamA") (t "Teams.teamB"))}}
+    @title={{
+      t
+      "gamePlay.title"
+      team=(if (is-team-a this.socket.turn) (t "Teams.teamA") (t "Teams.teamB"))
+    }}
+    @icon={{
+      if (eq this.user.team this.socket.turn) "play-circle" "pause-circle"
+    }}
+    @user={{this.user}}
+    @socket={{this.socket}}
   />
 
   <div local-class="bar">
@@ -11,7 +20,9 @@
         &nbsp;
       {{/if}}
 
-      <strong>{{this.user.name}}</strong>
+      <strong>
+        {{this.user.name}}
+      </strong>
     </p>
 
     <strong>

@@ -4,10 +4,9 @@ import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 import { action } from '@ember/object';
 import styles from './card.css';
 
-const { TEAM_A, TEAM_B } = CARD_STATES;
-
 export default class GameCardComponent extends Component {
   @service user;
+  @service socket;
 
   get state() {
     return this.args.card.state;
@@ -40,6 +39,10 @@ export default class GameCardComponent extends Component {
   }
 
   get isDisabled() {
+    if (this.user.team !== this.socket.turn) {
+      return true;
+    }
+
     if (this.user.isLead && this.args.card.selected === false) {
       return true;
     }

@@ -56,6 +56,18 @@ io.on('connection', async (socket) => {
     ack({ id: room, data: store[room] });
   });
 
+  socket.on('room.delete', ({ sender, room, data }, ack) => {
+    if (!sender || !room || room !== _room) {
+      return;
+    }
+
+    delete store[room];
+
+    io.to(room).emit('room.delete', room);
+
+    ack({ id: room });
+  });
+
   socket.on('disconnect', () => {
     if (!_sender || !store[_room] || store[_room].words || store[_room].cards) {
       return;

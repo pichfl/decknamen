@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import ENV from 'game/config/environment';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { sampleSize, difference, random, shuffle } from 'lodash-es';
+import { sampleSize, difference, shuffle } from 'lodash-es';
 import { CARD_STATES, CARD_TYPES } from '../utils/enums';
 
 const { COVERED, UNCOVERED } = CARD_STATES;
@@ -15,6 +15,7 @@ export default class SocketService extends Service {
   });
 
   @service user;
+  @service router;
 
   @tracked isConnected = false;
   @tracked room = undefined;
@@ -102,7 +103,8 @@ export default class SocketService extends Service {
 
   get over() {
     return (
-      this.current.over || this.failed || this.winner !== undefined || false
+      this.cards.length > 0 &&
+      (this.current.over || this.failed || this.winner !== undefined || false)
     );
   }
 
@@ -157,6 +159,12 @@ export default class SocketService extends Service {
           this.current = data;
         });
 
+        this.subscribe('room.delete', () => {
+          this.current = {};
+          this.room = undefined;
+          this.router.transitionTo('index');
+        });
+
         this.isConnected = true;
 
         resolve();
@@ -203,9 +211,17 @@ export default class SocketService extends Service {
       card.type = secondTeam;
     });
 
-    cards[random(0, cards.length - 1)].type = ABORT;
+    const failCards = sampleSize(cards, 1);
 
-    cards = shuffle([...cards, ...firstTeamCards, ...secondTeamCards]);
+    cards = difference(cards, failCards);
+
+    failCards.forEach((card) => {
+      card.type = ABORT;
+    });
+
+    cards = shuffle(
+      shuffle([...cards, ...failCards, ...firstTeamCards, ...secondTeamCards])
+    );
 
     await this.syncTask.perform({
       cards,
@@ -275,9 +291,18 @@ export default class SocketService extends Service {
     });
   }
 
-  async reset() {}
+  async reset() {
+    await this.syncTask.perform({
+      over: false,
+      turn: undefined,
+      cards: [],
+      words: '',
+    });
+  }
 
-  async deleteGame() {}
+  async exit() {
+    await this.emit('room.delete', { room: this.room });
+  }
 
   async emit(eventName, data) {
     const sender = this.user.id;

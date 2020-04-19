@@ -1,7 +1,8 @@
+{{! template-lint-disable css-modules/no-class }}
 <button
   type="button"
   disabled={{this.isDisabled}}
-  class="{{if (or this.user.isLead this.isUncovered) this.typeClass}}"
+  class={{if (or this.user.isLead this.isUncovered) this.typeClass}}
   local-class="
   card
   {{if this.user.isLead "lead" "player"}}

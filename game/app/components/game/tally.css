@@ -1,11 +1,9 @@
-.tally {
-}
-
 .tally .title {
   max-width: 100%;
   font-size: 3rem;
   text-align: left;
   padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
 }
 
 .bar {
@@ -24,7 +22,7 @@
 
 .tally .bar {
   margin-top: calc(-1 * var(--spacing-2xl) + var(--spacing-sm));
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-md);
   max-width: 100%;
 }
 
@@ -53,10 +51,6 @@
 
 .bar > * + * {
   margin-left: var(--spacing-lg);
-}
-
-.tally .title {
-  text-shadow: 3px 5px 0px var(--metal-7);
 }
 
 .tally .team-a {

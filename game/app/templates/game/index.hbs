@@ -13,7 +13,6 @@
   local-class="max"
 >
   <Ui::Button
-    class="button"
     @style="primary"
     @disabled={{not-eq this.socket.turn this.user.team}}
     @onClick={{this.doEndTurn}}
@@ -25,7 +24,6 @@
     <Ui::Button
       @disabled={{not-eq this.socket.turn this.user.team}}
       @onClick={{this.doEndGame}}
-      class="button ml-2 bg-gray-800 border-gray-700 text-gray-300"
     >
       {{t "gamePlay.action.end"}}
     </Ui::Button>

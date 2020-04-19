@@ -15,7 +15,7 @@ module.exports = function (/* environment */) {
      * @type {Array?}
      * @default "null"
      */
-    locales: null,
+    locales: ['de-de', 'en-us'],
 
     /**
      * Merges the fallback locale's translations into all other locales as a
@@ -56,7 +56,7 @@ module.exports = function (/* environment */) {
      * @type {Boolean}
      * @default "false"
      */
-    disablePolyfill: false,
+    disablePolyfill: true,
 
     /**
      * Prevents the translations from being bundled with the application code.
@@ -69,7 +69,7 @@ module.exports = function (/* environment */) {
      * @type {Boolean}
      * @default "false"
      */
-    publicOnly: false,
+    publicOnly: true,
 
     /**
      * Cause a build error if ICU argument mismatches are detected.

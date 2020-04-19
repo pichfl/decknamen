@@ -1,30 +1,76 @@
 {{title this.documentTitle}}
 
-<Layout::Title @title={{this.pageTitle}} local-class="title {{if (is-team-a this.socket.winner) "team-a"}} {{if (is-team-b this.socket.winner) "team-b"}}" />
+<section local-class="end">
+  <Layout::Title
+    @title={{this.pageTitle}}
+    local-class="title {{if (is-team-a this.socket.winner) "team-a"}} {{
+      if (is-team-b this.socket.winner) "team-b"
+    }}"
+  />
 
-<Layout::Panel>
-  {{#if (not (is-empty this.socket.winner))}}
-    <p local-class="message">
-      {{#if (eq this.user.team this.socket.winner)}}
-        {{t "gameOver.text.congratulations" name=this.user.name}}
-      {{else}}
-        {{t "gameOver.text.condolences" name=this.user.name}}
+  <Layout::Panel>
+    <p local-class="message {{if (is-team-a this.socket.turn) "team-a" "team-b"}}">
+      {{#if (not (is-empty this.socket.winner))}}
+        {{#if (eq this.user.team this.socket.winner)}}
+          {{t "gameOver.text.congratulations" name=this.user.name}}
+          <br />
+          <FaIcon @icon="trophy" @size="4x" local-class="icon party" />
+        {{else}}
+          {{t "gameOver.text.condolences" name=this.user.name}}
+          <br />
+          <FaIcon @icon="heart-broken" @size="4x" local-class="icon" />
+        {{/if}}
+      {{else if this.socket.failed}}
+        <span>
+          {{t (if (is-team-a this.socket.turn) "gameOver.text.failTeamA" "gameOver.text.failTeamB")}}
+        </span>
+        {{t (if (not-eq this.user.team this.socket.turn) "gameOver.text.congratulations" "gameOver.text.condolences") name=this.user.name}}
+        <br />
+        {{#if (not-eq this.user.team this.socket.turn)}}
+          <FaIcon @icon="trophy" @size="4x" local-class="icon party" />
+        {{else}}
+          <FaIcon @icon="skull" @size="4x" local-class="icon" />
+        {{/if}}
       {{/if}}
     </p>
+  </Layout::Panel>
 
-    <p local-class="actions">
-      <Ui::Button @style="primary">
+  <Layout::Panel @title={{t "gameOver.text.stats"}}>
+    {{#each this.stats as |stat|}}
+      <h3 local-class="hstats">
+        {{t stat.translation}}
+      </h3>
+
+      {{! template-lint-disable css-modules/no-class }}
+      <ul local-class="list" class={{stat.localClass}}>
+        {{#each stat.cards as |card|}}
+          <li
+            local-class="word {{
+              if (is-uncovered card.state) "uncovered" "covered"
+            }}"
+          >
+            {{card.word}}
+          </li>
+        {{/each}}
+      </ul>
+    {{/each}}
+  </Layout::Panel>
+
+  <Layout::Panel>
+    <p local-class="actions" >
+      <Ui::Button @style="primary" @onClick={{this.doReset}}>
         {{t "gameOver.action.newGame"}}
       </Ui::Button>
-      <Ui::Button>
+
+      <Ui::Button @onClick={{this.doExit}}>
         {{t "gameOver.action.exit"}}
       </Ui::Button>
 
-      <Ui::Button @style="link" @onClick={{this.undo}}>Undo</Ui::Button>
+      <Ui::Button @style="link" @onClick={{this.undo}}>
+        Undo
+      </Ui::Button>
     </p>
-  {{/if}}
-</Layout::Panel>
+  </Layout::Panel>
 
-
-
-{{outlet}}
+  {{outlet}}
+</section>

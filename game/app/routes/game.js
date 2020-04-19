@@ -19,22 +19,16 @@ export default class GameRoute extends Route {
         return;
       }
 
-      if (this.socket.cards.length < 0) {
-        this.replaceWith('game.index');
-
-        return;
-      } else {
-        this.replaceWith('game.lobby');
-
-        return;
-      }
+      this.replaceWith(
+        this.socket.cards.length > 0 ? 'game.index' : 'game.lobby'
+      );
     };
 
     this.socket.subscribe('room.sync', this._onRoomSync);
   }
 
   deactivate() {
-    this.controller.isLoading = false;
+    console.log('deactivate');
 
     this.socket.unsubscribe('room.sync', this._onRoomSync);
   }

@@ -14,8 +14,16 @@
 
 .subtitle {
   width: 100%;
-  max-width: 32rem;
-  margin: calc(-1 * var(--spacing-xl)) auto var(--spacing-xl);
+  max-width: 24rem;
+  margin: calc(-1 * var(--spacing-lg)) auto var(--spacing-xl);
   text-align: center;
-  color: var(--metal-2);
+  color: var(--metal-3);
+}
+
+.team-a {
+  color: var(--heat-4);
+}
+
+.team-b {
+  color: var(--cold-4);
 }

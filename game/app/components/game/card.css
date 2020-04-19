@@ -1,9 +1,7 @@
 .card {
   display: block;
   position: relative;
-  padding-bottom: calc(9 / 16 * 100%);
-  font-size: 1.25rem;
-  font-weight: 700 !important;
+  padding-bottom: calc(40%);
   border: 4px solid var(--metal-3);
   background: var(--metal-2);
   color: var(--metal-8);
@@ -31,7 +29,12 @@
 
 .card.covered:not(.lead):hover {
   background: var(--metal-1);
-  border-color: vaR(--metal-2);
+  border-color: var(--metal-2);
+}
+
+.card.covered:not(.lead):disabled:hover {
+  background: var(--metal-2);
+  border-color: var(--metal-3);
 }
 
 .type-team-a {
@@ -176,5 +179,10 @@
 }
 
 .word {
+  font-size: 1rem;
+  font-weight: 700 !important;
   letter-spacing: 0.025rem;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  hyphens: auto;
 }

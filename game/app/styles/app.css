@@ -1,3 +1,20 @@
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url('/assets/Inter.var.woff2?v=3.13') format('woff2');
+}
+@font-face {
+  font-family: 'Inter var';
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+  font-named-instance: 'Italic';
+  src: url('/assets/Inter-italic.var.woff2?v=3.13') format('woff2');
+}
+
 :root {
   --metal-1: #fff;
   --metal-2: #dbe0e7;
@@ -62,13 +79,12 @@
     calc(-1 * var(--spacing-sm)) var(--metal-8);
 }
 
-@import-sanitize;
+/* @import-sanitize; */
 
 *,
 *:before,
 *:after {
   box-sizing: border-box;
-  font-family: inherit;
 }
 
 html,
@@ -78,8 +94,13 @@ body {
   border: 0;
   background: var(--metal-6);
   color: var(--metal-1);
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+}
+
+html,
+body,
+* {
+  font-family: 'Inter var', system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
 body {
@@ -101,4 +122,32 @@ body {
 
 body > * {
   width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+  margin: 0;
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h4 + *,
+h5 + *,
+h6 + *,
+p + *,
+ul + * {
+  margin-top: var(--spacing-md);
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }

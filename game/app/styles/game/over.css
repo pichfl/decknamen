@@ -1,3 +1,12 @@
+.end {
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.end > * + * {
+  margin-top: var(--spacing-lg);
+}
+
 .message {
   margin: var(--spacing-xl);
   font-size: 1.5rem;
@@ -12,13 +21,77 @@
   margin-top: var(--spacing-md);
 }
 
-.title {
-}
-
-.title.team-a span {
+.team-a span {
   color: var(--heat-4);
 }
 
-.title.team-b span {
+.team-b span {
   color: var(--cold-4);
+}
+
+.icon {
+  margin-top: var(--spacing-xl);
+  color: var(--metal-1);
+}
+
+.icon.party {
+  animation: party 2s linear infinite;
+}
+
+.hstats + * {
+  margin-top: var(--spacing-sm);
+}
+
+.list {
+  line-height: var(--spacing-lg);
+}
+
+.word {
+  display: inline-block;
+  margin: 0 0 var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--spacing-xs);
+  background: var(--metal-4);
+  color: var(--metal-8);
+}
+
+.team-a .uncovered {
+  background: var(--heat-4);
+}
+
+.team-b .uncovered {
+  background: var(--cold-4);
+}
+
+.bystander .uncovered {
+  background: var(--metal-1);
+}
+
+.fail .word {
+  background: var(--metal-8);
+  color: var(--metal-1);
+}
+
+@keyframes party {
+  0%,
+  100% {
+    color: var(--cold-3);
+    transform: rotate(0);
+  }
+  20% {
+    color: var(--heat-3);
+    transform: rotate(-3deg);
+  }
+  40% {
+    color: var(--gold-3);
+    transform: rotate(5deg);
+  }
+  60% {
+    color: var(--grass-3);
+    transform: rotate(-5deg);
+  }
+  80% {
+    color: var(--magic-3);
+    transform: rotate(3deg);
+  }
 }

@@ -1,7 +1,7 @@
 <p>
   {{#if (eq @type "text")}}
     {{#if @label}}
-      <label for={{this.elementId}}>
+      <label local-class="label" for={{this.elementId}}>
         {{@label}}
       </label>
     {{/if}}

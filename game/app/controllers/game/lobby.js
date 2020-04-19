@@ -124,7 +124,9 @@ export default class GameLobbyController extends Controller {
     const words = (
       [...event.target.elements].find((element) => element.type === 'textarea')
         ?.value || ''
-    ).split(',');
+    )
+      .split(',')
+      .map((word) => word.trim());
 
     await this.socket.startGame(words);
 

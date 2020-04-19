@@ -13,6 +13,7 @@ module.exports = function (defaults) {
         require('autoprefixer'),
         require('postcss-preset-env'),
       ],
+      headerModules: ['tix/styles/app.css'],
     },
   });
 
