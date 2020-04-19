@@ -28,7 +28,7 @@ gameLobby:
 gamePlay:
   title: 'Team {team} ist dran'
   action:
-    skip: Passen
+    skip: Weiter
     end: Abbrechen
     confirmEnd: Bist du dir sicher, dass du das Spiel abbrechen willst?
 

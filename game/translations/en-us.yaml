@@ -28,7 +28,7 @@ gameLobby:
 gamePlay:
   title: '{team} team’s turn'
   action:
-    skip: Skip turn
+    skip: End turn
     end: Throw game
     confirmEnd: Are you sure you want throw the game?
 
