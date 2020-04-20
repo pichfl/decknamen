@@ -31,6 +31,6 @@ export default class GameIndexController extends Controller {
       return;
     }
 
-    await this.socket.endGame();
+    await this.socket.reset();
   }
 }

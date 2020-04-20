@@ -29,7 +29,6 @@ export default class SocketService extends Service {
       words: payload.words || '',
       cards: payload.cards ? payload.cards : this.current?.cards || undefined,
       turn: payload.turn !== undefined ? payload.turn : undefined,
-      over: payload.over !== undefined ? payload.over : undefined,
     };
 
     const { data } = yield this.emit('room.sync', {
@@ -104,7 +103,7 @@ export default class SocketService extends Service {
   get over() {
     return (
       this.cards.length > 0 &&
-      (this.current.over || this.failed || this.winner !== undefined || false)
+      (this.failed || this.winner !== undefined || false)
     );
   }
 
@@ -285,15 +284,15 @@ export default class SocketService extends Service {
     });
   }
 
-  async endGame() {
-    await this.syncTask.perform({
-      over: true,
-    });
-  }
-
   async reset() {
     await this.syncTask.perform({
-      over: false,
+      players: Object.values(this.players).reduce(
+        (acc, player) => ({
+          ...acc,
+          [player.id]: { ...player, lead: false, team: undefined },
+        }),
+        {}
+      ),
       turn: undefined,
       cards: [],
       words: '',
