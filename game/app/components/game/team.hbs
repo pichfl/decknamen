@@ -1,38 +1,23 @@
 <aside ...attributes local-class="bar">
-  <div local-class="team">
-    <h3 local-class="headline team-a">
-      {{t "Teams.teamA"}}
-    </h3>
+  {{#each this.teamList as |team|}}
+    <div local-class="team">
+      {{! template-lint-disable css-modules/no-class }}
+      <h3 local-class="headline" class={{team.className}}>
+        {{t team.headline}}
+      </h3>
 
-    <ul local-class="list">
-      {{#each this.teamA as |player|}}
-        <li>
-          {{#if player.lead}}
-            <FaIcon @icon="user-tie" />
-          {{/if}}
-          {{player.name}}
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-
-  <div local-class="team">
-    <h3 local-class="headline team-b">
-      {{t "Teams.teamB"}}
-    </h3>
-
-    <ul local-class="list">
-      {{#each this.teamB as |player|}}
-        <li>
-          {{#if player.lead}}
-            <FaIcon @icon="user-tie" />
-          {{/if}}
-
-          {{player.name}}
-        </li>
-      {{/each}}
-    </ul>
-  </div>
+      <ul local-class="list">
+        {{#each team.players as |player|}}
+          <li>
+            {{#if player.lead}}
+              <FaIcon @icon="user-tie" />
+            {{/if}}
+            {{player.name}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/each}}
 
   {{yield}}
 </aside>

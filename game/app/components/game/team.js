@@ -1,38 +1,37 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { TEAMS } from 'game/utils/enums';
+import { sortBy } from 'lodash-es';
+import styles from './team.css';
 
 const { TEAM_A, TEAM_B } = TEAMS;
 
-const teamSorter = (a, b) => {
-  if (a.lead) {
-    return -1;
-  }
-
-  if (a.name > b.name) {
-    return -1;
-  }
-
-  if (a.name < b.name) {
-    return 1;
-  }
-
-  return 0;
-};
+const sortPlayers = (players, team) =>
+  sortBy(
+    Object.values(players).filter((player) => player.team === team),
+    ['lead', 'name']
+  );
 
 export default class GameTeamComponent extends Component {
   @service user;
   @service socket;
 
-  get teamA() {
-    return Object.values(this.socket.players)
-      .filter((player) => player.team === TEAM_A)
-      .sort(teamSorter);
-  }
+  get teamList() {
+    const teamA = {
+      headline: 'Teams.teamA',
+      players: sortPlayers(this.socket.players, TEAM_A),
+      className: styles['team-a'],
+    };
+    const teamB = {
+      headline: 'Teams.teamB',
+      players: sortPlayers(this.socket.players, TEAM_B),
+      className: styles['team-b'],
+    };
 
-  get teamB() {
-    return Object.values(this.socket.players)
-      .filter((player) => player.team === TEAM_B)
-      .sort(teamSorter);
+    if (this.socket.totalCardsTeamA < this.socket.totalCardsTeamB) {
+      return [teamB, teamA];
+    }
+
+    return [teamA, teamB];
   }
 }
