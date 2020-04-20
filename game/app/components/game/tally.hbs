@@ -5,6 +5,11 @@
       t
       "gamePlay.title"
       team=(if (is-team-a this.socket.turn) (t "Teams.teamA") (t "Teams.teamB"))
+      stats=(t
+        "GameTally.text.stats"
+        current=this.socket.uncoveredCards
+        total=this.socket.totalCards
+      )
     }}
     @icon={{
       if (eq this.user.team this.socket.turn) "play-circle" "pause-circle"
@@ -24,15 +29,6 @@
         {{this.user.name}}
       </strong>
     </p>
-
-    <strong>
-      {{
-        t
-        "GameTally.text.stats"
-        current=this.socket.uncoveredCards
-        total=this.socket.totalCards
-      }}
-    </strong>
 
     <p local-class="actions">
       {{yield}}

@@ -1,17 +1,16 @@
 module.exports = () => ({
-  'pro-duotone-svg-icons': [
+  'free-solid-svg-icons': [
     'crown',
-    'exchange',
+    'exchange-alt',
     'heart-broken',
-    'level-down',
+    'level-down-alt',
     'pause-circle',
-    'pencil',
+    'pencil-alt',
     'play-circle',
     'save',
     'skull',
-    'spinner-third',
+    'circle-notch',
     'trophy',
-    'user-edit',
     'user-tie',
   ],
 });

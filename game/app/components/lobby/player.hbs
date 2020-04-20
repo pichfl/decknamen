@@ -24,7 +24,10 @@
 
       {{#if (eq @player.id this.user.id)}}
         <Ui::Button @style="link" @onClick={{fn (mut this.isEditMode) true}}>
-          <FaIcon @icon="pencil" @title={{t "LobbyPlayer.action.changeName"}} />
+          <FaIcon
+            @icon="pencil-alt"
+            @title={{t "LobbyPlayer.action.changeName"}}
+          />
         </Ui::Button>
       {{/if}}
     </div>
@@ -64,7 +67,7 @@
               @onClick={{fn this.updateUser (hash team=@otherTeam)}}
               title={{t "LobbyPlayer.action.switchTeam"}}
             >
-              <FaIcon @icon="exchange" @rotation={{90}} />
+              <FaIcon @icon="exchange-alt" @rotation={{90}} />
             </Ui::Button>
           {{else}}
             <Ui::Button
@@ -72,7 +75,7 @@
               @onClick={{fn this.updateUser (hash lead=false)}}
               title={{t "LobbyPlayer.action.demote"}}
             >
-              <FaIcon @icon="level-down" />
+              <FaIcon @icon="level-down-alt" />
             </Ui::Button>
           {{/if}}
         {{/if}}
