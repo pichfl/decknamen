@@ -4,6 +4,12 @@
   margin-top: var(--spacing-lg) !important;
   margin-bottom: var(--spacing-md);
   max-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teams {
+  display: flex;
 }
 
 .headline {

@@ -29,8 +29,8 @@ gamePlay:
   title: 'Team {team} ist dran {stats}'
   action:
     skip: Weiter
-    end: Spiel Abbrechen
-    confirmEnd: Bist du dir sicher, dass du das Spiel abbrechen willst?
+    end: Spiel Abbrechen…
+    confirmEnd: Bist du dir sicher, dass du das Spiel abbrechen und zur Lobby zurückkehren willst?
 
 gameOver:
   title:
@@ -49,6 +49,13 @@ gameOver:
   action:
     newGame: Neues Spiel mit den gleichen Mitspielern
     exit: Zurück zum Start
+
+gameInProgress:
+  title: Nicht stören
+  text:
+    message: Du kannst leider keinem laufenden Spiel beitreten.
+  action:
+    back: Zurück zum Start
 
 LobbyPlayer:
   text:

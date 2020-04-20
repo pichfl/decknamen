@@ -45,6 +45,10 @@
   color: var(--metal-2);
 }
 
+.link:hover {
+  text-decoration: underline;
+}
+
 .button:disabled {
   background: var(--metal-6);
   border-color: var(--metal-5);

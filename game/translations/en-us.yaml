@@ -29,8 +29,8 @@ gamePlay:
   title: '{team} team’s turn {stats}'
   action:
     skip: End turn
-    end: Throw game
-    confirmEnd: Are you sure you want throw the game?
+    end: Cancel game…
+    confirmEnd: Are you sure you want to cancel the game and go back to the lobby?
 
 gameOver:
   title:
@@ -49,6 +49,13 @@ gameOver:
   action:
     newGame: New game with same players
     exit: Exit to start
+
+gameInProgress:
+  title: Do not disturb
+  text:
+    message: You can't join a running game.
+  action:
+    back: Back to start
 
 LobbyPlayer:
   text:

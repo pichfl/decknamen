@@ -21,7 +21,7 @@
 }
 
 .tally .bar {
-  margin-top: calc(-1 * var(--spacing-2xl) + var(--spacing-sm));
+  margin-top: calc(-1 * var(--spacing-2xl));
   margin-bottom: var(--spacing-md);
   max-width: 100%;
 }

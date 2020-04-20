@@ -21,15 +21,6 @@
     >
       {{t "gamePlay.action.skip"}}
     </Ui::Button>
-
-    {{#if this.user.isLead}}
-      <Ui::Button
-        @disabled={{not-eq this.socket.turn this.user.team}}
-        @onClick={{this.doEndGame}}
-      >
-        {{t "gamePlay.action.end"}}
-      </Ui::Button>
-    {{/if}}
   </Game::Tally>
 
   <ul local-class="cards">
@@ -40,7 +31,18 @@
     {{/each}}
   </ul>
 
-  <Game::Team />
+  <Game::Team>
+    {{#if this.user.isLead}}
+      <Ui::Button
+        @disabled={{not-eq this.socket.turn this.user.team}}
+        @onClick={{this.doEndGame}}
+        @style="link"
+        local-class="abort"
+      >
+        {{t "gamePlay.action.end"}}
+      </Ui::Button>
+    {{/if}}
+  </Game::Team>
 </div>
 
 {{outlet}}

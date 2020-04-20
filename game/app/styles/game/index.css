@@ -20,6 +20,10 @@
   padding: 1%;
 }
 
+.abort {
+  color: var(--metal-4);
+}
+
 @media (max-width: 48rem) {
   .cards > * {
     width: 33%;

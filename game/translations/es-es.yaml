@@ -29,7 +29,7 @@ gamePlay:
   title: 'Turno del equipo {team} {stats}'
   action:
     skip: Finalizar turno
-    end: Rendirse
+    end: Rendirse…
     confirmEnd: Estás seguro que quieres rendirte? tu equipo perderá el juego
 
 gameOver:
@@ -49,6 +49,13 @@ gameOver:
   action:
     newGame: Nuevo juego con los mismos jugadores
     exit: Salir
+
+gameInProgress:
+  title: No molestar
+  text:
+    message: No puedes unirte a un juego en progreso.
+  action:
+    back: Regresar al inicio
 
 LobbyPlayer:
   text:
