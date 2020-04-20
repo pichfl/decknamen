@@ -32,7 +32,7 @@
   border-color: var(--metal-2);
 }
 
-.card.covered:not(.lead):disabled:hover {
+.card.covered:not(.lead):not(.selected):disabled:hover {
   background: var(--metal-2);
   border-color: var(--metal-3);
 }
