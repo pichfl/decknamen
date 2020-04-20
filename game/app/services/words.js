@@ -20,7 +20,7 @@ export default class WordsService extends Service {
             .toLowerCase()
             .split(' ')
             .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
-            .join()
+            .join(' ')
         )
         .join(', '),
     }));
