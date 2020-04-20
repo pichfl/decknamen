@@ -4,6 +4,11 @@
     team=(t
       (if (eq this.socket.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")
     )
+    stats=(t
+      "GameTally.text.stats"
+      current=this.socket.uncoveredCards
+      total=this.socket.totalCards
+    )
   )
 }}
 

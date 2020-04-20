@@ -26,7 +26,7 @@ gameLobby:
     selectWords: Begriffe auswählen
 
 gamePlay:
-  title: 'Team {team} ist dran'
+  title: 'Team {team} ist dran {stats}'
   action:
     skip: Weiter
     end: Spiel Abbrechen
@@ -62,7 +62,7 @@ LobbyPlayer:
 
 GameTally:
   text:
-    stats: '{current}/{total} Begriffe gefunden'
+    stats: '{current}/{total}'
 
 Teams:
   teamA: Rot

@@ -26,7 +26,7 @@ gameLobby:
     selectWords: Select words
 
 gamePlay:
-  title: '{team} team’s turn'
+  title: '{team} team’s turn {stats}'
   action:
     skip: End turn
     end: Throw game
@@ -62,7 +62,7 @@ LobbyPlayer:
 
 GameTally:
   text:
-    stats: '{current}/{total} targets found'
+    stats: '{current}/{total}'
 
 Teams:
   teamA: Red

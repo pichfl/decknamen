@@ -26,7 +26,7 @@ gameLobby:
     selectWords: Selecciona palabras
 
 gamePlay:
-  title: 'Turno del equipo {team}'
+  title: 'Turno del equipo {team} {stats}'
   action:
     skip: Finalizar turno
     end: Rendirse
@@ -62,7 +62,7 @@ LobbyPlayer:
 
 GameTally:
   text:
-    stats: '{current}/{total} objetivos encontrados'
+    stats: '{current}/{total}'
 
 Teams:
   teamA: Rojo
