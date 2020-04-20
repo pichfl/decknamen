@@ -19,7 +19,7 @@ export default class GameIndexRoute extends Route {
     }
 
     if (this.socket.players[this.user.id].team === undefined) {
-      this.transitionTo('index');
+      this.transitionTo('game.in-progress');
 
       return;
     }

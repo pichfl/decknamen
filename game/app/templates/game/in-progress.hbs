@@ -1,0 +1,15 @@
+{{title (t "gameInProgress.title")}}
+
+<Layout::Title @title={{t "gameInProgress.title"}} />
+
+<Layout::Panel>
+  <p>
+    {{t "gameInProgress.text.message"}}
+  </p>
+
+  <Ui::Button @route="index">
+    {{t "gameInProgress.action.back"}}
+  </Ui::Button>
+</Layout::Panel>
+
+{{outlet}}

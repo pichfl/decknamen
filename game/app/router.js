@@ -15,6 +15,7 @@ Router.map(function () {
     function () {
       this.route('lobby');
       this.route('over');
+      this.route('in-progress');
     }
   );
 });
