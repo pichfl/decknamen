@@ -29,7 +29,7 @@ gamePlay:
   title: 'Team {team} ist dran'
   action:
     skip: Weiter
-    end: Abbrechen
+    end: Spiel Abbrechen
     confirmEnd: Bist du dir sicher, dass du das Spiel abbrechen willst?
 
 gameOver:
