@@ -26,9 +26,8 @@
   justify-content: space-between;
 }
 
-.player > div:first-of-type {
-  width: 100%;
-  flex: 1 1 100%;
+.player > div {
+  display: flex;
 }
 
 .player + * {
