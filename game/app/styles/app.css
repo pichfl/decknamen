@@ -151,3 +151,8 @@ fieldset {
   padding: 0;
   border: 0;
 }
+
+:global(.ember-load-indicator) {
+  text-align: center;
+  color: var(--metal-3);
+}
