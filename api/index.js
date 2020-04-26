@@ -6,12 +6,18 @@ io.attach(process.env.PORT || 3000);
 let store = {};
 
 function mergeRoom(room = {}, data = {}) {
-  // do not accept changes to the players if cards were generated
-  if (data.words && data.cards) {
+  // ignore changes to the player list if the game has started
+  if (data.words || data.cards) {
     delete data.players;
   }
 
   const result = _.merge({}, room, data);
+
+  Object.keys(result.players).forEach((id) => {
+    if (result.players[id] === null) {
+      delete result.players[id];
+    }
+  });
 
   if (Array.isArray(data.cards)) {
     result.cards = data.cards;
@@ -45,7 +51,7 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('room.sync', ({ sender, room, data }, ack) => {
-    if (!sender || !room || room !== _room) {
+    if (!sender || sender !== _sender || !room || room !== _room) {
       return;
     }
 
@@ -56,8 +62,8 @@ io.on('connection', async (socket) => {
     ack({ id: room, data: store[room] });
   });
 
-  socket.on('room.delete', ({ sender, room, data }, ack) => {
-    if (!sender || !room || room !== _room) {
+  socket.on('room.delete', ({ sender, room }, ack) => {
+    if (!sender || sender !== _sender || !room || room !== _room) {
       return;
     }
 
@@ -68,15 +74,13 @@ io.on('connection', async (socket) => {
     ack({ id: room });
   });
 
-  socket.on('disconnect', () => {
-    if (!_sender || !store[_room] || store[_room].words || store[_room].cards) {
+  socket.on('room.sound', ({ sender, room, sprite }, ack) => {
+    if (!sender || sender !== _sender || !room || room !== _room) {
       return;
     }
 
-    if (store && store[_room] && store[_room].players) {
-      delete store[_room].players[_sender];
-    }
+    io.to(room).emit('room.sound', { sprite });
 
-    io.to(_room).emit('room.sync', store[_room]);
+    ack({ id: room, sprite });
   });
 });

@@ -7,6 +7,7 @@ import { action } from '@ember/object';
 export default class LobbyPlayerComponent extends Component {
   @service user;
   @service socket;
+  @service intl;
 
   @tracked isEditMode = false;
   @tracked isSaving = false;
@@ -34,5 +35,20 @@ export default class LobbyPlayerComponent extends Component {
   @action
   async updateUser(data) {
     await this.args.onUpdateUser(this.args.player, data);
+  }
+
+  @action
+  async kickPlayer(id) {
+    const confirmed = window.confirm(
+      this.intl.t('LobbyPlayer.action.confirmKick', {
+        name: this.socket.players[id].name,
+      })
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    await this.socket.kickPlayer(id);
   }
 }

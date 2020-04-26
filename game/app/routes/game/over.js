@@ -6,6 +6,10 @@ export default class GameOverRoute extends Route {
   @service socket;
 
   beforeModel() {
+    if (!this.socket.room) {
+      return;
+    }
+
     if (this.socket.over === true) {
       return;
     }

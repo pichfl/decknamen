@@ -1,5 +1,7 @@
 module.exports = () => ({
   'free-solid-svg-icons': [
+    'circle',
+    'circle-notch',
     'crown',
     'exchange-alt',
     'heart-broken',
@@ -9,7 +11,7 @@ module.exports = () => ({
     'play-circle',
     'save',
     'skull',
-    'circle-notch',
+    'times-circle',
     'trophy',
     'user-tie',
   ],

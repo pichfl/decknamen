@@ -66,6 +66,8 @@ LobbyPlayer:
     switchTeam: Switch team
     promote: Make lead
     demote: Make member
+    confirmKick: 'Are you sure you want to remove ${name} from this lobby?'
+    kick: Remove player
 
 GameTally:
   text:

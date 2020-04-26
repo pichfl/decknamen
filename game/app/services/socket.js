@@ -102,6 +102,7 @@ export default class SocketService extends Service {
 
   get over() {
     return (
+      !!this.room &&
       this.cards.length > 0 &&
       (this.failed || this.winner !== undefined || false)
     );
@@ -137,6 +138,14 @@ export default class SocketService extends Service {
     });
   }
 
+  async kickPlayer(playerId) {
+    const players = this.players;
+
+    players[playerId] = null;
+
+    return this.syncPlayers(players);
+  }
+
   async connect(room, player) {
     return new Promise((resolve) => {
       this.socket.open();
@@ -155,6 +164,14 @@ export default class SocketService extends Service {
         this.current = data;
 
         this.subscribe('room.sync', (data) => {
+          if (data.players[this.user.id] === undefined) {
+            this.current = {};
+            this.room = undefined;
+            this.router.transitionTo('index');
+
+            return;
+          }
+
           this.current = data;
         });
 

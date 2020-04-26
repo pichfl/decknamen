@@ -13,6 +13,10 @@ export default class GameRoute extends Route {
 
   activate() {
     this._onRoomSync = () => {
+      if (!this.socket.room) {
+        return;
+      }
+
       if (this.socket.over === true) {
         this.replaceWith('game.over');
 
@@ -28,8 +32,6 @@ export default class GameRoute extends Route {
   }
 
   deactivate() {
-    console.log('deactivate');
-
     this.socket.unsubscribe('room.sync', this._onRoomSync);
   }
 }

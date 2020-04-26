@@ -24,6 +24,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  margin-right: calc(-1 * var(--spacing-sm));
 }
 
 .player > div {
@@ -35,24 +36,34 @@
 }
 
 .leader {
-  position: absolute;
-  top: 50%;
-  left: calc(-1 * var(--spacing-sm));
   width: var(--spacing-xl);
   height: var(--spacing-xl);
-  transform: translate(-85%, -50%);
   background: var(--metal-2);
   color: var(--metal-8);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  margin-right: var(--spacing-sm);
+}
+
+.name {
+  display: flex;
+  align-items: center;
 }
 
 button.team-a {
   color: var(--heat-4);
 }
 
+.button-spacer {
+  width: calc(2.5 * var(--spacing-md));
+}
+
 button.team-b {
   color: var(--cold-4);
+}
+
+button.dim {
+  color: var(--metal-4);
 }

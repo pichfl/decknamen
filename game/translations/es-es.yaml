@@ -66,6 +66,8 @@ LobbyPlayer:
     switchTeam: Cambiar equipo
     promote: Promover a líder
     demote: Convertir a miembro
+    confirmKick: 'Estás seguro de remover {name} de esta sala'
+    kick: Botar jugador
 
 GameTally:
   text:

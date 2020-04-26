@@ -6,6 +6,10 @@ export default class GameIndexRoute extends Route {
   @service user;
 
   beforeModel() {
+    if (!this.socket.room) {
+      return;
+    }
+
     if (this.socket.cards.length === 0) {
       this.replaceWith('game.lobby');
 

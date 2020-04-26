@@ -66,6 +66,8 @@ LobbyPlayer:
     switchTeam: Team wechseln
     promote: Zur Leiterin befördern
     demote: Zur Mitspielerin machen
+    confirmKick: 'Bist du dir sicher, dass du {name} aus der Lobby entfernen willst?'
+    kick: Mitspielerin entfernen
 
 GameTally:
   text:
