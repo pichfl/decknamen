@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 import { sampleSize, difference, shuffle } from 'lodash-es';
 import { CARD_STATES, CARD_TYPES } from '../utils/enums';
 
-const { COVERED, UNCOVERED } = CARD_STATES;
+const { UNCOVERED } = CARD_STATES;
 const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 
 export default class SocketService extends Service {
@@ -16,6 +16,7 @@ export default class SocketService extends Service {
 
   @service user;
   @service router;
+  @service sound;
 
   @tracked isConnected = false;
   @tracked room = undefined;
@@ -181,6 +182,10 @@ export default class SocketService extends Service {
           this.router.transitionTo('index');
         });
 
+        this.subscribe('room.sound', ({ sprite }) => {
+          this.sound.play(sprite);
+        });
+
         this.isConnected = true;
 
         resolve();
@@ -266,6 +271,8 @@ export default class SocketService extends Service {
       }
 
       if (card.type === ABORT) {
+        this.playSound('fail');
+
         return {
           ...oldCard,
           state: UNCOVERED,
@@ -276,11 +283,15 @@ export default class SocketService extends Service {
 
       if (card.type === BYSTANDER || card.type !== turn) {
         turn = turn === TEAM_A ? TEAM_B : TEAM_A;
+
+        this.playSound('fail');
+      } else {
+        this.playSound('success');
       }
 
       return {
         ...oldCard,
-        state: oldCard.state === COVERED ? UNCOVERED : COVERED,
+        state: UNCOVERED,
         selected: false,
         turn,
       };
@@ -318,6 +329,11 @@ export default class SocketService extends Service {
 
   async exit() {
     await this.emit('room.delete', { room: this.room });
+  }
+
+  playSound(sprite) {
+    this.sound.play(sprite);
+    this.emit('room.sound', { room: this.room, sprite });
   }
 
   async emit(eventName, data) {

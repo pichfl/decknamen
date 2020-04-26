@@ -16,7 +16,7 @@ module.exports = function (defaults) {
       headerModules: ['tix/styles/app.css'],
     },
     fingerprint: {
-      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'json'],
+      extensions: ['js', 'css', 'png', 'jpg', 'gif', 'map', 'json', 'mp3'],
       generateAssetMap: true,
       fingerprintAssetMap: true,
     },
