@@ -5,10 +5,14 @@ io.attach(process.env.PORT || 3000);
 
 let store = {};
 
-function mergeRoom(room = {}, data = {}) {
+function mergeRoom(room = {}, data = {}, force = false) {
   // ignore changes to the player list if the game has started
-  if (data.words || data.cards) {
+  if (data.cards) {
     delete data.players;
+  }
+
+  if (force) {
+    return data;
   }
 
   const result = _.merge({}, room, data);
@@ -50,12 +54,12 @@ io.on('connection', async (socket) => {
     ack({ id: room, data: store[room] });
   });
 
-  socket.on('room.sync', ({ sender, room, data }, ack) => {
+  socket.on('room.sync', ({ sender, room, data, force }, ack) => {
     if (!sender || sender !== _sender || !room || room !== _room) {
       return;
     }
 
-    store[room] = mergeRoom(store[room], data);
+    store[room] = mergeRoom(store[room], data, force);
 
     io.to(room).emit('room.sync', store[room]);
 

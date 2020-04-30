@@ -22,19 +22,23 @@ export default class SocketService extends Service {
   @tracked room = undefined;
   @tracked current = {};
 
-  @task(function* (payload = {}) {
+  @task(function* (payload = {}, force = false) {
     const state = {
       players: {
         ...payload.players,
       },
       words: payload.words || '',
-      cards: payload.cards ? payload.cards : this.current?.cards || undefined,
+      cards:
+        payload.cards !== undefined
+          ? payload.cards
+          : this.current?.cards || undefined,
       turn: payload.turn !== undefined ? payload.turn : undefined,
     };
 
     const { data } = yield this.emit('room.sync', {
       room: this.room,
       data: state,
+      force,
     });
 
     this.current = data;
@@ -313,18 +317,18 @@ export default class SocketService extends Service {
   }
 
   async reset() {
-    await this.syncTask.perform({
-      players: Object.values(this.players).reduce(
-        (acc, player) => ({
-          ...acc,
-          [player.id]: { ...player, lead: false, team: undefined },
-        }),
-        {}
-      ),
-      turn: undefined,
-      cards: [],
-      words: '',
-    });
+    await this.syncTask.perform(
+      {
+        players: Object.values(this.players).reduce(
+          (acc, player) => ({
+            ...acc,
+            [player.id]: { ...player, lead: false, team: undefined },
+          }),
+          {}
+        ),
+      },
+      true
+    );
   }
 
   async exit() {

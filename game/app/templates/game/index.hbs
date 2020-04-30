@@ -34,7 +34,6 @@
   <Game::Team>
     {{#if this.user.isLead}}
       <Ui::Button
-        @disabled={{not-eq this.socket.turn this.user.team}}
         @onClick={{this.doEndGame}}
         @style="link"
         local-class="abort"
