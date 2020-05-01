@@ -6,7 +6,7 @@ import styles from './card.css';
 
 export default class GameCardComponent extends Component {
   @service user;
-  @service socket;
+  @service state;
 
   get state() {
     return this.args.card.state;
@@ -39,7 +39,7 @@ export default class GameCardComponent extends Component {
   }
 
   get isDisabled() {
-    if (this.user.team !== this.socket.turn) {
+    if (this.user.team !== this.state.turn) {
       return true;
     }
 

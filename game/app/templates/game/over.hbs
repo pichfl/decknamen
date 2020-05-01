@@ -3,19 +3,19 @@
 <section local-class="end">
   <Layout::Title
     @title={{this.pageTitle}}
-    local-class="title {{if (is-team-a this.socket.winner) "team-a"}} {{
-      if (is-team-b this.socket.winner) "team-b"
+    local-class="title {{if (is-team-a this.state.winner) "team-a"}} {{
+      if (is-team-b this.state.winner) "team-b"
     }}"
   />
 
   <Layout::Panel>
     <p
       local-class="message {{
-        if (is-team-a this.socket.turn) "team-a" "team-b"
+        if (is-team-a this.state.turn) "team-a" "team-b"
       }}"
     >
-      {{#if (not (is-empty this.socket.winner))}}
-        {{#if (eq this.user.team this.socket.winner)}}
+      {{#if (not (is-empty this.state.winner))}}
+        {{#if (eq this.user.team this.state.winner)}}
           {{t "gameOver.text.congratulations" name=this.user.name}}
           <br />
           <FaIcon @icon="trophy" @size="4x" local-class="icon party" />
@@ -24,12 +24,12 @@
           <br />
           <FaIcon @icon="heart-broken" @size="4x" local-class="icon" />
         {{/if}}
-      {{else if this.socket.failed}}
+      {{else if this.state.failed}}
         <span>
           {{
             t
             (if
-              (is-team-a this.socket.turn)
+              (is-team-a this.state.turn)
               "gameOver.text.failTeamA"
               "gameOver.text.failTeamB"
             )
@@ -37,14 +37,14 @@
         </span>
         {{t
           (if
-            (not-eq this.user.team this.socket.turn)
+            (not-eq this.user.team this.state.turn)
             "gameOver.text.congratulations"
             "gameOver.text.condolences"
           )
           name=this.user.name
         }}
         <br />
-        {{#if (not-eq this.user.team this.socket.turn)}}
+        {{#if (not-eq this.user.team this.state.turn)}}
           <FaIcon @icon="trophy" @size="4x" local-class="icon party" />
         {{else}}
           <FaIcon @icon="skull" @size="4x" local-class="icon" />

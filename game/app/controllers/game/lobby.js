@@ -6,6 +6,7 @@ import { TEAMS } from 'game/utils/enums';
 
 export default class GameLobbyController extends Controller {
   @service socket;
+  @service state;
   @service user;
   @service words;
 
@@ -16,7 +17,7 @@ export default class GameLobbyController extends Controller {
   TEAMS = TEAMS;
 
   get playersList() {
-    return Object.values(this.socket.players);
+    return Object.values(this.state.players);
   }
 
   get leadTeamA() {
@@ -55,14 +56,14 @@ export default class GameLobbyController extends Controller {
       !!this.leadTeamA &&
       !!this.leadTeamB &&
       this.user.isLead &&
-      this.socket.words !== ''
+      this.state.words !== ''
     );
   }
 
   @action
   async updateUser(user, newData, persist) {
     let target = newData;
-    const players = this.socket.players;
+    const players = this.state.players;
 
     if (persist && user.id === this.user.data.id) {
       this.user.data = {
@@ -77,40 +78,40 @@ export default class GameLobbyController extends Controller {
       set(players[user.id], key, target[key]);
     });
 
-    await this.socket.syncPlayers(players);
+    await this.state.syncPlayers(players);
   }
 
   @action
   async setTeam(player, team) {
     const players = {
-      ...this.socket.players,
+      ...this.state.players,
       [player.id]: {
         ...player,
         team,
       },
     };
 
-    await this.socket.syncPlayers(players);
+    await this.state.syncPlayers(players);
   }
 
   @action
   async toggleLead(player) {
     const players = {
-      ...this.socket.players,
+      ...this.state.players,
       [player.id]: {
         ...player,
         lead: !player.lead,
       },
     };
 
-    await this.socket.syncPlayers(players);
+    await this.state.syncPlayers(players);
   }
 
   @action
   async selectWords(value) {
     this.isSelectingWords = true;
 
-    await this.socket.selectWords(value);
+    await this.state.selectWords(value);
 
     this.isSelectingWords = false;
   }
@@ -128,7 +129,7 @@ export default class GameLobbyController extends Controller {
       .split(',')
       .map((word) => word.trim());
 
-    await this.socket.startGame(words);
+    await this.state.startGame(words);
 
     this.transitionToRoute('game.index');
   }

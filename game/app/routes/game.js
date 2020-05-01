@@ -3,10 +3,11 @@ import { inject as service } from '@ember/service';
 
 export default class GameRoute extends Route {
   @service socket;
+  @service state;
   @service user;
 
   async model({ room_id }) {
-    await this.socket.connect(room_id, {
+    await this.state.connect(room_id, {
       ...this.user.data,
     });
   }
@@ -17,14 +18,14 @@ export default class GameRoute extends Route {
         return;
       }
 
-      if (this.socket.over === true) {
+      if (this.state.over === true) {
         this.replaceWith('game.over');
 
         return;
       }
 
       this.replaceWith(
-        this.socket.cards.length > 0 ? 'game.index' : 'game.lobby'
+        this.state.cards.length > 0 ? 'game.index' : 'game.lobby'
       );
     };
 

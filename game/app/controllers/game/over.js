@@ -10,7 +10,7 @@ const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 const { COVERED } = CARD_STATES;
 
 export default class GameOverController extends Controller {
-  @service socket;
+  @service state;
   @service user;
   @service intl;
 
@@ -19,10 +19,10 @@ export default class GameOverController extends Controller {
   }
 
   get documentTitle() {
-    if (this.socket.winner !== undefined) {
+    if (this.state.winner !== undefined) {
       return this.intl.t('gameOver.title.winner', {
         team: this.intl.t(
-          `Teams.${this.socket.winnerTeamA ? 'teamA' : 'teamB'}`
+          `Teams.${this.state.winnerTeamA ? 'teamA' : 'teamB'}`
         ),
       });
     }
@@ -31,11 +31,11 @@ export default class GameOverController extends Controller {
   }
 
   get pageTitle() {
-    if (this.socket.winner !== undefined) {
+    if (this.state.winner !== undefined) {
       return htmlSafe(
         this.intl.t('gameOver.title.winner', {
           team: `<span>${this.intl.t(
-            `Teams.${this.socket.winnerTeamA ? 'teamA' : 'teamB'}`
+            `Teams.${this.state.winnerTeamA ? 'teamA' : 'teamB'}`
           )}</span>`,
         })
       );
@@ -45,7 +45,7 @@ export default class GameOverController extends Controller {
   }
 
   get stats() {
-    const { teamA, teamB, fail, bystander } = this.socket.cards.reduce(
+    const { teamA, teamB, fail, bystander } = this.state.cards.reduce(
       (acc, card) => {
         if (card.type === TEAM_A) {
           acc.teamA.push(card);
@@ -99,17 +99,17 @@ export default class GameOverController extends Controller {
 
   @action
   doExit() {
-    this.socket.exit();
+    this.state.exit();
   }
 
   @action
   doReset() {
-    this.socket.reset();
+    this.state.reset();
   }
 
   @action
   undo() {
-    const cards = this.socket.cards;
+    const cards = this.state.cards;
     const abort = cards.find((card) => card.type === 3);
 
     abort.state = 0;
@@ -118,7 +118,7 @@ export default class GameOverController extends Controller {
       card.state = COVERED;
     });
 
-    this.socket.syncTask.perform({
+    this.state.syncTask.perform({
       cards,
       over: false,
     });

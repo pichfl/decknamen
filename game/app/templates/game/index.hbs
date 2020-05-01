@@ -2,12 +2,12 @@
   (t
     "gamePlay.title"
     team=(t
-      (if (eq this.socket.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")
+      (if (eq this.state.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")
     )
     stats=(t
       "GameTally.text.stats"
-      current=this.socket.uncoveredCards
-      total=this.socket.totalCards
+      current=this.state.uncoveredCards
+      total=this.state.totalCards
     )
   )
 }}
@@ -16,7 +16,7 @@
   <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}}>
     <Ui::Button
       @style="primary"
-      @disabled={{not-eq this.socket.turn this.user.team}}
+      @disabled={{not-eq this.state.turn this.user.team}}
       @onClick={{this.doEndTurn}}
     >
       {{t "gamePlay.action.skip"}}
@@ -24,7 +24,7 @@
   </Game::Tally>
 
   <ul local-class="cards">
-    {{#each this.socket.cards as |card|}}
+    {{#each this.state.cards as |card|}}
       <li>
         <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
       </li>

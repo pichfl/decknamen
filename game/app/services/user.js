@@ -5,10 +5,10 @@ import { TEAMS } from 'game/utils/enums';
 const { TEAM_A, TEAM_B } = TEAMS;
 
 export default class UserService extends Service {
-  @service socket;
+  @service state;
 
   get player() {
-    return this.socket.players[this.id];
+    return this.state.players[this.id];
   }
 
   get isLead() {

@@ -14,21 +14,21 @@ const sortPlayers = (players, team) =>
 
 export default class GameTeamComponent extends Component {
   @service user;
-  @service socket;
+  @service state;
 
   get teamList() {
     const teamA = {
       headline: 'Teams.teamA',
-      players: sortPlayers(this.socket.players, TEAM_A),
+      players: sortPlayers(this.state.players, TEAM_A),
       className: styles['team-a'],
     };
     const teamB = {
       headline: 'Teams.teamB',
-      players: sortPlayers(this.socket.players, TEAM_B),
+      players: sortPlayers(this.state.players, TEAM_B),
       className: styles['team-b'],
     };
 
-    if (this.socket.totalCardsTeamA < this.socket.totalCardsTeamB) {
+    if (this.state.totalCardsTeamA < this.state.totalCardsTeamB) {
       return [teamB, teamA];
     }
 

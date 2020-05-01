@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default class GameIndexRoute extends Route {
   @service socket;
+  @service state;
   @service user;
 
   beforeModel() {
@@ -10,19 +11,19 @@ export default class GameIndexRoute extends Route {
       return;
     }
 
-    if (this.socket.cards.length === 0) {
+    if (this.state.cards.length === 0) {
       this.replaceWith('game.lobby');
 
       return;
     }
 
-    if (this.socket.over === true) {
+    if (this.state.over === true) {
       this.replaceWith('game.over');
 
       return;
     }
 
-    if (this.socket.players[this.user.id].team === undefined) {
+    if (this.state.players[this.user.id].team === undefined) {
       this.transitionTo('game.in-progress');
 
       return;

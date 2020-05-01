@@ -36,7 +36,7 @@
       {{/if}}
     </div>
 
-    {{#if (not this.socket.cards)}}
+    {{#if (not this.state.cards)}}
       <div>
         {{#if (is-empty @player.team)}}
           <Ui::Button

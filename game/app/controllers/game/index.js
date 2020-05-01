@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default class GameIndexController extends Controller {
-  @service socket;
+  @service state;
   @service user;
   @service intl;
 
@@ -15,12 +15,12 @@ export default class GameIndexController extends Controller {
 
   @action
   async onCardChange(card) {
-    await this.socket.changeCard(card);
+    await this.state.changeCard(card);
   }
 
   @action
   async doEndTurn() {
-    await this.socket.endTurn();
+    await this.state.endTurn();
   }
 
   @action
@@ -31,6 +31,6 @@ export default class GameIndexController extends Controller {
       return;
     }
 
-    await this.socket.reset();
+    await this.state.reset();
   }
 }

@@ -72,7 +72,7 @@
             {{#each this.words.list as |list|}}
               <option
                 value={{list.id}}
-                selected={{eq list.id this.socket.words}}
+                selected={{eq list.id this.state.words}}
               >
                 {{list.title}} ({{
                   t "gameLobby.text.wordCount" count=list.list.length
@@ -82,23 +82,23 @@
           </Ui::Input>
         {{/if}}
 
-        {{#if this.socket.words}}
+        {{#if this.state.words}}
           <Ui::Input
             @type="textarea"
-            @value={{get (get this.words.byId this.socket.words) "plain"}}
+            @value={{get (get this.words.byId this.state.words) "plain"}}
           />
         {{/if}}
       </fieldset>
     </Layout::Panel>
-  {{else if this.socket.words}}
+  {{else if this.state.words}}
     <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
       <p>
-        {{get (get this.words.byId this.socket.words) "title"}}
+        {{get (get this.words.byId this.state.words) "title"}}
         <span>
           {{
             t
             "gameLobby.text.wordCount"
-            count=(get (get this.words.byId this.socket.words) "list.length")
+            count=(get (get this.words.byId this.state.words) "list.length")
           }}
         </span>
       </p>
@@ -111,7 +111,7 @@
         @style="primary"
         @type="submit"
         @disabled={{not this.canContinue}}
-        @isLoading={{or this.isLoading this.socket.cards}}
+        @isLoading={{or this.isLoading this.state.cards}}
       >
         {{t "gameLobby.action.start"}}
       </Ui::Button>
