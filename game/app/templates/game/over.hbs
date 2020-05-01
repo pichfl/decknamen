@@ -10,9 +10,7 @@
 
   <Layout::Panel>
     <p
-      local-class="message {{
-        if (is-team-a this.state.turn) "team-a" "team-b"
-      }}"
+      local-class="message {{if (is-team-a this.state.turn) "team-a" "team-b"}}"
     >
       {{#if (not (is-empty this.state.winner))}}
         {{#if (eq this.user.team this.state.winner)}}

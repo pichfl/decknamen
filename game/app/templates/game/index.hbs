@@ -33,11 +33,7 @@
 
   <Game::Team>
     {{#if this.user.isLead}}
-      <Ui::Button
-        @onClick={{this.doEndGame}}
-        @style="link"
-        local-class="abort"
-      >
+      <Ui::Button @onClick={{this.doEndGame}} @style="link" local-class="abort">
         {{t "gamePlay.action.end"}}
       </Ui::Button>
     {{/if}}
