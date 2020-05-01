@@ -20,8 +20,12 @@ gameLobby:
     headlineWaiting: Waiting List
     headlineWords: Words
     wordCount: '{count} words'
+    share: 'To share this lobby with others send them the URL of this page:'
+    shared: Join my game of Decknamen
   action:
     start: Start Game
+    randomize: Randomize teams & players
+    share: Invite others
   placeholder:
     selectWords: Select words
 

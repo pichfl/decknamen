@@ -15,11 +15,7 @@ export default class ApplicationRoute extends Route {
   }
 
   async loadAndSetLanguage() {
-    let code = `${window.navigator.language}`.toLowerCase();
-
-    if (code.length === 2) {
-      code = `${code}-${code}`.toLowerCase();
-    }
+    let code = `${window.navigator.language}`.toLowerCase().substr(0, 2);
 
     if (!ENV.APP.locales.includes(code)) {
       code = ENV.APP.locales[0];

@@ -20,8 +20,12 @@ gameLobby:
     headlineWaiting: Warteliste
     headlineWords: Begriffe
     wordCount: '{count} Begriffe'
+    share: 'Um weitere Mitspielerinnen einzuladen schick ihnen den Link zu dieser Seite:'
+    shared: Spiel Decknamen mit mir
   action:
     start: Spiel starten
+    randomize: Teams und Spieler zufällig verteilen
+    share: Mitspielerinnen einladen
   placeholder:
     selectWords: Begriffe auswählen
 

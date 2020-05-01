@@ -20,8 +20,11 @@ gameLobby:
     headlineWaiting: Lista de Espera
     headlineWords: Palabras
     wordCount: '{count} palabras'
+    share: 'Para invitar a tus amigos al juego, envíales el link de esta página:'
+    shared: Juega conmigo Decknamen
   action:
     start: Empezar Juego
+    share: Invitar
   placeholder:
     selectWords: Selecciona palabras
 
