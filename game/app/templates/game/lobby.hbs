@@ -1,7 +1,20 @@
 {{title (t "gameLobby.title")}}
 
 <Layout::Title @title={{t "gameLobby.title"}}>
-  {{t "gameLobby.text.help"}}
+  <p>
+    {{t "gameLobby.text.help"}}
+  </p>
+
+    {{#if this.canShare}}
+    <Ui::Button @onClick={{this.share}}>{{t "gameLobby.action.share"}}</Ui::Button>
+    {{else}}
+      <p>
+        {{t "gameLobby.text.share"}}
+      </p>
+      <p>
+        <Ui::Input @type="copy" @value={{this.lobbyUrl}} />
+      </p>
+    {{/if}}
 </Layout::Title>
 
 <Ui::Form @onSubmit={{this.startGame}}>

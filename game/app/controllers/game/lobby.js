@@ -5,6 +5,7 @@ import { action, set } from '@ember/object';
 import { TEAMS } from 'game/utils/enums';
 
 export default class GameLobbyController extends Controller {
+  @service intl;
   @service socket;
   @service state;
   @service user;
@@ -58,6 +59,14 @@ export default class GameLobbyController extends Controller {
       this.user.isLead &&
       this.state.words !== ''
     );
+  }
+
+  get lobbyUrl() {
+    return `${window.location.protocol}//${window.location.host}/${this.socket.room}`;
+  }
+
+  get canShare() {
+    return !!window.navigator.share;
   }
 
   @action
@@ -132,5 +141,24 @@ export default class GameLobbyController extends Controller {
     await this.state.startGame(words);
 
     this.transitionToRoute('game.index');
+  }
+
+  @action
+  async share() {
+    if (window.navigator.share) {
+      try {
+        await window.navigator.share({
+          title: this.intl.t('application.title'),
+          text: this.intl.t('gameLobby.text.shared'),
+          url: this.lobbyUrl,
+        });
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          return;
+        }
+
+        console.error(err);
+      }
+    }
   }
 }

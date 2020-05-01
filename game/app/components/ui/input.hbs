@@ -41,6 +41,8 @@
     >
       {{yield}}
     </select>
+  {{else if (eq @type "copy")}}
+    <input type="text" local-class="copy" value={{@value}} readonly {{on "click" this.selectAll}} />
   {{else}}
     {{yield}}
   {{/if}}

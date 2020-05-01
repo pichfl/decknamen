@@ -9,4 +9,9 @@ export default class UiInputComponent extends Component {
   onChange(event) {
     this.args.onChange?.(event.target.value);
   }
+
+  @action
+  selectAll(event) {
+    event.target.select();
+  }
 }

@@ -43,3 +43,17 @@
   background-position: right var(--spacing-xs) center, center;
   background-repeat: no-repeat, repeat;
 }
+
+.copy {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--spacing-xs);
+  font-family: monospace;
+  background: linear-gradient(var(--metal-7) -100%, var(--metal-6) 200%);
+  color: var(--gold-4);
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 1;
+  border: 0;
+}
