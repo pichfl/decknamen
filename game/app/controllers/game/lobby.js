@@ -144,6 +144,11 @@ export default class GameLobbyController extends Controller {
   }
 
   @action
+  async doRandomizePlayers() {
+    return this.state.randomizePlayers();
+  }
+
+  @action
   async share() {
     if (window.navigator.share) {
       try {
