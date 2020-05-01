@@ -24,7 +24,7 @@ gameLobby:
     shared: Join my game of Decknamen
   action:
     start: Start Game
-    randomize: Randomize teams & players
+    randomize: Randomize teams & leaders
     share: Invite others
   placeholder:
     selectWords: Select words

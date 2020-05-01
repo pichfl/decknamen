@@ -24,7 +24,7 @@ gameLobby:
     shared: Spiel Decknamen mit mir
   action:
     start: Spiel starten
-    randomize: Teams und Spieler zufällig verteilen
+    randomize: Teams & Leitung zufällig verteilen
     share: Mitspielerinnen einladen
   placeholder:
     selectWords: Begriffe auswählen

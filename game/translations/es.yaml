@@ -25,6 +25,7 @@ gameLobby:
   action:
     start: Empezar Juego
     share: Invitar
+    randomize: Randomize teams & leaders
   placeholder:
     selectWords: Selecciona palabras
 
