@@ -17,6 +17,10 @@ export default class ApplicationRoute extends Route {
   async loadAndSetLanguage() {
     let code = `${window.navigator.language}`.toLowerCase().substr(0, 2);
 
+    if (!Intl.RelativeTimeFormat) {
+      await import('@formatjs/intl-relativetimeformat/polyfill');
+    }
+
     if (!ENV.APP.locales.includes(code)) {
       code = ENV.APP.locales[0];
     }
