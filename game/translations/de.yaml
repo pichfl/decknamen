@@ -9,7 +9,7 @@ index:
     continue: Fortfahren
   text:
     headlineAbout: Spiel mit deinen Freunden ❤️
-    about: "Decknamen ist eine Online-Version von Codenames, dem Gesellschaftsspiel von Vlaada Chvátil. Wenn dir diese Version gefällt, kauf' dir das originale Spiel, wenn du es nicht schon hast. Die Regeln findest du in der Schachtel vom Original. "
+    about: "Decknamen ist eine Online-Version von Codenames, dem Gesellschaftsspiel von Vlaada Chvátil. Wenn dir diese Version gefällt, kauf' dir das originale Spiel, falls du es nicht schon hast. Die Regeln findest du in der Schachtel vom Original-Spiel. "
     githubBefore: Der Quellcode dieses Projekts ist auch
     github: auf GitHub
     githubLink: https://github.com/pichfl/decknamen
@@ -49,7 +49,7 @@ gameOver:
     condolences: 'Schade. Vielleicht hast du beim nächsten Mal mehr Glück, {name}!'
     failTeamA: 'Team Rot hat versagt und den schwarzen Begriff gewählt.'
     failTeamB: 'Team Blau hat versagt und den schwarzen Begriff gewählt.'
-    stats: Auswerrtung
+    stats: Auswertung
     statsTeamA: Rot
     statsTeamB: Blau
     statsBystander: Unbeteiligt
