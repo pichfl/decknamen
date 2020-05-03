@@ -5,14 +5,6 @@
       t
       "gamePlay.title"
       team=(if (is-team-a this.state.turn) (t "Teams.teamA") (t "Teams.teamB"))
-      stats=(t
-        "GameTally.text.stats"
-        current=this.state.uncoveredCards
-        total=this.state.totalCards
-      )
-    }}
-    @icon={{
-      if (eq this.user.team this.state.turn) "play-circle" "pause-circle"
     }}
     @user={{this.user}}
     @socket={{this.state}}
@@ -21,7 +13,7 @@
   <div local-class="bar">
     <p local-class="player {{if (is-team-a this.user.team) "bg-a" "bg-b"}}">
       {{#if this.user.isLead}}
-        <FaIcon @icon="user-tie" />
+        <FaIcon @icon="spy" />
         &nbsp;
       {{/if}}
 

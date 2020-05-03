@@ -16,7 +16,7 @@
     <div local-class="name">
       {{#if @player.lead}}
         <span local-class="leader">
-          <FaIcon @icon="user-tie" />
+          <FaIcon @icon="spy" />
         </span>
       {{/if}}
 
@@ -64,7 +64,7 @@
                 @onClick={{fn this.updateUser (hash lead=true)}}
                 title={{t "LobbyPlayer.action.promote"}}
               >
-                <FaIcon @icon="user-tie" />
+                <FaIcon @icon="spy" />
               </Ui::Button>
             {{/if}}
 

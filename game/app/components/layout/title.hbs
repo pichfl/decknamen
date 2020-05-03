@@ -1,13 +1,4 @@
 <h1 ...attributes local-class="title">
-  {{#if @icon}}
-    <FaIcon
-      @icon={{@icon}}
-      @spin={{eq @icon "circle-notch"}}
-      local-class={{if (eq @user.team @socket.turn) "team-" "team-b"}}
-    />
-    &nbsp;
-  {{/if}}
-
   {{@title}}
 </h1>
 

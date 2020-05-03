@@ -10,9 +10,6 @@
         <ul local-class="list">
           {{#each team.players as |player|}}
             <li>
-              {{#if player.lead}}
-                <FaIcon @icon="user-tie" />
-              {{/if}}
               {{player.name}}
             </li>
           {{/each}}
