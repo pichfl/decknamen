@@ -8,12 +8,12 @@ index:
     new: Neues Spiel
     continue: Fortfahren
   text:
-    headlineAbout: Play with your friends ❤️
-    about: "Decknamen is an online version of Codenames, a board game created by Vlaada Chvátil. If you enjoy playing this, buy the original, it's even more fun to play this around a table with snacks and friends."
-    githubBefore: The source code for this is available
-    github: on GitHub.
+    headlineAbout: Spiel mit deinen Freunden ❤️
+    about: "Decknamen ist eine Online-Version von Codenames, dem Gesellschaftsspiel von Vlaada Chvátil. Wenn dir diese Version gefällt, kauf' dir das originale Spiel, wenn du es nicht schon hast. Die Regeln findest du in der Schachtel vom Original. "
+    githubBefore: Der Quellcode dieses Projekts ist auch
+    github: auf GitHub
     githubLink: https://github.com/pichfl/decknamen
-    githubAfter: If you know what that means, feel free to help to improve it.
+    githubAfter: verfügbar. Wenn du weißt, was das ist, hilf mir gerne das Spiel noch besser zu machen.
 
 gameLobby:
   title: Lobby

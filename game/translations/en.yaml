@@ -9,7 +9,7 @@ index:
     continue: Continue
   text:
     headlineAbout: Play with your friends ❤️
-    about: "Decknamen is an online version of Codenames, a board game created by Vlaada Chvátil. If you enjoy playing this, buy the original, it's even more fun to play this around a table with snacks and friends."
+    about: "Decknamen is an online version of Codenames, a board game created by Vlaada Chvátil. If you enjoy playing this, buy the original. You'll need it for the instructions on how to play this."
     githubBefore: The source code for this is available
     github: on GitHub.
     githubLink: https://github.com/pichfl/decknamen
