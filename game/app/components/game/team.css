@@ -10,6 +10,7 @@
 
 .teams {
   display: flex;
+  flex-flow: row wrap;
 }
 
 .headline {
@@ -26,7 +27,7 @@
 }
 
 .team {
-  display: flex;
+  flex: 1 0 auto;
 }
 
 .team + .team {
@@ -42,24 +43,11 @@
 }
 
 .list li {
-  display: inline;
+  display: block;
 }
 
 .list svg {
   color: var(--metal-3);
-}
-
-.list li:after {
-  content: ', ';
-  color: var(--metal-4);
-}
-
-.list li:last-child:after {
-  content: '';
-}
-
-.list li:nth-last-child(2):after {
-  content: ' & ';
 }
 
 @media (max-width: 48rem) {
@@ -67,7 +55,7 @@
     display: block;
   }
 
-  .team + .team {
-    margin-left: 0;
+  .bar > div:last-child {
+    margin-top: var(--spacing-lg);
   }
 }

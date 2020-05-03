@@ -1,263 +1,165 @@
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
-import { sampleSize, difference, shuffle } from 'lodash-es';
+import { sampleSize, shuffle } from 'lodash-es';
 import { CARD_STATES, CARD_TYPES } from '../utils/enums';
+import GameState from '../utils/game-state';
 
 const { UNCOVERED } = CARD_STATES;
 const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 
-export default class StateService extends Service {
+export class StateService extends Service {
   @service user;
   @service router;
   @service sound;
   @service socket;
 
-  @tracked current = {};
+  @tracked current = null;
 
-  @task(function* (payload = {}, force = false) {
-    const state = {
-      players: {
-        ...payload.players,
-      },
-      words: payload.words || '',
-      cards:
-        payload.cards !== undefined
-          ? payload.cards
-          : this.current?.cards || undefined,
-      turn: payload.turn !== undefined ? payload.turn : undefined,
-    };
-
+  @task(function* () {
     const response = yield this.socket.roomSync({
-      data: state,
-      force,
+      data: this.current.serialize(),
     });
 
-    this.current = response.data;
-
-    return response.data;
+    this.current = this.current.merge(response.data);
   })
   syncTask;
 
-  get players() {
-    return JSON.parse(JSON.stringify(this.current?.players || {}));
-  }
-
-  get cards() {
-    return JSON.parse(JSON.stringify(this.current?.cards || []));
-  }
-
-  get words() {
-    return `${this.current?.words || ''}`;
-  }
-
-  get turn() {
-    return this.current.turn;
-  }
-
-  get totalCardsTeamA() {
-    return this.countTotalCardsByTeam(TEAM_A);
-  }
-
-  get totalCardsTeamB() {
-    return this.countTotalCardsByTeam(TEAM_B);
-  }
-
-  get totalCards() {
-    return this.countTotalCardsByTeam(this.turn);
-  }
-
-  get uncoveredCards() {
-    return this.countUncoveredCardsByTeam(this.turn);
-  }
-
-  get winner() {
-    if (this.winnerTeamA) {
-      return TEAM_A;
-    }
-
-    if (this.winnerTeamB) {
-      return TEAM_B;
-    }
-
-    return undefined;
-  }
-
-  get winnerTeamA() {
-    return this.uncoveredCardsTeamA === this.totalCardsTeamA;
-  }
-
-  get winnerTeamB() {
-    return this.uncoveredCardsTeamB === this.totalCardsTeamB;
-  }
-
-  get failed() {
-    return this.cards.some(
-      (card) => card.type === ABORT && card.state === UNCOVERED
-    );
-  }
-
-  get over() {
-    return (
-      !!this.socket.room &&
-      this.cards.length > 0 &&
-      (this.failed || this.winner !== undefined || false)
-    );
-  }
-
-  get uncoveredCardsTeamA() {
-    return this.countUncoveredCardsByTeam(TEAM_A);
-  }
-
-  get uncoveredCardsTeamB() {
-    return this.countUncoveredCardsByTeam(TEAM_B);
-  }
-
-  countUncoveredCardsByTeam(team) {
-    return this.cards.reduce(
-      (acc, card) =>
-        card.type === team && card.state !== CARD_STATES.COVERED ? ++acc : acc,
-      0
-    );
-  }
-
-  countTotalCardsByTeam(team) {
-    return this.cards.reduce(
-      (acc, card) => (card.type === team ? ++acc : acc),
-      0
-    );
-  }
-
-  async connect(room, player) {
+  async connect(room) {
     await this.socket.connect();
 
-    const { id, data } = await this.socket.emit('room.join', {
+    const { data } = await this.socket.emit('room.join', {
       room,
       sender: this.user.id,
-      player,
     });
 
-    if (id !== room) {
-      throw new Error('Out of sync');
-    }
-
     this.socket.room = room;
-    this.current = data;
+    this.current = new GameState(data);
+    this.assignPlayer();
+
+    await this.syncTask.perform();
 
     this.socket.subscribe('room.sync', (data) => {
-      if (data.players[this.user.id] === undefined) {
-        this.current = {};
+      if (!data) {
+        return;
+      }
+
+      this.current = this.current.merge(data);
+
+      if (!this.player) {
+        this.current = null;
         this.socket.room = undefined;
         this.router.transitionTo('index');
 
         return;
       }
-
-      this.current = data;
-    });
-
-    this.socket.subscribe('room.delete', () => {
-      this.current = {};
-      this.socket.room = undefined;
-      this.router.transitionTo('index');
     });
 
     this.socket.subscribe('room.sound', ({ sprite }) => {
       this.sound.play(sprite);
     });
-  }
 
-  async syncPlayers(players) {
-    return this.syncTask.perform({
-      ...this.current,
-      players,
+    document.addEventListener('visibilitychange', async () => {
+      if (document.hidden) {
+        return;
+      }
+
+      const response = await this.socket.roomRead();
+
+      this.current = this.current.merge(response.data);
     });
   }
 
+  assignPlayer() {
+    // Skip player assignment if the game has started
+    if (this.cards.length > 0) {
+      return;
+    }
+
+    const randomTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
+    const smallerTeam = this.teamA.length < this.teamB.length ? TEAM_A : TEAM_B;
+    const nextTeam =
+      this.teamA.length === this.teamB.length ? randomTeam : smallerTeam;
+    const team = this.player?.team ?? nextTeam;
+
+    this.current.updatePlayer({
+      ...this.user.data,
+      team,
+    });
+  }
+
+  async updatePlayer(player) {
+    this.current.updatePlayer(player);
+
+    await this.syncTask.perform();
+  }
+
   async randomizePlayers() {
-    const players = this.players;
-    const shuffledPlayers = shuffle(Object.values(players));
+    const players = [...this.players];
+    const shuffledPlayers = shuffle(players);
     const teamSize = Math[Math.random() < 0.5 ? 'floor' : 'ceil'](
       shuffledPlayers.length / 2
     );
 
     shuffledPlayers.forEach(({ id }, index) => {
-      players[id].team = index < teamSize ? TEAM_A : TEAM_B;
-      players[id].lead = index === 0 || index === teamSize;
+      this.current.updatePlayer({
+        id,
+        team: index < teamSize ? TEAM_A : TEAM_B,
+        lead: index === 0 || index === teamSize,
+      });
     });
 
-    this.syncPlayers(players);
+    await this.syncTask.perform();
   }
 
   async kickPlayer(playerId) {
-    const players = this.players;
-
-    players[playerId] = null;
-
-    return this.syncPlayers(players);
+    this.current.removePlayer(playerId);
+    this.syncTask.perform();
   }
 
-  async selectWords(id) {
-    await this.syncTask.perform({
-      ...this.current,
-      words: id,
-    });
+  async selectWords(words) {
+    this.current.words = words;
+
+    await this.syncTask.perform();
   }
 
   async startGame(words) {
     const selectedWords = sampleSize(words, 25);
 
-    // Create cards
-    let cards = selectedWords.map((word) => ({
-      type: CARD_TYPES.BYSTANDER,
-      word,
-      fail: false,
-      state: CARD_STATES.COVERED,
-      selected: false,
-    }));
-
     // Pick starting team
     const firstTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
     const secondTeam = firstTeam === TEAM_A ? TEAM_B : TEAM_A;
 
-    const firstTeamCards = sampleSize(cards, 9);
+    // Create cards
+    const cards = shuffle(selectedWords).map((word, index) => {
+      let type = CARD_TYPES.BYSTANDER;
 
-    cards = difference(cards, firstTeamCards);
+      if (index < 9) {
+        type = firstTeam;
+      } else if (index < 17) {
+        type = secondTeam;
+      } else if (index === 17) {
+        type = ABORT;
+      }
 
-    firstTeamCards.forEach((card) => {
-      card.type = firstTeam;
+      return {
+        type,
+        word,
+        state: CARD_STATES.COVERED,
+        selected: false,
+      };
     });
 
-    const secondTeamCards = sampleSize(cards, 8);
+    this.current.cards.push(...shuffle(cards));
+    this.current.turn = firstTeam;
 
-    cards = difference(cards, secondTeamCards);
-
-    secondTeamCards.forEach((card) => {
-      card.type = secondTeam;
-    });
-
-    const failCards = sampleSize(cards, 1);
-
-    cards = difference(cards, failCards);
-
-    failCards.forEach((card) => {
-      card.type = ABORT;
-    });
-
-    cards = shuffle(
-      shuffle([...cards, ...failCards, ...firstTeamCards, ...secondTeamCards])
-    );
-
-    await this.syncTask.perform({
-      cards,
-      turn: firstTeam,
-    });
+    this.syncTask.perform();
   }
 
   async changeCard(card) {
     let turn = this.turn;
 
-    const cards = this.cards.map((oldCard) => {
+    this.current.cards = this.cards.map((oldCard) => {
       if (this.turn !== this.user.team) {
         return oldCard;
       }
@@ -270,8 +172,8 @@ export default class StateService extends Service {
         return { ...oldCard, selected: false };
       }
 
-      if (!this.user.isLead) {
-        return { ...oldCard, selected: !oldCard.selected };
+      if (!this.player.lead) {
+        return { ...oldCard, selected: true };
       }
 
       if (card.type === ABORT) {
@@ -280,7 +182,6 @@ export default class StateService extends Service {
         return {
           ...oldCard,
           state: UNCOVERED,
-          turn: undefined,
           selected: false,
         };
       }
@@ -297,46 +198,154 @@ export default class StateService extends Service {
         ...oldCard,
         state: UNCOVERED,
         selected: false,
-        turn,
       };
     });
 
-    return this.syncTask.perform({
-      ...this.current,
-      cards,
-      turn,
-    });
+    this.current.turn = turn;
+
+    this.syncTask.perform();
   }
 
   async endTurn() {
     const { TEAM_A, TEAM_B } = CARD_TYPES;
 
-    await this.syncTask.perform({
-      turn: this.turn === TEAM_A ? TEAM_B : TEAM_A,
-    });
+    this.current.turn = this.turn === TEAM_A ? TEAM_B : TEAM_A;
+
+    return this.syncTask.perform();
   }
 
   async reset() {
-    await this.syncTask.perform(
-      {
-        players: Object.values(this.players).reduce(
-          (acc, player) => ({
-            ...acc,
-            [player.id]: { ...player, lead: false, team: undefined },
-          }),
-          {}
-        ),
-      },
-      true
-    );
-  }
-
-  async exit() {
-    return this.socket.roomDelete();
+    this.current.reset();
+    await this.syncTask.perform();
   }
 
   async playSound(sprite) {
     this.sound.play(sprite);
-    this.socket.roomSound(sprite);
+
+    return this.socket.roomSound(sprite);
+  }
+}
+
+export default class GameStateService extends StateService {
+  get player() {
+    return this.current?.getPlayer(this.user.id);
+  }
+
+  get players() {
+    return this.current?.players ?? [];
+  }
+
+  get cards() {
+    return this.current?.cards ?? [];
+  }
+
+  get words() {
+    return this.current?.words ?? '';
+  }
+
+  get turn() {
+    return this.current?.turn;
+  }
+
+  get canStartGame() {
+    return (
+      this.playersTeamA.length > 0 &&
+      this.playersTeamB.length > 0 &&
+      !!this.leadTeamA &&
+      !!this.leadTeamB &&
+      this.player.lead &&
+      this.words !== null &&
+      this.cards.length === 0
+    );
+  }
+
+  get over() {
+    return (
+      this.cards.length > 0 &&
+      (this.failed || this.winner !== undefined || false)
+    );
+  }
+
+  get failed() {
+    return this.cards.some(
+      (card) => card.type === ABORT && card.state === UNCOVERED
+    );
+  }
+
+  get statistics() {
+    const stats = this.cards.reduce(
+      (acc, card) => {
+        if (card.type === TEAM_A) {
+          acc.teamA.total++;
+
+          if (card.state === UNCOVERED) {
+            acc.teamA.uncovered++;
+          }
+        }
+
+        if (card.type === TEAM_B) {
+          acc.teamB.total++;
+
+          if (card.state === UNCOVERED) {
+            acc.teamB.uncovered++;
+          }
+        }
+
+        return acc;
+      },
+      {
+        teamA: { total: 0, uncovered: 0 },
+        teamB: { total: 0, uncovered: 0 },
+        winner: undefined,
+      }
+    );
+
+    if (stats.teamA.uncovered === stats.teamA.total) {
+      stats.winner = TEAM_A;
+    } else if (stats.teamB.uncovered === stats.teamB.total) {
+      stats.winner = TEAM_B;
+    }
+
+    return stats;
+  }
+
+  get winnerTeamA() {
+    return this.statistics.winner === TEAM_A;
+  }
+
+  get winnerTeamB() {
+    return this.statistics.winner === TEAM_B;
+  }
+
+  get winner() {
+    return this.statistics.winner;
+  }
+
+  get teamA() {
+    return this.players.filter((player) => player.team === TEAM_A);
+  }
+
+  get teamB() {
+    return this.players.filter((player) => player.team === TEAM_B);
+  }
+
+  get leadTeamA() {
+    return this.players.find((player) => player.team === TEAM_A && player.lead);
+  }
+
+  get leadTeamB() {
+    return this.players.find((player) => player.team === TEAM_B && player.lead);
+  }
+
+  get playersTeamA() {
+    return this.players.filter(
+      (player) => player.team === TEAM_A && !player.lead
+    );
+  }
+
+  get playersTeamB() {
+    return this.players.filter(
+      (player) => player.team === TEAM_B && !player.lead
+    );
   }
 }

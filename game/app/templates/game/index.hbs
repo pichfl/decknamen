@@ -27,7 +27,14 @@
   </ul>
 
   <Game::Team>
-    {{#if this.user.isLead}}
+    {{#if this.isDevelopment}}
+      <Ui::Button @style="link" @onClick={{this.win}}>
+        {{! template-lint-disable no-bare-strings }}
+        Debug:Win
+      </Ui::Button>
+    {{/if}}
+
+    {{#if this.state.player.lead}}
       <Ui::Button @onClick={{this.doEndGame}} @style="link" local-class="abort">
         {{t "gamePlay.action.end"}}
       </Ui::Button>

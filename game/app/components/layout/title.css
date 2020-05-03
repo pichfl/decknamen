@@ -1,7 +1,7 @@
 .title {
   width: 100%;
   max-width: 32rem;
-  margin: 0 auto var(--spacing-lg);
+  margin: 0 auto var(--spacing-xl);
   text-align: center;
   font-size: 5rem;
   text-transform: uppercase;
@@ -9,7 +9,7 @@
   font-style: italic;
   letter-spacing: -0.1rem;
   color: var(--metal-4);
-  line-height: 5rem;
+  line-height: 1em;
 }
 
 @media (max-width: 48rem) {

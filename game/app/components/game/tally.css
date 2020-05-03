@@ -9,6 +9,7 @@
 .bar {
   composes: panel from '../layout/panel.css';
   display: flex;
+  margin-top: calc(-1 * var(--spacing-2xl));
   justify-content: space-between;
   align-items: center;
   align-content: center;
@@ -21,7 +22,6 @@
 }
 
 .tally .bar {
-  margin-top: calc(-1 * var(--spacing-2xl));
   margin-bottom: var(--spacing-md);
   max-width: 100%;
 }

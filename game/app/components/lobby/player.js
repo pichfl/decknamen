@@ -20,16 +20,32 @@ export default class LobbyPlayerComponent extends Component {
 
     this.isSaving = true;
 
-    await this.args.onUpdateUser(
-      this.args.player,
-      {
-        name: event.target.elements[0].value,
-      },
-      true
-    );
+    const name = event.target.elements[0].value;
 
+    await this.state.updatePlayer({
+      ...this.state.player,
+      name,
+    });
+
+    this.user.name = name;
     this.isEditMode = false;
     this.isSaving = false;
+  }
+
+  @action
+  async toggleLead() {
+    return this.state.updatePlayer({
+      ...this.state.player,
+      lead: !this.state.player.lead,
+    });
+  }
+
+  @action
+  async changeTeam(team) {
+    return this.state.updatePlayer({
+      ...this.state.player,
+      team,
+    });
   }
 
   @action
@@ -41,7 +57,7 @@ export default class LobbyPlayerComponent extends Component {
   async kickPlayer(id) {
     const confirmed = window.confirm(
       this.intl.t('LobbyPlayer.action.confirmKick', {
-        name: this.state.players[id].name,
+        name: this.state.current.getPlayer(id)?.name,
       })
     );
 

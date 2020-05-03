@@ -22,18 +22,14 @@
 <Ui::Form @onSubmit={{this.startGame}}>
   <Layout::Panel @title={{t "gameLobby.text.headlineTeamA"}} local-class="red">
     <ul>
-      {{#if this.leadTeamA}}
-        <Lobby::Player
-          @player={{this.leadTeamA}}
-          @onUpdateUser={{this.updateUser}}
-        />
+      {{#if this.state.leadTeamA}}
+        <Lobby::Player @player={{this.state.leadTeamA}} />
       {{/if}}
 
-      {{#each this.playersTeamA as |player|}}
+      {{#each this.state.playersTeamA as |player|}}
         <Lobby::Player
           @player={{player}}
-          @teamHasLead={{this.leadTeamA}}
-          @onUpdateUser={{this.updateUser}}
+          @teamHasLead={{this.state.leadTeamA}}
           @otherTeam={{this.TEAMS.TEAM_B}}
         />
       {{else}}
@@ -46,18 +42,14 @@
 
   <Layout::Panel @title={{t "gameLobby.text.headlineTeamB"}} local-class="blue">
     <ul>
-      {{#if this.leadTeamB}}
-        <Lobby::Player
-          @player={{this.leadTeamB}}
-          @onUpdateUser={{this.updateUser}}
-        />
+      {{#if this.state.leadTeamB}}
+        <Lobby::Player @player={{this.state.leadTeamB}} />
       {{/if}}
 
-      {{#each this.playersTeamB as |player|}}
+      {{#each this.state.playersTeamB as |player|}}
         <Lobby::Player
           @player={{player}}
-          @teamHasLead={{this.leadTeamB}}
-          @onUpdateUser={{this.updateUser}}
+          @teamHasLead={{this.state.leadTeamB}}
           @otherTeam={{this.TEAMS.TEAM_A}}
         />
       {{else}}
@@ -68,26 +60,20 @@
     </ul>
   </Layout::Panel>
 
-  <Layout::Panel>
-    <p>
-      <Ui::Button @onClick={{this.doRandomizePlayers}}>
-        {{t "gameLobby.action.randomize"}}
-      </Ui::Button>
-    </p>
-  </Layout::Panel>
-
-  {{#if this.playersWaiting}}
-    <Layout::Panel @title={{t "gameLobby.text.headlineWaiting"}}>
-      <ul>
-        {{#each this.playersWaiting as |player|}}
-          <Lobby::Player @player={{player}} @onUpdateUser={{this.updateUser}} />
-        {{/each}}
-      </ul>
+  {{#if (not this.state.current.words)}}
+    <Layout::Panel>
+      <p>
+        <Ui::Button @onClick={{this.doRandomizePlayers}}>
+          {{t "gameLobby.action.randomize"}}
+        </Ui::Button>
+      </p>
     </Layout::Panel>
-  {{else if this.user.isLead}}
+  {{/if}}
+
+  {{#if this.state.player.lead}}
     <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
       <fieldset local-class="fieldset" disabled={{this.isSelectingWords}}>
-        {{#if this.user.isLead}}
+        {{#if this.state.player.lead}}
           <Ui::Input @type="select" @onChange={{this.selectWords}}>
             <option value="">
               {{t "gameLobby.placeholder.selectWords"}}
@@ -128,12 +114,12 @@
     </Layout::Panel>
   {{/if}}
 
-  {{#if this.user.isLead}}
+  {{#if this.state.player.lead}}
     <Ui::FormActions local-class="actions">
       <Ui::Button
         @style="primary"
         @type="submit"
-        @disabled={{not this.canContinue}}
+        @disabled={{not this.state.canStartGame}}
         @isLoading={{or this.isLoading this.state.cards}}
       >
         {{t "gameLobby.action.start"}}

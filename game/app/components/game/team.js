@@ -1,34 +1,33 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { TEAMS } from 'game/utils/enums';
 import { sortBy } from 'lodash-es';
 import styles from './team.css';
-
-const { TEAM_A, TEAM_B } = TEAMS;
-
-const sortPlayers = (players, team) =>
-  sortBy(
-    Object.values(players).filter((player) => player.team === team),
-    ['lead', 'name']
-  );
 
 export default class GameTeamComponent extends Component {
   @service user;
   @service state;
 
   get teamList() {
+    const statistics = this.state.statistics;
+
     const teamA = {
       headline: 'Teams.teamA',
-      players: sortPlayers(this.state.players, TEAM_A),
+      lead: this.state.leadTeamA,
+      players: sortBy(this.state.playersTeamA, ['name']),
       className: styles['team-a'],
+      total: statistics.teamA.total,
+      uncovered: statistics.teamA.uncovered,
     };
     const teamB = {
       headline: 'Teams.teamB',
-      players: sortPlayers(this.state.players, TEAM_B),
+      lead: this.state.leadTeamB,
+      players: sortBy(this.state.playersTeamB, ['name']),
       className: styles['team-b'],
+      total: statistics.teamB.total,
+      uncovered: statistics.teamB.uncovered,
     };
 
-    if (this.state.totalCardsTeamA < this.state.totalCardsTeamB) {
+    if (statistics.teamA.total < statistics.teamB.total) {
       return [teamB, teamA];
     }
 

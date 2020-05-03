@@ -1,26 +1,20 @@
 <Layout::Title @title={{t "application.title"}} />
 
-<Layout::Panel>
-  <!--
-  <Ui::Form @onSubmit={{this.startGame}}>
-    <Ui::Input @label={{t "index.label.token"}} @type="text" @value="" />
-
-    <Ui::FormActions>
-      <Ui::Button @type="submit">
-        {{t "index.action.continue"}}
-      </Ui::Button>
-    </Ui::FormActions>
-  </Ui::Form>
-
-  <p local-class="or">
-    {{t "index.text.or"}}
-  </p>
-  -->
-
+<Layout::Panel local-class="extra">
   <p local-class="actions">
     <Ui::Button @style="primary" @route="game" @model={{this.randomToken}}>
       {{t "index.action.new"}}
     </Ui::Button>
+  </p>
+  <p>
+    Play with your friends. Decknamen is an online version of Codenames, a board game created by Vlaada Chvátil. If you like playing this, buy the original.
+  </p>
+  <p>
+    The source code for this is available
+    <a href="https://github.com/pichfl/decknamen">
+      on GitHub
+    </a>
+    . If you know what that means, feel free to help to improve it.
   </p>
 </Layout::Panel>
 

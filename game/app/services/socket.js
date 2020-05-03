@@ -55,13 +55,15 @@ export default class SocketService extends Service {
 
   // --- Room shortcuts
 
-  roomDelete() {
-    return this.emit('room.delete', { room: this.room });
-  }
-
   roomSync(payload) {
     return this.emit('room.sync', {
       ...payload,
+      room: this.room,
+    });
+  }
+
+  roomRead() {
+    return this.emit('room.read', {
       room: this.room,
     });
   }

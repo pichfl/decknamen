@@ -7,24 +7,20 @@ const { TEAM_A, TEAM_B } = TEAMS;
 export default class UserService extends Service {
   @service state;
 
-  get player() {
-    return this.state.players[this.id];
-  }
-
   get isLead() {
-    return this.player?.lead || false;
+    return this.state.player?.lead || false;
   }
 
   get team() {
-    return this.player.team;
+    return this.state.player?.team;
   }
 
   get inTeamA() {
-    return this.team === TEAM_A;
+    return this.state.player?.team === TEAM_A;
   }
 
   get inTeamB() {
-    return this.team === TEAM_B;
+    return this.state.player?.team === TEAM_B;
   }
 
   get id() {
@@ -33,6 +29,13 @@ export default class UserService extends Service {
 
   get name() {
     return this.data.name;
+  }
+
+  set name(value) {
+    this.data = {
+      ...this.data,
+      name: value,
+    };
   }
 
   create() {

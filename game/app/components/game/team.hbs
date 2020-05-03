@@ -4,10 +4,15 @@
       <div local-class="team">
         {{! template-lint-disable css-modules/no-class }}
         <h3 local-class="headline" class={{team.className}}>
-          {{t team.headline}}
+          {{t team.headline}} {{team.uncovered}}/{{team.total}}
         </h3>
 
         <ul local-class="list">
+          <li>
+            {{team.lead.name}}
+            <FaIcon @icon="spy" />
+          </li>
+
           {{#each team.players as |player|}}
             <li>
               {{player.name}}

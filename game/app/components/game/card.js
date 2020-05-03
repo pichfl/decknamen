@@ -8,10 +8,6 @@ export default class GameCardComponent extends Component {
   @service user;
   @service state;
 
-  get state() {
-    return this.args.card.state;
-  }
-
   get type() {
     return this.args.card.type;
   }
@@ -43,7 +39,7 @@ export default class GameCardComponent extends Component {
       return true;
     }
 
-    if (this.user.isLead && this.args.card.selected === false) {
+    if (this.state.player.lead && this.args.card.selected === false) {
       return true;
     }
 
@@ -69,7 +65,7 @@ export default class GameCardComponent extends Component {
   }
 
   get typeBackground() {
-    switch (this.type) {
+    switch (this.args.card.type) {
       case CARD_TYPES.TEAM_A:
         return 'bg-red-700';
       case CARD_TYPES.TEAM_B:
@@ -83,7 +79,7 @@ export default class GameCardComponent extends Component {
   }
 
   get typeBorder() {
-    switch (this.type) {
+    switch (this.args.card.type) {
       case CARD_TYPES.TEAM_A:
         return 'border-red-600';
       case CARD_TYPES.TEAM_B:

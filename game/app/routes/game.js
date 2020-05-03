@@ -7,9 +7,7 @@ export default class GameRoute extends Route {
   @service user;
 
   async model({ room_id }) {
-    await this.state.connect(room_id, {
-      ...this.user.data,
-    });
+    await this.state.connect(room_id);
   }
 
   activate() {

@@ -1,4 +1,5 @@
-.button {
+.button,
+.button:link {
   display: block;
   position: relative;
   width: 100%;
@@ -25,7 +26,8 @@
   border-color: var(--metal-3);
 }
 
-.primary {
+.primary,
+.primary:link {
   border-color: var(--gold-5);
   background: linear-gradient(var(--gold-4), var(--gold-5));
   color: var(--earth-7);
@@ -35,7 +37,8 @@
   border-color: var(--gold-3);
 }
 
-.link {
+.link,
+.link:link {
   display: inline;
   padding: 0 var(--spacing-sm);
   width: auto;
@@ -45,6 +48,7 @@
   color: var(--metal-2);
 }
 
+.link:focus,
 .link:hover {
   text-decoration: underline;
 }

@@ -1,8 +1,7 @@
-.or {
-  text-align: center;
-  margin: var(--spacing-md);
+.extra {
+  padding: var(--spacing-2xl);
 }
 
 .actions {
-  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
 }

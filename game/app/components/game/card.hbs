@@ -2,10 +2,10 @@
 <button
   type="button"
   disabled={{this.isDisabled}}
-  class={{if (or this.user.isLead this.isUncovered) this.typeClass}}
+  class={{if (or this.state.player.lead this.isUncovered) this.typeClass}}
   local-class="
   card
-  {{if this.user.isLead "lead" "player"}}
+  {{if this.state.player.lead "lead" "player"}}
    {{if this.isSelected "selected"}}
    {{if this.isCovered "covered" "uncovered"}}
   "
@@ -35,7 +35,7 @@
   {{/if}}
 
   <span local-class="inner">
-    {{#if (or this.isLead this.isCovered)}}
+    {{#if this.isCovered}}
       <span local-class="word">
         {{@card.word}}
       </span>

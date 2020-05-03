@@ -78,13 +78,10 @@
         {{t "gameOver.action.newGame"}}
       </Ui::Button>
 
-      <Ui::Button @onClick={{this.doExit}}>
-        {{t "gameOver.action.exit"}}
-      </Ui::Button>
-
       {{#if this.isDevelopment}}
         <Ui::Button @style="link" @onClick={{this.undo}}>
-          Undo
+          {{! template-lint-disable no-bare-strings }}
+          Debug:Undo
         </Ui::Button>
       {{/if}}
     </p>

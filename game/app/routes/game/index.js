@@ -23,7 +23,7 @@ export default class GameIndexRoute extends Route {
       return;
     }
 
-    if (this.state.players[this.user.id].team === undefined) {
+    if (this.state.player.team === undefined) {
       this.transitionTo('game.in-progress');
 
       return;

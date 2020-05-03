@@ -156,3 +156,15 @@ fieldset {
   text-align: center;
   color: var(--metal-3);
 }
+
+a,
+a:link {
+  color: var(--magic-3);
+  text-decoration: none;
+}
+
+a:focus,
+a:hover {
+  color: var(--magic-3);
+  text-decoration: underline;
+}

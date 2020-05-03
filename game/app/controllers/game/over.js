@@ -98,29 +98,16 @@ export default class GameOverController extends Controller {
   }
 
   @action
-  doExit() {
-    this.state.exit();
-  }
-
-  @action
   doReset() {
     this.state.reset();
   }
 
   @action
   undo() {
-    const cards = this.state.cards;
-    const abort = cards.find((card) => card.type === 3);
-
-    abort.state = 0;
-
-    cards.forEach((card) => {
-      card.state = COVERED;
-    });
-
-    this.state.syncTask.perform({
-      cards,
-      over: false,
-    });
+    this.state.current.cards = this.state.cards.map((card) => ({
+      ...card,
+      state: COVERED,
+    }));
+    this.state.syncTask.perform();
   }
 }

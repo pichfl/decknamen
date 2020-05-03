@@ -42,7 +42,7 @@
           <Ui::Button
             local-class="team-a"
             @style="link"
-            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_A)}}
+            @onClick={{fn this.changeTeam this.TEAMS.TEAM_A}}
             title={{t "Teams.teamA"}}
           >
             <FaIcon @icon="circle" />
@@ -51,7 +51,7 @@
           <Ui::Button
             local-class="team-b"
             @style="link"
-            @onClick={{fn this.updateUser (hash team=this.TEAMS.TEAM_B)}}
+            @onClick={{fn this.changeTeam this.TEAMS.TEAM_B}}
             title={{t "Teams.teamB"}}
           >
             <FaIcon @icon="circle" />
@@ -61,7 +61,7 @@
             {{#if (not @teamHasLead)}}
               <Ui::Button
                 @style="link"
-                @onClick={{fn this.updateUser (hash lead=true)}}
+                @onClick={{this.toggleLead}}
                 title={{t "LobbyPlayer.action.promote"}}
               >
                 <FaIcon @icon="spy" />
@@ -70,7 +70,7 @@
 
             <Ui::Button
               @style="link"
-              @onClick={{fn this.updateUser (hash team=@otherTeam)}}
+              @onClick={{fn this.changeTeam @otherTeam}}
               title={{t "LobbyPlayer.action.switchTeam"}}
             >
               <FaIcon @icon="exchange-alt" @rotation={{90}} />
@@ -78,7 +78,7 @@
           {{else}}
             <Ui::Button
               @style="link"
-              @onClick={{fn this.updateUser (hash lead=false)}}
+              @onClick={{this.toggleLead}}
               title={{t "LobbyPlayer.action.demote"}}
             >
               <FaIcon @icon="level-down-alt" />
