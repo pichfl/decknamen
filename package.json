@@ -1,5 +1,6 @@
 {
   "private": true,
+  "license": "gpl-3.0",
   "workspaces": [
     "api",
     "game"
