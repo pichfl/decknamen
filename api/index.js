@@ -15,16 +15,12 @@ io.on('connection', async (socket) => {
     _sender = sender;
     _room = room;
 
-    console.log('join', room, sender);
-
     await new Promise((resolve) => socket.join(_room, resolve));
 
     ack({ id: room, data: store[room] });
   });
 
   socket.on('room.sync', ({ sender, room, data }, ack) => {
-    console.log('sync', sender, room, data);
-
     if (!sender || sender !== _sender || !room || room !== _room) {
       return;
     }
