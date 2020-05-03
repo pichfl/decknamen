@@ -87,5 +87,9 @@
     </p>
   </Layout::Panel>
 
+  {{#if (and (not (is-empty this.state.winner)) (not this.state.failed))}}
+      {{confetti (if this.state.winnerTeamA (array "#c42c36" "#ed5259" "#f7ac37") (array "#41f3fc" "#13b2f2" "#7f3b86"))}}
+  {{/if}}
+
   {{outlet}}
 </section>
