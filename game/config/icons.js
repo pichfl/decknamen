@@ -6,13 +6,10 @@ module.exports = () => ({
     'exchange-alt',
     'heart-broken',
     'level-down-alt',
-    'pause-circle',
     'pencil-alt',
-    'play-circle',
     'save',
     'skull',
     'times-circle',
     'trophy',
-    'user-tie',
   ],
 });
