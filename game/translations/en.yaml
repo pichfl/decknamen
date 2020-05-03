@@ -17,7 +17,6 @@ gameLobby:
     addTeamMembers: To begin the game add team members from the waiting list
     headlineTeamA: Team Red
     headlineTeamB: Team Blue
-    headlineWaiting: Waiting List
     headlineWords: Words
     wordCount: '{count} words'
     share: 'To share this lobby with others send them the URL of this page:'
@@ -30,7 +29,7 @@ gameLobby:
     selectWords: Select words
 
 gamePlay:
-  title: '{team} team’s turn {stats}'
+  title: '{team} team’s turn'
   action:
     skip: End turn
     end: Cancel game…
@@ -52,7 +51,6 @@ gameOver:
     statsFail: Fail
   action:
     newGame: New game with same players
-    exit: Exit to start
 
 gameInProgress:
   title: Do not disturb
@@ -72,10 +70,6 @@ LobbyPlayer:
     demote: Make member
     confirmKick: 'Are you sure you want to remove ${name} from this lobby?'
     kick: Remove player
-
-GameTally:
-  text:
-    stats: '{current}/{total}'
 
 Teams:
   teamA: Red

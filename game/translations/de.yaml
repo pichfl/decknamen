@@ -5,7 +5,7 @@ index:
   label:
     token: Token
   action:
-    new: Neue Spiel
+    new: Neues Spiel
     continue: Fortfahren
   text:
     or: oder
@@ -17,7 +17,6 @@ gameLobby:
     addTeamMembers: Um zu beginnen musst du noch Mitspielerinnen aus der Warteliste oder dem anderen Team verteilen
     headlineTeamA: Team Rot
     headlineTeamB: Team Blau
-    headlineWaiting: Warteliste
     headlineWords: Begriffe
     wordCount: '{count} Begriffe'
     share: 'Um weitere Mitspielerinnen einzuladen schick ihnen den Link zu dieser Seite:'
@@ -30,7 +29,7 @@ gameLobby:
     selectWords: Begriffe auswählen
 
 gamePlay:
-  title: 'Team {team} ist dran {stats}'
+  title: 'Team {team} ist dran'
   action:
     skip: Weiter
     end: Spiel Abbrechen…
@@ -44,7 +43,7 @@ gameOver:
     congratulations: 'Herzlichen Glückwunsch {name}, ihr habt gewonnen!'
     condolences: 'Schade. Vielleicht hast du beim nächsten Mal mehr Glück, {name}!'
     failTeamA: 'Team Rot hat versagt und den schwarzen Begriff gewählt.'
-    failTeamB: 'Team Blau hat versagt und den schwarzen Begriff gewählt'
+    failTeamB: 'Team Blau hat versagt und den schwarzen Begriff gewählt.'
     stats: Auswerrtung
     statsTeamA: Rot
     statsTeamB: Blau
@@ -52,7 +51,6 @@ gameOver:
     statsFail: Tödlich
   action:
     newGame: Neues Spiel mit den gleichen Mitspielern
-    exit: Zurück zum Start
 
 gameInProgress:
   title: Nicht stören
@@ -72,10 +70,6 @@ LobbyPlayer:
     demote: Zur Mitspielerin machen
     confirmKick: 'Bist du dir sicher, dass du {name} aus der Lobby entfernen willst?'
     kick: Mitspielerin entfernen
-
-GameTally:
-  text:
-    stats: '{current}/{total}'
 
 Teams:
   teamA: Rot

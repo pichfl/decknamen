@@ -17,7 +17,6 @@ gameLobby:
     addTeamMembers: Para empezar el juego, añade a tus miembros de equipo desde la lista de espera
     headlineTeamA: Equipo Rojo
     headlineTeamB: Equipo Azul
-    headlineWaiting: Lista de Espera
     headlineWords: Palabras
     wordCount: '{count} palabras'
     share: 'Para invitar a tus amigos al juego, envíales el link de esta página:'
@@ -30,7 +29,7 @@ gameLobby:
     selectWords: Selecciona palabras
 
 gamePlay:
-  title: 'Turno del equipo {team} {stats}'
+  title: 'Turno del equipo {team}'
   action:
     skip: Finalizar turno
     end: Rendirse…
@@ -52,7 +51,6 @@ gameOver:
     statsFail: Fallo
   action:
     newGame: Nuevo juego con los mismos jugadores
-    exit: Salir
 
 gameInProgress:
   title: No molestar
@@ -72,10 +70,6 @@ LobbyPlayer:
     demote: Convertir a miembro
     confirmKick: 'Estás seguro de remover {name} de esta sala'
     kick: Botar jugador
-
-GameTally:
-  text:
-    stats: '{current}/{total}'
 
 Teams:
   teamA: Rojo
