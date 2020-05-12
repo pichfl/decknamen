@@ -6,6 +6,10 @@ module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
     babel: {
       plugins: [require.resolve('ember-auto-import/babel-plugin')],
+      include: [
+        'proposal-nullish-coalescing-operator',
+        'proposal-optional-chaining',
+      ],
     },
     cssModules: {
       plugins: [

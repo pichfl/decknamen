@@ -15,7 +15,7 @@ export default class IndexController extends Controller {
     const original = this.words.byId?.['english(Original)']?.list ?? [];
     const duet = this.words.byId?.['english(Duet)']?.list ?? [];
     const wordlist = uniq([...original, ...duet]).map((word) =>
-      word.replace(/\s/gi, '')
+      word.split(' ').join('')
     );
 
     if (wordlist.length === 0) {
