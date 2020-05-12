@@ -14,7 +14,9 @@ export default class IndexController extends Controller {
   get randomToken() {
     const original = this.words.byId?.['english(Original)']?.list ?? [];
     const duet = this.words.byId?.['english(Duet)']?.list ?? [];
-    const wordlist = uniq([...original, ...duet]);
+    const wordlist = uniq([...original, ...duet]).map((word) =>
+      word.replace(/\s/gi, '')
+    );
 
     if (wordlist.length === 0) {
       return idLong();

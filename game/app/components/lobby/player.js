@@ -35,22 +35,18 @@ export default class LobbyPlayerComponent extends Component {
   @action
   async toggleLead() {
     return this.state.updatePlayer({
-      ...this.state.player,
-      lead: !this.state.player.lead,
+      ...this.args.player,
+      lead: !this.args.player.lead,
     });
   }
 
   @action
   async changeTeam(team) {
     return this.state.updatePlayer({
-      ...this.state.player,
+      ...this.args.player,
       team,
+      lead: false,
     });
-  }
-
-  @action
-  async updateUser(data) {
-    await this.args.onUpdateUser(this.args.player, data);
   }
 
   @action
