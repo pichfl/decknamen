@@ -17,28 +17,25 @@ export class StateService extends Service {
   @tracked current = null;
 
   @task(function* () {
-    const response = yield this.socket.roomSync({
-      data: this.current.serialize(),
-    });
+    const response = yield this.socket.roomSync(this.current.serialize());
 
-    this.current = this.current.merge(response.data);
+    this.current = this.current.merge(response);
   })
   syncTask;
 
   async connect(room) {
-    await this.socket.connect();
+    await this.socket.connect(room);
+    const data = await this.socket.roomRead();
 
-    const { data } = await this.socket.emit('room.join', {
-      room,
-      sender: this.user.id,
-    });
-
-    this.socket.room = room;
     this.current = new GameState(data);
     this.assignPlayer();
 
     await this.syncTask.perform();
 
+    this.subscribe();
+  }
+
+  subscribe() {
     this.socket.subscribe('room.sync', (data) => {
       if (!data) {
         return;
@@ -66,7 +63,7 @@ export class StateService extends Service {
 
       const response = await this.socket.roomRead();
 
-      this.current = this.current.merge(response.data);
+      this.current = this.current.merge(response);
     });
   }
 
@@ -203,7 +200,7 @@ export class StateService extends Service {
 
     this.current.turn = turn;
 
-    this.syncTask.perform();
+    return this.syncTask.perform();
   }
 
   async endTurn() {

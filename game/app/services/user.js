@@ -58,7 +58,7 @@ export default class UserService extends Service {
   }
 
   set data(value) {
-    return window.localStorage.setItem(
+    window.localStorage.setItem(
       'decknamen.user',
       JSON.stringify({
         ...this.user,

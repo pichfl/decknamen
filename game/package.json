@@ -36,7 +36,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@glimmer/component": "^1.0.0",
     "@glimmer/tracking": "^1.0.0",
-    "@tailwindcss/custom-forms": "^0.2.1",
     "autoprefixer": "^9.7.6",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
@@ -81,8 +80,6 @@
     "prettier": "^2.0.5",
     "pusher-js": "^6.0.2",
     "qunit-dom": "^1.1.0",
-    "socket.io-client": "^2.3.0",
-    "tailwindcss": "^1.4.4",
     "tracked-built-ins": "^1.0.2"
   },
   "engines": {

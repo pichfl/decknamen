@@ -1,12 +1,36 @@
 import Service, { inject as service } from '@ember/service';
-import io from 'socket.io-client';
 import ENV from 'game/config/environment';
 import { tracked } from '@glimmer/tracking';
+import { nanoid } from 'nanoid';
+
+const deferred = (options = { timeout: undefined }) => {
+  let resolve;
+  let reject;
+
+  const promise = new Promise((res, rej) => {
+    if (options.timeout) {
+      let timer = setTimeout(() => {
+        rej(new Error('Deferred timed out'));
+      }, options.timeout);
+
+      resolve = (...args) => {
+        clearTimeout(timer);
+        res(...args);
+      };
+      reject = rej;
+
+      return;
+    }
+
+    resolve = res;
+    reject = rej;
+  });
+
+  return { promise, resolve, reject };
+};
 
 export default class SocketService extends Service {
-  io = io(ENV.APP.server, {
-    autoConnect: false,
-  });
+  @tracked primus = undefined;
 
   @service user;
   @service router;
@@ -14,26 +38,60 @@ export default class SocketService extends Service {
 
   @tracked isConnected = false;
   @tracked room = undefined;
+  @tracked substream = undefined;
 
-  async connect() {
-    return new Promise((resolve) => {
-      this.io.open();
-      this.io.on('connect', async () => {
-        this.isConnected = true;
+  async loadPrimus() {
+    const script = document.createElement('script');
+    script.src = `${ENV.APP.server}primus/primus.js`;
 
-        resolve();
-      });
+    return new Promise((resolve, reject) => {
+      script.onload = resolve;
+      script.onerror = reject;
+
+      document.querySelector('script').after(script);
     });
   }
 
-  async emit(eventName, data) {
-    const sender = this.user.id;
+  async connect(room) {
+    await this.loadPrimus();
 
-    return new Promise((resolve) => {
-      this.io.emit(eventName, { sender, ...data }, (...args) => {
-        resolve(...args);
-      });
+    this.primus = new window.Primus(ENV.APP.server, {
+      manual: true,
     });
+
+    this.primus.open();
+
+    this.primus.on('data', ({ type, id, ...data }) => {
+      if (this.requests.has(id)) {
+        this.requests.get(id).resolve(data);
+      }
+
+      if (this.subscriptions.has(type)) {
+        this.subscriptions.get(type).forEach((val) => val(data));
+      }
+    });
+
+    const response = await this.write('room.join', {
+      room,
+    });
+
+    this.room = response.room;
+    this.isConnected = true;
+  }
+
+  requests = new Map();
+
+  async write(type, data) {
+    const id = nanoid();
+
+    this.requests.set(id, deferred());
+    this.primus.write({ type, id, ...data });
+
+    return this.requests.get(id).promise;
+  }
+
+  async emit(eventName, data) {
+    return this.write(eventName, data);
   }
 
   subscriptions = new Map();
@@ -43,9 +101,6 @@ export default class SocketService extends Service {
       this.subscriptions.get(keyword).add(callback);
     } else {
       this.subscriptions.set(keyword, new Set([callback]));
-      this.io.on(keyword, (...args) => {
-        this.subscriptions.get(keyword).forEach((val) => val(...args));
-      });
     }
   }
 
@@ -56,19 +111,18 @@ export default class SocketService extends Service {
   // --- Room shortcuts
 
   roomSync(payload) {
-    return this.emit('room.sync', {
+    return this.write('room.sync', {
       ...payload,
-      room: this.room,
     });
   }
 
   roomRead() {
-    return this.emit('room.read', {
+    return this.write('room.read', {
       room: this.room,
     });
   }
 
   roomSound(sprite) {
-    return this.emit('room.sound', { room: this.room, sprite });
+    return this.write('room.sound', { room: this.room, sprite });
   }
 }
