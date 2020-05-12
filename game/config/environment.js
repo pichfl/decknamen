@@ -38,7 +38,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production' || environment === 'heroku') {
-    ENV.APP.server = 'https://decknamen.herokuapp.com';
+    ENV.APP.server = 'https://decknamen.herokuapp.com/';
   }
 
   return ENV;

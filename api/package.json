@@ -13,7 +13,8 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "primus": "^7.3.4",
-    "primus-rooms": "^3.4.1"
+    "primus-rooms": "^3.4.1",
+    "ws": "^7.3.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
