@@ -1,52 +1,107 @@
-const io = require('./src/io.js');
-const _ = require('lodash');
+const primus = require('./src/primus')();
 
-io.attach(process.env.PORT || 3000);
+class Store {
+  rooms = new Map();
+  timeout = 24 * 60 * 60 * 1000;
 
-let store = {};
+  setRoom(id, data) {
+    let room = {
+      data: {},
+      timeout: undefined,
+    };
 
-// TODO: Remove room from store after x days;
+    if (this.rooms.has(id)) {
+      room = this.rooms.get(id);
 
-io.on('connection', async (socket) => {
-  let _room;
-  let _sender;
+      clearTimeout(room.timeout);
+    }
 
-  socket.on('room.join', async ({ room, sender }, ack) => {
-    _sender = sender;
-    _room = room;
+    room.timeout = setTimeout(() => {
+      this.removeRoom(id);
+    }, this.timeout);
+    room.data = data || room.data;
 
-    await new Promise((resolve) => socket.join(_room, resolve));
+    this.rooms.set(id, room);
+  }
 
-    ack({ id: room, data: store[room] });
-  });
+  removeRoom(id) {
+    const room = this.rooms.get(id);
 
-  socket.on('room.sync', ({ sender, room, data }, ack) => {
-    if (!sender || sender !== _sender || !room || room !== _room) {
+    clearTimeout(room.timeout);
+
+    room.data = null;
+
+    this.rooms.delete(id);
+  }
+
+  getRoom(id) {
+    if (!this.rooms.has(id)) {
       return;
     }
 
-    store[room] = data;
+    return this.rooms.get(id).data;
+  }
+}
 
-    io.to(room).emit('room.sync', store[room]);
+const store = new Store();
 
-    ack({ id: room, data: store[room] });
-  });
+primus.on('connection', async (spark) => {
+  let room;
 
-  socket.on('room.read', ({ sender, room }, ack) => {
-    if (!sender || sender !== _sender || !room || room !== _room) {
+  spark.on('data', ({ type, id, ...data }) => {
+    if (type === 'room.join') {
+      spark.join(data.room, () => {
+        spark.write({
+          type,
+          id,
+          ...data,
+        });
+      });
+
+      room = data.room;
+
       return;
     }
 
-    ack({ id: room, data: store[room] });
-  });
-
-  socket.on('room.sound', ({ sender, room, sprite }, ack) => {
-    if (!sender || sender !== _sender || !room || room !== _room) {
+    if (!room) {
       return;
     }
 
-    io.to(room).emit('room.sound', { sprite });
+    if (type === 'room.sync') {
+      if (Object.keys(data).length > 0) {
+        store.setRoom(room, data);
+      }
 
-    ack({ id: room, sprite });
+      spark.room(room).write({
+        type,
+        id,
+        ...store.getRoom(room),
+      });
+
+      return;
+    }
+
+    if (type === 'room.read') {
+      spark.room(room).write({
+        type,
+        id,
+        ...store.getRoom(room),
+      });
+
+      return;
+    }
+
+    if (type === 'room.sound') {
+      spark
+        .room(room)
+        .except(spark.id)
+        .write({
+          type,
+          id,
+          ...data,
+        });
+
+      return;
+    }
   });
 });

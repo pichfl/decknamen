@@ -16,8 +16,7 @@ The [spy icon](https://thenounproject.com/term/spy/2518785) was created by Adrie
 
 ## Technical details
 
-This project uses a simple websocket backend based on [socket.io](https://socket.io) and Node.js. See the `api` folder
-for details.
+This project uses a simple websocket backend based on Primus and Node.js. See the `api` folder for details.
 
 The website itself is powered by [Ember.js](https://emberjs.com) & a bunch of addons. The project is inside the `game`
 folder.
