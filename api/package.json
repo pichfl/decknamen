@@ -11,12 +11,15 @@
   "author": "Florian Pichler <@pichfl>",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "ioredis": "^4.17.1",
     "lodash": "^4.17.15",
+    "ms": "^2.1.2",
     "primus": "^7.3.4",
     "primus-rooms": "^3.4.1",
     "ws": "^7.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.4"
   }
 }
