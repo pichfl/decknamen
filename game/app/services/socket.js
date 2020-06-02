@@ -57,6 +57,12 @@ export default class SocketService extends Service {
 
     this.primus = new window.Primus(ENV.APP.server, {
       manual: true,
+      reconnect: {
+        max: Infinity,
+        min: 500,
+        retries: 20,
+        factor: 1.1,
+      },
     });
 
     this.primus.open();
