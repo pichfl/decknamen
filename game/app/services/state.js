@@ -207,6 +207,10 @@ export class StateService extends Service {
     const { TEAM_A, TEAM_B } = CARD_TYPES;
 
     this.current.turn = this.turn === TEAM_A ? TEAM_B : TEAM_A;
+    this.current.cards = this.cards.map((card) => ({
+      ...card,
+      selected: false,
+    }));
 
     return this.syncTask.perform();
   }
