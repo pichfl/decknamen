@@ -1,0 +1,81 @@
+application:
+  title: Decknamen
+
+index:
+  label:
+    token: Game token
+  action:
+    new: Start nieuw spel
+    continue: Doorgaan
+  text:
+    headlineAbout: Speel met je vrienden ❤️
+    about: "Decknamen is een online versie van Codenames, een bordspel gemaakt door Vlaada Chvátil. Als je het leuk vindt om te spelen, koop dan het origineel als het niet al in de kast ligt. Dan krijg je er meteen de handleiding bij."
+    githubBefore: De source code is beschikbaar
+    github: op GitHub.
+    githubLink: https://github.com/pichfl/decknamen
+    githubAfter: Als je weet wat dat betekent, voel je vrij om het spel te verbeteren.
+
+gameLobby:
+  title: Lobby
+  text:
+    help: Vul je naam in, selecteer een team en benoem de hoofden van de geheime diensten. Zij kiezen een woordenlijst om het spel mee te starten
+    addTeamMembers: Voeg teamleden toe van de wachtlijst om het spel te beginnen.
+    headlineTeamA: Team Rood
+    headlineTeamB: Team Blauw
+    headlineWords: Woorden
+    wordCount: '{count} woorden'
+    share: 'Deel deze link om mensen uit te nodigen mee te doen:'
+    shared: Speel Decknamen met mij
+  action:
+    start: Start spel
+    randomize: Hussel teams & rollen
+    share: Nodig anderen uit
+  placeholder:
+    selectWords: Selecteer woorden
+
+gamePlay:
+  title: 'Team {team} is aan de beurt'
+  action:
+    skip: Eindig beurt
+    end: Sluit spel af…
+    confirmEnd: Weet je zeker dat je het spel wilt afsluiten en terug wilt gaan naar de lobby?
+
+gameOver:
+  title:
+    failed: Game Over
+    winner: 'Team {team} wint!'
+  text:
+    congratulations: 'Gefeliciteerd {name}, je hebt gewonnen!'
+    condolences: 'Helaas, {name}. Volgende keer beter!'
+    failTeamA: 'Team Rood heeft verloren door de zwarte kaart aan te wijzen.'
+    failTeamB: 'Team Blauw heeft verloren door de zwarte kaart aan te wijzen.'
+    stats: Spel statistieken
+    statsTeamA: Rood
+    statsTeamB: Blauw
+    statsBystander: Omstanders
+    statsFail: Huurmoordenaar
+  action:
+    newGame: Nieuw spel met dezelfde spelers
+
+gameInProgress:
+  title: Niet storen
+  text:
+    message: Je kunt niet aan een spel meedoen wat al bezig is.
+  action:
+    back: Terug naar begin
+
+LobbyPlayer:
+  text:
+    unknownPlayer: 'Onbekende speler'
+  action:
+    confirmNameChange: Oké
+    changeName: Aanpassen
+    switchTeam: Wissel van team
+    promote: Promoveer tot hoofd van de geheime dienst
+    demote: Maak teamlid
+    confirmKick: 'Weet je zeker dat je ${name} wilt verwijderen uit de lobby?'
+    kick: Verwijder speler
+
+Teams:
+  teamA: Rood
+  teamB: Blauw
