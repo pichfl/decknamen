@@ -13,7 +13,7 @@ module.exports = function (environment) {
 
     APP: {
       server: 'http://localhost:3000/',
-      locales: ['en', 'de', 'es'],
+      locales: ['en', 'de', 'es', 'nl'],
     },
 
     fontawesome: {
