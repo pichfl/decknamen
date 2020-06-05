@@ -9,7 +9,7 @@ index:
     continue: Doorgaan
   text:
     headlineAbout: Speel met je vrienden ❤️
-    about: "Decknamen is een online versie van Codenames, een bordspel gemaakt door Vlaada Chvátil. Als je het leuk vindt om te spelen, koop dan het origineel als het niet al in de kast ligt. Dan krijg je er meteen de handleiding bij."
+    about: 'Decknamen is een online versie van Codenames, een bordspel gemaakt door Vlaada Chvátil. Als je het leuk vindt om te spelen, koop dan het origineel als het niet al in de kast ligt. Dan krijg je er meteen de handleiding bij.'
     githubBefore: De source code is beschikbaar
     github: op GitHub.
     githubLink: https://github.com/pichfl/decknamen
@@ -34,7 +34,8 @@ gameLobby:
     selectWords: Selecteer woorden
 
 gamePlay:
-  title: 'Team {team} is aan de beurt'
+  title: 'Het is jouw beurt!'
+  titleOther: 'De anderen zijn aan.'
   action:
     skip: Eindig beurt
     end: Sluit spel af…

@@ -13,10 +13,6 @@
   text-align: center;
 }
 
-.actions {
-  margin: var(--spacing-2xl) var(--spacing-xl) var(--spacing-xl);
-}
-
 .actions > * + * {
   margin-top: var(--spacing-md);
 }

@@ -20,6 +20,27 @@
   color: var(--metal-3);
 }
 
-.fieldset > * + * {
+.fieldset > * + *,
+.col > * + * {
   margin-top: var(--spacing-lg);
+}
+
+.col {
+  margin-top: 0;
+}
+
+@media (min-width: 68rem) {
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 32rem 32rem 1fr;
+    column-gap: 2rem;
+  }
+
+  .col {
+    grid-column: 2;
+  }
+
+  .col + .col {
+    grid-column: 3;
+  }
 }

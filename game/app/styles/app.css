@@ -75,8 +75,10 @@
   --shadow-md: 0 var(--spacing-xs) var(--spacing-lg)
     calc(-1 * var(--spacing-sm)) var(--metal-8);
 
-  --shadow-lg: 0 var(--spacing-xs) var(--spacing-2xl)
-    calc(-1 * var(--spacing-sm)) var(--metal-8);
+  --shadow-lg: inset 0 0.5px 0 0 var(--metal-5),
+    inset 0 -1px 2px 0 var(--metal-6),
+    0 var(--spacing-xs) var(--spacing-2xl) calc(-1 * var(--spacing-sm))
+      var(--metal-8);
 }
 
 /* @import-sanitize; */
@@ -111,6 +113,11 @@ body {
   align-items: stretch;
   min-height: calc(var(--vh, 1vh) * 100);
   padding: var(--spacing-md);
+  background-image: radial-gradient(
+    circle at 50% 20%,
+    var(--metal-6) 55%,
+    var(--metal-7) 100%
+  );
 }
 
 @media (max-width: 48rem) {

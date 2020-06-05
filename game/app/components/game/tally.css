@@ -66,18 +66,12 @@
 }
 
 .player {
-  padding: var(--spacing-sm) var(--spacing-md);
+  flex: 1 0 auto;
+  font-size: 1.25rem;
+  padding: var(--spacing-sm) 0;
   border-radius: var(--spacing-xs);
-  color: var(--metal-8);
+  color: var(--metal-1);
   word-break: break-all;
-}
-
-.tally .bg-a {
-  background: var(--heat-4);
-}
-
-.tally .bg-b {
-  background: var(--cold-4);
 }
 
 .actions {

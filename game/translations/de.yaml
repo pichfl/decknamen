@@ -34,7 +34,8 @@ gameLobby:
     selectWords: Begriffe auswählen
 
 gamePlay:
-  title: 'Team {team} ist dran'
+  title: 'Ihr seid dran!'
+  titleOther: 'Die Anderen sind dran.'
   action:
     skip: Weiter
     end: Spiel Abbrechen…
@@ -77,5 +78,6 @@ LobbyPlayer:
     kick: Mitspielerin entfernen
 
 Teams:
+  team: Team
   teamA: Rot
   teamB: Blau

@@ -19,113 +19,117 @@
   {{/if}}
 </Layout::Title>
 
-<Ui::Form @onSubmit={{this.startGame}}>
-  <Layout::Panel @title={{t "gameLobby.text.headlineTeamA"}} local-class="red">
-    <ul>
-      {{#if this.state.leadTeamA}}
-        <Lobby::Player @player={{this.state.leadTeamA}} />
-      {{/if}}
-
-      {{#each this.state.playersTeamA as |player|}}
-        <Lobby::Player
-          @player={{player}}
-          @teamHasLead={{this.state.leadTeamA}}
-          @otherTeam={{this.TEAMS.TEAM_B}}
-        />
-      {{else}}
-        <li local-class="help">
-          {{t "gameLobby.text.addTeamMembers"}}
-        </li>
-      {{/each}}
-    </ul>
-  </Layout::Panel>
-
-  <Layout::Panel @title={{t "gameLobby.text.headlineTeamB"}} local-class="blue">
-    <ul>
-      {{#if this.state.leadTeamB}}
-        <Lobby::Player @player={{this.state.leadTeamB}} />
-      {{/if}}
-
-      {{#each this.state.playersTeamB as |player|}}
-        <Lobby::Player
-          @player={{player}}
-          @teamHasLead={{this.state.leadTeamB}}
-          @otherTeam={{this.TEAMS.TEAM_A}}
-        />
-      {{else}}
-        <li local-class="help">
-          {{t "gameLobby.text.addTeamMembers"}}
-        </li>
-      {{/each}}
-    </ul>
-  </Layout::Panel>
-
-  {{#if (not this.state.current.words)}}
-    <Layout::Panel>
-      <p>
-        <Ui::Button @onClick={{this.doRandomizePlayers}}>
-          {{t "gameLobby.action.randomize"}}
-        </Ui::Button>
-      </p>
-    </Layout::Panel>
-  {{/if}}
-
-  {{#if this.state.player.lead}}
-    <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
-      <fieldset local-class="fieldset" disabled={{this.isSelectingWords}}>
-        {{#if this.state.player.lead}}
-          <Ui::Input @type="select" @onChange={{this.selectWords}}>
-            <option value="">
-              {{t "gameLobby.placeholder.selectWords"}}
-            </option>
-            {{#each this.words.list as |list|}}
-              <option
-                value={{list.id}}
-                selected={{eq list.id this.state.words}}
-              >
-                {{list.title}} ({{
-                  t "gameLobby.text.wordCount" count=list.list.length
-                }})
-              </option>
-            {{/each}}
-          </Ui::Input>
+<Ui::Form @onSubmit={{this.startGame}} local-class="form">
+  <div local-class="col">
+    <Layout::Panel @title={{t "gameLobby.text.headlineTeamA"}} local-class="red">
+      <ul>
+        {{#if this.state.leadTeamA}}
+          <Lobby::Player @player={{this.state.leadTeamA}} />
         {{/if}}
 
-        {{#if this.state.words}}
-          <Ui::Input
-            @type="textarea"
-            @value={{get (get this.words.byId this.state.words) "plain"}}
+        {{#each this.state.playersTeamA as |player|}}
+          <Lobby::Player
+            @player={{player}}
+            @teamHasLead={{this.state.leadTeamA}}
+            @otherTeam={{this.TEAMS.TEAM_B}}
           />
-        {{/if}}
-      </fieldset>
+        {{else}}
+          <li local-class="help">
+            {{t "gameLobby.text.addTeamMembers"}}
+          </li>
+        {{/each}}
+      </ul>
     </Layout::Panel>
-  {{else if this.state.words}}
-    <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
-      <p>
-        {{get (get this.words.byId this.state.words) "title"}}
-        <span>
-          {{
-            t
-            "gameLobby.text.wordCount"
-            count=(get (get this.words.byId this.state.words) "list.length")
-          }}
-        </span>
-      </p>
-    </Layout::Panel>
-  {{/if}}
 
-  {{#if this.state.player.lead}}
-    <Ui::FormActions local-class="actions">
-      <Ui::Button
-        @style="primary"
-        @type="submit"
-        @disabled={{not this.state.canStartGame}}
-        @isLoading={{or this.isLoading this.state.cards}}
-      >
-        {{t "gameLobby.action.start"}}
-      </Ui::Button>
-    </Ui::FormActions>
-  {{/if}}
+    <Layout::Panel @title={{t "gameLobby.text.headlineTeamB"}} local-class="blue">
+      <ul>
+        {{#if this.state.leadTeamB}}
+          <Lobby::Player @player={{this.state.leadTeamB}} />
+        {{/if}}
+
+        {{#each this.state.playersTeamB as |player|}}
+          <Lobby::Player
+            @player={{player}}
+            @teamHasLead={{this.state.leadTeamB}}
+            @otherTeam={{this.TEAMS.TEAM_A}}
+          />
+        {{else}}
+          <li local-class="help">
+            {{t "gameLobby.text.addTeamMembers"}}
+          </li>
+        {{/each}}
+      </ul>
+    </Layout::Panel>
+  </div>
+
+  <div local-class="col">
+    {{#if (not this.state.current.words)}}
+      <Layout::Panel>
+        <p>
+          <Ui::Button @onClick={{this.doRandomizePlayers}}>
+            {{t "gameLobby.action.randomize"}}
+          </Ui::Button>
+        </p>
+      </Layout::Panel>
+    {{/if}}
+
+    {{#if this.state.player.lead}}
+      <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
+        <fieldset local-class="fieldset" disabled={{this.isSelectingWords}}>
+          {{#if this.state.player.lead}}
+            <Ui::Input @type="select" @onChange={{this.selectWords}}>
+              <option value="">
+                {{t "gameLobby.placeholder.selectWords"}}
+              </option>
+              {{#each this.words.list as |list|}}
+                <option
+                  value={{list.id}}
+                  selected={{eq list.id this.state.words}}
+                >
+                  {{list.title}} ({{
+                    t "gameLobby.text.wordCount" count=list.list.length
+                  }})
+                </option>
+              {{/each}}
+            </Ui::Input>
+          {{/if}}
+
+          {{#if this.state.words}}
+            <Ui::Input
+              @type="textarea"
+              @value={{get (get this.words.byId this.state.words) "plain"}}
+            />
+          {{/if}}
+        </fieldset>
+      </Layout::Panel>
+    {{else if this.state.words}}
+      <Layout::Panel @title={{t "gameLobby.text.headlineWords"}}>
+        <p>
+          {{get (get this.words.byId this.state.words) "title"}}
+          <span>
+            {{
+              t
+              "gameLobby.text.wordCount"
+              count=(get (get this.words.byId this.state.words) "list.length")
+            }}
+          </span>
+        </p>
+      </Layout::Panel>
+    {{/if}}
+
+    {{#if this.state.player.lead}}
+      <Layout::Panel>
+        <Ui::Button
+          @style="primary"
+          @type="submit"
+          @disabled={{not this.state.canStartGame}}
+          @isLoading={{or this.isLoading this.state.cards}}
+        >
+          {{t "gameLobby.action.start"}}
+        </Ui::Button>
+      </Layout::Panel>
+    {{/if}}
+  </div>
 </Ui::Form>
 
 {{outlet}}

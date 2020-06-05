@@ -34,7 +34,8 @@ gameLobby:
     selectWords: Select words
 
 gamePlay:
-  title: '{team} team’s turn'
+  title: 'Your turn!'
+  titleOther: 'The other team’s turn.'
   action:
     skip: End turn
     end: Cancel game…

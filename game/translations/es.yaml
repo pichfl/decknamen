@@ -34,7 +34,8 @@ gameLobby:
     selectWords: Selecciona palabras
 
 gamePlay:
-  title: 'Turno del equipo {team}'
+  title: 'Tu turno!'
+  titleOther: 'El turno del otro equipo.'
   action:
     skip: Finalizar turno
     end: Rendirse…

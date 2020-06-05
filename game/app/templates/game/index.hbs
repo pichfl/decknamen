@@ -1,11 +1,10 @@
-{{title
+{{title (
+  if (eq this.state.turn this.user.team)
   (t
-    "gamePlay.title"
-    team=(t
-      (if (eq this.state.turn this.TEAMS.TEAM_A) "Teams.teamA" "Teams.teamB")
-    )
-  )
-}}
+  "gamePlay.title")
+  (t
+  "gamePlay.titleOther")
+)}}
 
 <div local-class="max">
   <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}}>
