@@ -1,5 +1,6 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
+import { later } from '@ember/runloop';
 
 export default class Confetti extends Helper {
   @service confetti;
@@ -7,53 +8,52 @@ export default class Confetti extends Helper {
   colors;
 
   compute([colors]) {
-    let last = 0;
+    if (this.confetti.running) {
+      return;
+    }
 
     this.confetti.running = true;
-
-    const render = (now) => {
-      if (!this.confetti.running) {
-        return;
-      }
-
-      if (now - last >= 2000) {
-        last = now;
-
-        this.fire(colors);
-      }
-
-      this.token = requestAnimationFrame(render);
-    };
-
-    render();
+    this.fire(colors);
   }
 
-  fire(colors = ['#203864', '#8faadc', '#d1dbed']) {
+  async fire(
+    colors = ['#203864', '#8faadc', '#d1dbed'],
+    particles = 17 + Math.ceil(Math.random() * 7)
+  ) {
+    if (!this.confetti.running) {
+      return;
+    }
+
     this.confetti.fire({
-      particleCount: colors.count,
+      particleCount: colors.length * particles,
       angle: 60,
-      spread: 55,
+      spread: 60,
       origin: { x: 0 },
       colors: colors,
+      startVelocity: 60,
       disableForReducedMotion: true,
     });
 
     this.confetti.fire({
-      particleCount: colors.count,
+      particleCount: colors.length * particles,
       angle: 120,
-      spread: 55,
+      spread: 60,
       origin: { x: 1 },
       colors: colors,
+      startVelocity: 60,
       disableForReducedMotion: true,
     });
+
+    later(() => {
+      this.fire(colors);
+    }, 2000);
   }
 
   willDestroy() {
     this.confetti.running = false;
     this.confetti.reset();
-
-    if (this.token) {
-      window.cancelAnimationFrame(this.token);
-    }
+    // if (this.token) {
+    //   window.cancelAnimationFrame(this.token);
+    // }
   }
 }
