@@ -16,16 +16,25 @@ The [spy icon](https://thenounproject.com/term/spy/2518785) was created by Adrie
 
 ## Technical details
 
-This project uses a simple websocket backend based on Primus and Node.js. See the `api` folder for details.
+This project uses a websocket and http backend based on Primus and Node.js. See the `api` folder for details. To
+organize everything, this repository uses [Yarn](https://yarnpkg.com) workspaces (for now). Given that the API part
+could easily power any game, it might get extracted into its own repository at some point.
 
 The website itself is powered by [Ember.js](https://emberjs.com) & a bunch of addons. The project is inside the `game`
 folder.
 
-To organize everything, this repository uses [Yarn](https://yarnpkg.com) workspaces (for now). Given that the API part
-could easily power any game, it might get extracted into its own repository at some point.
+This public version runs on a free tier of [Heroku](https://heroku.com/) and its
+[Redis Addon](https://elements.heroku.com/addons/heroku-redis) and is hosted on [Vercel](https://vercel.com/), both of
+which are quite excellent and made deploying this a bliss.
 
-This project runs on a free tier of [Heroku](https://heroku.com/) and is hosted on [Vercel](https://vercel.com/), both
-of which are quite excellent and made deploying this a bliss.
+To run the project locally, you will need to create a `.env` file in the root of this project, containing a single
+configuration option:
+
+```
+REDIS_URL=redis://…
+```
+
+You can either run Redis locally on your machine or use connection URL provided by Heroku, it will work locally as well.
 
 ## Contributing & License
 
