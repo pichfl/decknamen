@@ -18,4 +18,8 @@ export default class GameLobbyRoute extends Route {
       this.replaceWith('game.over');
     }
   }
+
+  deactivate() {
+    this.controller.isLoading = false;
+  }
 }

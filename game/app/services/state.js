@@ -255,7 +255,7 @@ export default class GameStateService extends StateService {
       !!this.leadTeamA &&
       !!this.leadTeamB &&
       this.player.lead &&
-      this.words !== null &&
+      !!this.words &&
       this.cards.length === 0
     );
   }
