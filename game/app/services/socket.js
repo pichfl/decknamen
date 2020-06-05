@@ -2,6 +2,7 @@ import Service, { inject as service } from '@ember/service';
 import ENV from 'game/config/environment';
 import { tracked } from '@glimmer/tracking';
 import { nanoid } from 'nanoid';
+import fetch from 'fetch';
 
 const deferred = (options = { timeout: undefined }) => {
   let resolve;
@@ -38,11 +39,10 @@ export default class SocketService extends Service {
 
   @tracked isConnected = false;
   @tracked room = undefined;
-  @tracked substream = undefined;
 
   async loadPrimus() {
     const script = document.createElement('script');
-    script.src = `${ENV.APP.server}primus/primus.js`;
+    script.src = `${ENV.APP.server}/primus/primus.js`;
 
     return new Promise((resolve, reject) => {
       script.onload = resolve;
@@ -122,10 +122,10 @@ export default class SocketService extends Service {
     });
   }
 
-  roomRead() {
-    return this.write('room.read', {
-      room: this.room,
-    });
+  async roomRead() {
+    const response = await fetch(`${ENV.APP.server}/rooms/${this.room}`);
+
+    return response.json();
   }
 
   roomSound(sprite) {

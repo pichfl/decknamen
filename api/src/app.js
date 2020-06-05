@@ -1,72 +1,20 @@
-const initPrimus = require('./primus');
+const fastify = require('./fastify');
+const primus = require('./primus');
 const Store = require('./store');
 
 module.exports = () => {
-  const primus = initPrimus();
   const store = new Store();
 
-  primus.on('connection', async (spark) => {
-    let room;
+  fastify.decorate('store', store);
 
-    spark.on('data', async ({ type, id, ...data }) => {
-      if (type === 'room.join') {
-        spark.join(data.room, () => {
-          spark.write({
-            type,
-            id,
-            ...data,
-          });
-        });
+  fastify.listen(process.env.PORT || 3000, (err, address) => {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
 
-        room = data.room;
-
-        return;
-      }
-
-      if (!room) {
-        return;
-      }
-
-      if (type === 'room.sync') {
-        if (Object.keys(data).length > 0) {
-          await store.setRoom(room, data);
-        }
-
-        const roomData = await store.getRoom(room);
-
-        spark.room(room).write({
-          type,
-          id,
-          ...roomData,
-        });
-
-        return;
-      }
-
-      if (type === 'room.read') {
-        const roomData = await store.getRoom(room);
-
-        spark.room(room).write({
-          type,
-          id,
-          ...roomData,
-        });
-
-        return;
-      }
-
-      if (type === 'room.sound') {
-        spark
-          .room(room)
-          .except(spark.id)
-          .write({
-            type,
-            id,
-            ...data,
-          });
-
-        return;
-      }
-    });
+    fastify.log.info(`server listening on ${address}`);
   });
+
+  primus(fastify.server, store);
 };
