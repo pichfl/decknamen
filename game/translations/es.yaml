@@ -16,7 +16,7 @@ index:
     githubAfter: If you know what that means, feel free to help to improve it.
 
 gameLobby:
-  title: Lobby
+  title: Decknamen
   text:
     help: Edita tu nombre, selecciona un equipo, líder de equipo, y espera a que elijan una lista de palabras para empezar el juego
     addTeamMembers: Para empezar el juego, añade a tus miembros de equipo desde la lista de espera
