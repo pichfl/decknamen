@@ -12,7 +12,7 @@ module.exports = function (environment) {
     },
 
     APP: {
-      server: 'http://localhost:3000/',
+      server: 'http://localhost:3000',
       locales: ['en', 'de', 'es', 'nl'],
     },
 
@@ -38,7 +38,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production' || environment === 'heroku') {
-    ENV.APP.server = 'https://decknamen.herokuapp.com/';
+    ENV.APP.server = 'https://decknamen.herokuapp.com';
   }
 
   return ENV;
