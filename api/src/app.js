@@ -7,13 +7,13 @@ module.exports = () => {
 
   fastify.decorate('store', store);
 
-  fastify.listen(process.env.PORT || 3000, (err, address) => {
+  fastify.listen(process.env.PORT || 3000, '0.0.0.0', (err, address) => {
     if (err) {
       fastify.log.error(err);
       process.exit(1);
     }
 
-    fastify.log.info(`server listening on ${address}`);
+    console.log(`Server listening on ${address}`);
   });
 
   primus(fastify.server, store);

@@ -78,5 +78,6 @@ LobbyPlayer:
     kick: Verwijder speler
 
 Teams:
+  team: Team
   teamA: Rood
   teamB: Blauw
