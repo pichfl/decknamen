@@ -34,8 +34,8 @@ gameLobby:
     selectWords: Selecteer woorden
 
 gamePlay:
-  title: 'Het is jouw beurt!'
-  titleOther: 'De anderen zijn aan.'
+  title: 'Het is jullie beurt!'
+  titleOther: 'Het andere team is aan de beurt.'
   action:
     skip: Eindig beurt
     end: Sluit spel af…
