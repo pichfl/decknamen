@@ -1,4 +1,5 @@
 .loading {
+  display: block;
   margin: auto;
   color: var(--metal-3);
 }
