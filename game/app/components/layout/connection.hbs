@@ -1,0 +1,13 @@
+<div local-class="connection">
+  <p local-class="status">
+    {{t "LayoutConnection.text.disconnected"}}
+  </p>
+
+  {{#if this.showRefresh}}
+    <Ui::Button @style="link" @onClick={{this.forceRefresh}} local-class="link">
+      {{t "LayoutConnection.action.tryAgain"}}
+    </Ui::Button>
+  {{else}}
+    <FaIcon @icon="circle-notch" local-class="loading" @size="2x" @spin="true" />
+  {{/if}}
+</div>

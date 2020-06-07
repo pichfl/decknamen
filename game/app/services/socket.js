@@ -12,8 +12,13 @@ export default class SocketService extends Service {
   @service router;
   @service sound;
 
-  @tracked isConnected = false;
   @tracked room = undefined;
+  @tracked readyState = 0;
+  @tracked isReconnecting = false;
+
+  get isConnected() {
+    return this.readyState === 3;
+  }
 
   async loadPrimus() {
     const script = document.createElement('script');
@@ -30,7 +35,7 @@ export default class SocketService extends Service {
   async connect(room) {
     await this.loadPrimus();
 
-    this.primus = new window.Primus(getServer(), {
+    const primus = new window.Primus(getServer(), {
       reconnect: {
         max: Infinity,
         min: 500,
@@ -39,7 +44,7 @@ export default class SocketService extends Service {
       },
     });
 
-    this.primus.on('data', ({ type, id, ...data }) => {
+    primus.on('data', ({ type, id, ...data }) => {
       if (this.requests.has(id)) {
         this.requests.get(id).resolve(data);
       }
@@ -49,12 +54,25 @@ export default class SocketService extends Service {
       }
     });
 
+    primus.on('readyStateChange', () => {
+      this.readyState = primus.readyState;
+    });
+
+    primus.on('reconnect', () => {
+      this.isReconnecting = true;
+    });
+
+    primus.on('reconnected', () => {
+      this.isReconnecting = false;
+    });
+
+    this.primus = primus;
+
     const response = await this.write('room.join', {
       room,
     });
 
     this.room = response.room;
-    this.isConnected = true;
   }
 
   requests = new Map();

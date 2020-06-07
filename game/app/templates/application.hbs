@@ -1,6 +1,13 @@
 <HeadLayout />
 
 {{title (t "application.title")}}
+
 <EmberLoadRemover />
 
-{{outlet}}
+{{#if this.socket.isReconnecting}}
+  <Layout::Connection />
+{{/if}}
+
+<div local-class={{if this.socket.isReconnecting "disconnected"}}>
+  {{outlet}}
+</div>

@@ -61,15 +61,22 @@ export class StateService extends Service {
       this.sound.play(sprite);
     });
 
+    this.socket.primus.on('reconnected', () => {
+      this.updateRoom();
+    });
+
     document.addEventListener('visibilitychange', async () => {
       if (document.hidden) {
         return;
       }
 
-      const response = await this.socket.roomRead();
-
-      this.current = this.current.merge(response);
+      this.updateRoom();
     });
+  }
+
+  async updateRoom() {
+    const response = await this.socket.roomRead();
+    this.current = this.current.merge(response);
   }
 
   assignPlayer() {

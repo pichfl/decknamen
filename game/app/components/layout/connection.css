@@ -1,0 +1,33 @@
+.connection {
+  position: absolute;
+  z-index: 2;
+  top: var(--spacing-3xl);
+  left: 50%;
+  width: 100%;
+  max-width: 24rem;
+  padding: var(--spacing-lg);
+  transform: translateX(-50%);
+  border-radius: var(--spacing-sm);
+  background: var(--metal-7);
+  box-shadow: var(--shadow-lg);
+}
+
+.loading {
+  display: block;
+  margin: var(--spacing-sm) auto 0;
+  color: var(--metal-3);
+}
+
+.status {
+  line-height: 1.5rem;
+  text-align: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+button.link {
+  display: block;
+  margin: var(--spacing-sm) auto 0;
+  padding: var(--spacing-sm);
+  text-align: center;
+  color: var(--metal-3);
+}
