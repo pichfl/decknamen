@@ -65,6 +65,12 @@ gameInProgress:
   action:
     back: Zurück zum Start
 
+LayoutConnection:
+  text:
+    disconnected: Die Serververbindung wurde unterbrochen. Versuche erneut zu verbinden.
+  action:
+    tryAgain: 'Nochmal versuchen'
+
 LobbyPlayer:
   text:
     unknownPlayer: Unbekannt

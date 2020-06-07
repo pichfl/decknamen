@@ -65,6 +65,12 @@ gameInProgress:
   action:
     back: Terug naar begin
 
+LayoutConnection:
+  text:
+    disconnected: Je verbinding met de server is verbroken. Probeert opnieuw te verbinden
+  action:
+    tryAgain: Probeer opnieuw
+
 LobbyPlayer:
   text:
     unknownPlayer: 'Onbekende speler'

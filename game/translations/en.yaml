@@ -65,6 +65,12 @@ gameInProgress:
   action:
     back: Back to start
 
+LayoutConnection:
+  text:
+    disconnected: You were disconnected from the server. Trying to reconnect.
+  action:
+    tryAgain: 'Try again'
+
 LobbyPlayer:
   text:
     unknownPlayer: 'Unknown player'
@@ -78,5 +84,6 @@ LobbyPlayer:
     kick: Remove player
 
 Teams:
+  team: Team
   teamA: Red
   teamB: Blue
