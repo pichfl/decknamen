@@ -24,7 +24,12 @@ export class StateService extends Service {
   syncTask;
 
   async connect(room) {
-    await this.socket.connect(room);
+    try {
+      await this.socket.connect(room);
+    } catch (err) {
+      console.error('Error connecting', err);
+    }
+
     const data = await this.socket.roomRead();
 
     this.current = new GameState(data);

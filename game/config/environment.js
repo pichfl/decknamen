@@ -12,7 +12,7 @@ module.exports = function (environment) {
     },
 
     APP: {
-      server: 'http://localhost:3000',
+      server: ':3000',
       locales: ['en', 'de', 'es', 'nl'],
     },
 

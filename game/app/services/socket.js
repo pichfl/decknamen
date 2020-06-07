@@ -1,34 +1,9 @@
 import Service, { inject as service } from '@ember/service';
-import ENV from 'game/config/environment';
 import { tracked } from '@glimmer/tracking';
 import { nanoid } from 'nanoid';
 import fetch from 'fetch';
-
-const deferred = (options = { timeout: undefined }) => {
-  let resolve;
-  let reject;
-
-  const promise = new Promise((res, rej) => {
-    if (options.timeout) {
-      let timer = setTimeout(() => {
-        rej(new Error('Deferred timed out'));
-      }, options.timeout);
-
-      resolve = (...args) => {
-        clearTimeout(timer);
-        res(...args);
-      };
-      reject = rej;
-
-      return;
-    }
-
-    resolve = res;
-    reject = rej;
-  });
-
-  return { promise, resolve, reject };
-};
+import getServer from 'game/utils/get-server';
+import { defer } from 'rsvp';
 
 export default class SocketService extends Service {
   @tracked primus = undefined;
@@ -42,7 +17,7 @@ export default class SocketService extends Service {
 
   async loadPrimus() {
     const script = document.createElement('script');
-    script.src = `${ENV.APP.server}/primus/primus.js`;
+    script.src = `${getServer()}/primus/primus.js`;
 
     return new Promise((resolve, reject) => {
       script.onload = resolve;
@@ -55,8 +30,7 @@ export default class SocketService extends Service {
   async connect(room) {
     await this.loadPrimus();
 
-    this.primus = new window.Primus(ENV.APP.server, {
-      manual: true,
+    this.primus = new window.Primus(getServer(), {
       reconnect: {
         max: Infinity,
         min: 500,
@@ -64,8 +38,6 @@ export default class SocketService extends Service {
         factor: 1.1,
       },
     });
-
-    this.primus.open();
 
     this.primus.on('data', ({ type, id, ...data }) => {
       if (this.requests.has(id)) {
@@ -90,7 +62,7 @@ export default class SocketService extends Service {
   async write(type, data) {
     const id = nanoid();
 
-    this.requests.set(id, deferred());
+    this.requests.set(id, defer());
     this.primus.write({ type, id, ...data });
 
     return this.requests.get(id).promise;
@@ -123,7 +95,7 @@ export default class SocketService extends Service {
   }
 
   async roomRead() {
-    const response = await fetch(`${ENV.APP.server}/rooms/${this.room}`);
+    const response = await fetch(`${getServer()}/rooms/${this.room}`);
 
     return response.json();
   }
