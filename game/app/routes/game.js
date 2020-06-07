@@ -7,6 +7,8 @@ export default class GameRoute extends Route {
   @service user;
 
   async model({ room_id }) {
+    this.socket.room = room_id;
+
     return this.state.connect(room_id);
   }
 

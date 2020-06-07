@@ -79,11 +79,11 @@
 
 .selected.lead {
   border-color: var(--metal-1);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg-outside);
 }
 
 .selected.lead:focus {
-  box-shadow: var(--shadow-lg), 0 0 0 var(--spacing-xs) var(--cold-4);
+  box-shadow: var(--shadow-lg-outside), 0 0 0 var(--spacing-xs) var(--cold-4);
 }
 
 .selected.player,
@@ -92,11 +92,11 @@
   border-color: var(--grass-3);
   color: var(--metal-1);
   text-shadow: 0 1px 3px var(--grass-7);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg-outside);
 }
 
 .selected.player:focus {
-  box-shadow: var(--shadow-lg), 0 0 0 var(--spacing-xs) var(--cold-4);
+  box-shadow: var(--shadow-lg-outside), 0 0 0 var(--spacing-xs) var(--cold-4);
 }
 
 .selected.player .target {

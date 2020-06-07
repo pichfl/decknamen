@@ -68,11 +68,13 @@ export default class SocketService extends Service {
 
     this.primus = primus;
 
-    const response = await this.write('room.join', {
-      room,
-    });
+    await this.joinRoom();
+  }
 
-    this.room = response.room;
+  async joinRoom() {
+    await this.write('room.join', {
+      room: this.room,
+    });
   }
 
   requests = new Map();

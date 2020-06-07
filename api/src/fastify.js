@@ -4,11 +4,16 @@ const fastify = require('fastify')({
 
 fastify.register(require('fastify-compress'), { global: true });
 fastify.register(require('fastify-cors'), {
-  origin: ['http://localhost:4200', 'https://dn.ylk.gd', /^https:\/\/decknamen-.*\.now\.sh$/],
+  origin: [
+    'http://localhost:4200',
+    'https://dn.ylk.gd',
+    /^https:\/\/decknamen-.*\.now\.sh$/,
+    ...(process.env.LOCAL_ORIGIN ? [process.env.LOCAL_ORIGIN] : []),
+  ],
 });
 
 fastify.get('/', (request, reply) => {
-  reply.send({ hello: 'world' });
+  reply.send('Learn more: https://github.com/pichfl/decknamen');
 });
 
 fastify.get('/rooms/:id', async (request, reply) => {
