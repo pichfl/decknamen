@@ -27,6 +27,7 @@
 
 .col {
   margin-top: 0;
+  margin-bottom: var(--spacing-lg);
 }
 
 @media (min-width: 68rem) {
