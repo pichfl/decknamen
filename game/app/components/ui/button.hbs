@@ -1,36 +1,23 @@
 {{#if @route}}
-  {{#if @model}}
-    <LinkTo
-      ...attributes
-      @route={{@route}}
-      @model={{@model}}
-      local-class="button {{if (eq @style "primary") "primary"}} {{
-        if (eq @style "link") "link"
-      }}"
-      disabled={{or this.isLoading @disabled}}
-    >
-      {{yield}}
-    </LinkTo>
-  {{else}}
-    <LinkTo
-      ...attributes
-      @route={{@route}}
-      local-class="button {{if (eq @style "primary") "primary"}} {{
-        if (eq @style "link") "link"
-      }}"
-      disabled={{or this.isLoading @disabled}}
-    >
-      {{yield}}
-    </LinkTo>
-  {{/if}}
+  <LinkTo
+    ...attributes
+    @route={{@route}}
+    @model={{@model}}
+    local-class="button {{if (eq @style "primary") "primary"}} {{
+      if (eq @style "link") "link"
+    }}"
+    disabled={{or this.isLoading @disabled}}
+  >
+    {{yield}}
+  </LinkTo>
 {{else}}
   <button
-    ...attributes
     local-class="button {{if this.isLoading "loading"}} {{
       if (eq @style "primary") "primary"
     }} {{if (eq @style "link") "link"}}"
     type={{if @type @type "button"}}
     disabled={{or this.isLoading @disabled}}
+    ...attributes
     {{on "click" this.onClick}}
   >
     <span local-class="label">
