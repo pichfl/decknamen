@@ -27,7 +27,7 @@
           <Lobby::Player @player={{this.state.leadTeamA}} />
         {{/if}}
 
-        {{#each this.state.playersTeamA as |player|}}
+        {{#each this.state.playersTeamA key="id" as |player|}}
           <Lobby::Player
             @player={{player}}
             @teamHasLead={{this.state.leadTeamA}}
@@ -47,7 +47,7 @@
           <Lobby::Player @player={{this.state.leadTeamB}} />
         {{/if}}
 
-        {{#each this.state.playersTeamB as |player|}}
+        {{#each this.state.playersTeamB key="id" as |player|}}
           <Lobby::Player
             @player={{player}}
             @teamHasLead={{this.state.leadTeamB}}
