@@ -17,15 +17,15 @@
   padding: 1%;
 }
 
-.card * {
-  transition: all 0.5s ease-in-out;
+.cards button {
+  transition: all 0.2s ease-in;
 }
 
 .cards button {
   border-width: 3px;
-  border-radius: var(--spacing-xs);
+  border-radius: calc(var(--spacing-xs) * 2);
 }
 
 .cards span span {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
