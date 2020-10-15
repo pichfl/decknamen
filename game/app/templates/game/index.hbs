@@ -1,10 +1,10 @@
-{{page-title (
-  if (eq this.state.turn this.user.team)
-  (t
-  "gamePlay.title")
-  (t
-  "gamePlay.titleOther")
-)}}
+{{page-title
+  (if
+    (eq this.state.turn this.user.team)
+    (t "gamePlay.title")
+    (t "gamePlay.titleOther")
+  )
+}}
 
 <div local-class="max">
   <Game::Tally @cards={{this.cards}} @players={{this.lobby.players}}>
@@ -20,7 +20,13 @@
   <ul local-class="cards">
     {{#each this.state.cards as |card|}}
       <li>
-        <Game::Card @card={{card}} @onChange={{this.onCardChange}} />
+        <Game::Card
+          @card={{card}}
+          @state={{this.state}}
+          @isLead={{this.state.player.lead}}
+          @user={{this.user}}
+          @onChange={{this.onCardChange}}
+        />
       </li>
     {{/each}}
   </ul>

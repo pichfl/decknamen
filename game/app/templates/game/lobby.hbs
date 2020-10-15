@@ -21,7 +21,10 @@
 
 <Ui::Form @onSubmit={{this.startGame}} local-class="form">
   <div local-class="col">
-    <Layout::Panel @title={{t "gameLobby.text.headlineTeamA"}} local-class="red">
+    <Layout::Panel
+      @title={{t "gameLobby.text.headlineTeamA"}}
+      local-class="red"
+    >
       <ul>
         {{#if this.state.leadTeamA}}
           <Lobby::Player @player={{this.state.leadTeamA}} />
@@ -41,7 +44,10 @@
       </ul>
     </Layout::Panel>
 
-    <Layout::Panel @title={{t "gameLobby.text.headlineTeamB"}} local-class="blue">
+    <Layout::Panel
+      @title={{t "gameLobby.text.headlineTeamB"}}
+      local-class="blue"
+    >
       <ul>
         {{#if this.state.leadTeamB}}
           <Lobby::Player @player={{this.state.leadTeamB}} />

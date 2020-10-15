@@ -2,11 +2,10 @@
   <Layout::Title
     local-class="title {{if (is-team-a this.state.turn) "team-a" "team-b"}}"
     @title={{
-      if (eq this.state.turn this.user.team)
-      (t
-      "gamePlay.title")
-      (t
-      "gamePlay.titleOther")
+      if
+      (eq this.state.turn this.user.team)
+      (t "gamePlay.title")
+      (t "gamePlay.titleOther")
     }}
     @user={{this.user}}
     @socket={{this.state}}

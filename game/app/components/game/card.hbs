@@ -2,10 +2,10 @@
 <button
   type="button"
   disabled={{this.isDisabled}}
-  class={{if (or this.state.player.lead this.isUncovered) this.typeClass}}
+  class={{if (or @isLead this.isUncovered) this.typeClass}}
   local-class="
   card
-  {{if this.state.player.lead "lead" "player"}}
+  {{if @isLead "lead" "player"}}
    {{if this.isSelected "selected"}}
    {{if this.isCovered "covered" "uncovered"}}
   "

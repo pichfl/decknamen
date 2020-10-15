@@ -32,7 +32,7 @@ export default class SocketService extends Service {
     });
   }
 
-  async connect(room) {
+  async connect(/* room */) {
     await this.loadPrimus();
 
     const primus = new window.Primus(getServer(), {

@@ -1,13 +1,9 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import { CARD_STATES, CARD_TYPES } from 'game/utils/enums';
 import { action } from '@ember/object';
 import styles from './card.css';
 
 export default class GameCardComponent extends Component {
-  @service user;
-  @service state;
-
   get type() {
     return this.args.card.type;
   }
@@ -35,11 +31,11 @@ export default class GameCardComponent extends Component {
   }
 
   get isDisabled() {
-    if (this.user.team !== this.state.turn) {
+    if (this.args.user.team !== this.args.state.turn) {
       return true;
     }
 
-    if (this.state.player.lead && this.args.card.selected === false) {
+    if (this.args.isLead && this.args.card.selected === false) {
       return true;
     }
 

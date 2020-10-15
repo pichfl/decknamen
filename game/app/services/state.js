@@ -8,6 +8,40 @@ import GameState from '../utils/game-state';
 const { UNCOVERED } = CARD_STATES;
 const { TEAM_A, TEAM_B, BYSTANDER, ABORT } = CARD_TYPES;
 
+export function shuffleCards(words) {
+  const selectedWords = sampleSize(words, 25);
+
+  // Pick starting team
+  const firstTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
+  const secondTeam = firstTeam === TEAM_A ? TEAM_B : TEAM_A;
+
+  // Create cards
+  const cards = shuffle(selectedWords).map((word, index) => {
+    let type = CARD_TYPES.BYSTANDER;
+
+    if (index < 9) {
+      type = firstTeam;
+    } else if (index < 17) {
+      type = secondTeam;
+    } else if (index === 17) {
+      type = ABORT;
+    }
+
+    return {
+      type,
+      word,
+      state: CARD_STATES.COVERED,
+      selected: false,
+    };
+  });
+
+  return {
+    firstTeam,
+    secondTeam,
+    cards: shuffle(cards),
+  };
+}
+
 export class StateService extends Service {
   @service user;
   @service router;
@@ -135,31 +169,7 @@ export class StateService extends Service {
   }
 
   async startGame(words) {
-    const selectedWords = sampleSize(words, 25);
-
-    // Pick starting team
-    const firstTeam = Math.random() < 0.5 ? TEAM_A : TEAM_B;
-    const secondTeam = firstTeam === TEAM_A ? TEAM_B : TEAM_A;
-
-    // Create cards
-    const cards = shuffle(selectedWords).map((word, index) => {
-      let type = CARD_TYPES.BYSTANDER;
-
-      if (index < 9) {
-        type = firstTeam;
-      } else if (index < 17) {
-        type = secondTeam;
-      } else if (index === 17) {
-        type = ABORT;
-      }
-
-      return {
-        type,
-        word,
-        state: CARD_STATES.COVERED,
-        selected: false,
-      };
-    });
+    const { firstTeam, cards } = shuffleCards(words);
 
     this.current.cards.push(...shuffle(cards));
     this.current.turn = firstTeam;
