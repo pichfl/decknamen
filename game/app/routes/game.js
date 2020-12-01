@@ -9,7 +9,9 @@ export default class GameRoute extends Route {
   async model({ room_id }) {
     this.socket.room = room_id;
 
-    return this.state.connect(room_id);
+    await this.state.connect(room_id);
+
+    return room_id;
   }
 
   activate() {
