@@ -62,7 +62,7 @@ export default class GameLobbyController extends Controller {
       .split(',')
       .map((word) => word.trim());
 
-    await this.state.startGame(words);
+    await this.state.startGame([...new Set(words)]);
 
     this.transitionToRoute('game.index');
   }
