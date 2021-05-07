@@ -1,4 +1,3 @@
-{{! template-lint-disable css-modules/no-class }}
 <button
   type="button"
   disabled={{this.isDisabled}}
@@ -6,8 +5,8 @@
   local-class="
   card
   {{if @isLead "lead" "player"}}
-   {{if this.isSelected "selected"}}
-   {{if this.isCovered "covered" "uncovered"}}
+  {{if this.isSelected "selected"}}
+  {{if this.isCovered "covered" "uncovered"}}
   "
   {{on "click" this.onClick}}
 >
@@ -42,5 +41,3 @@
     {{/if}}
   </span>
 </button>
-
-{{yield}}

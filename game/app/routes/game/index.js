@@ -5,6 +5,7 @@ export default class GameIndexRoute extends Route {
   @service socket;
   @service state;
   @service user;
+  @service router;
 
   beforeModel() {
     if (!this.socket.room) {
@@ -12,19 +13,19 @@ export default class GameIndexRoute extends Route {
     }
 
     if (this.state.cards.length === 0) {
-      this.replaceWith('game.lobby');
+      this.router.replaceWith('game.lobby');
 
       return;
     }
 
     if (this.state.over === true) {
-      this.replaceWith('game.over');
+      this.router.replaceWith('game.over');
 
       return;
     }
 
     if (this.state.player.team === undefined) {
-      this.transitionTo('game.in-progress');
+      this.router.transitionTo('game.in-progress');
 
       return;
     }

@@ -64,7 +64,7 @@ export default class GameLobbyController extends Controller {
 
     await this.state.startGame([...new Set(words)]);
 
-    this.transitionToRoute('game.index');
+    this.router.transitionTo('game.index');
   }
 
   @action

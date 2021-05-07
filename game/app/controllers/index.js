@@ -10,6 +10,7 @@ const idShort = customAlphabet(alphabet, 4);
 
 export default class IndexController extends Controller {
   @service words;
+  @service router;
 
   get randomToken() {
     const original = this.words.byId?.['english(Original)']?.list ?? [];
@@ -29,6 +30,6 @@ export default class IndexController extends Controller {
   startGame(event) {
     event.preventDefault();
 
-    this.transitionToRoute('game');
+    this.router.transitionTo('game');
   }
 }

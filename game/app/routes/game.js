@@ -5,6 +5,7 @@ export default class GameRoute extends Route {
   @service socket;
   @service state;
   @service user;
+  @service router;
 
   async model({ room_id }) {
     this.socket.room = room_id;
@@ -21,12 +22,12 @@ export default class GameRoute extends Route {
       }
 
       if (this.state.over === true) {
-        this.replaceWith('game.over');
+        this.router.replaceWith('game.over');
 
         return;
       }
 
-      this.replaceWith(
+      this.router.replaceWith(
         this.state.cards.length > 0 ? 'game.index' : 'game.lobby'
       );
     };

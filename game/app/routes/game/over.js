@@ -5,6 +5,7 @@ export default class GameOverRoute extends Route {
   @service socket;
   @service state;
   @service user;
+  @service router;
 
   beforeModel() {
     if (!this.socket.room) {
@@ -16,9 +17,9 @@ export default class GameOverRoute extends Route {
     }
 
     if (this.state.cards.length > 0) {
-      this.replaceWith('game.index');
+      this.router.replaceWith('game.index');
     } else {
-      this.replaceWith('game.lobby');
+      this.router.replaceWith('game.lobby');
     }
   }
 }

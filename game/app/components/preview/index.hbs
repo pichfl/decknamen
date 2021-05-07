@@ -1,0 +1,19 @@
+<div>
+  <ul local-class="cards">
+    {{#each this.cards key="word" as |cardData|}}
+      <li>
+        <Game::Card
+          @card={{cardData}}
+          @state={{hash
+            player=(hash
+              lead=true
+            )
+          }}
+          @isLead={{cardData.isLead}}
+          @user={{hash}}
+          @onChange={{this.noop}}
+        />
+      </li>
+    {{/each}}
+  </ul>
+</div>

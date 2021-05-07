@@ -1,6 +1,6 @@
 <Layout::Title @title={{t "application.title"}} />
 
-<Preview @cards={{this.model.cards}} />
+<Preview />
 
 <Layout::Panel local-class="extra">
   <p local-class="actions">
@@ -12,9 +12,11 @@
   <h3>
     {{t "index.text.headlineAbout"}}
   </h3>
+
   <p>
     {{t "index.text.about"}}
   </p>
+
   <p>
     {{t "index.text.githubBefore"}}
     <a href={{t "index.text.githubLink"}}>

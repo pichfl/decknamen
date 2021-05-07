@@ -7,27 +7,23 @@ import { action } from '@ember/object';
 
 const randomBoolean = () => Math.random() < 0.5;
 
-export default class PreviewComponent extends Component {
+export default class GamePreviewComponent extends Component {
   @service state;
   @service words;
 
-  state = {
-    player: {
-      lead: false,
-    },
-  };
-  user = {};
-  @tracked cards = shuffleCards([
-    ...this.words.byId['english(Original)'].list,
-    ...this.words.byId['english(Duet)'].list,
-  ]).cards.map((card) => ({
-    ...card,
-    isLead: randomBoolean(),
-    state: randomBoolean() ? CARD_STATES.COVERED : CARD_STATES.UNCOVERED,
-  }));
+  @tracked cards = [];
 
   constructor() {
     super(...arguments);
+
+    this.cards = shuffleCards([
+      ...this.words.byId['english(Original)'].list,
+      ...this.words.byId['english(Duet)'].list,
+    ]).cards.map((card) => ({
+      ...card,
+      isLead: randomBoolean(),
+      state: randomBoolean() ? CARD_STATES.COVERED : CARD_STATES.UNCOVERED,
+    }));
 
     setInterval(() => {
       this.cards = this.cards.map((card) => ({
