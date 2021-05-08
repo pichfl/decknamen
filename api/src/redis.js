@@ -1,9 +1,18 @@
 const Redis = require('ioredis');
 
-const redis = new Redis(process.env.REDIS_URL, {
-  tls: {
-      rejectUnauthorized: false
+const client = new Redis(
+  process.env.REDIS_URL ?? 
+  process.env.HEROKU_REDIS_PUCE_TLS_URL ?? 
+  process.env.HEROKU_REDIS_PUCE_URL, 
+  {
+    tls: {
+        rejectUnauthorized: false
+    }
   }
-});
+);
 
-module.exports = redis;
+client.on('error', (error) => {
+  console.error(error)
+})
+
+module.exports = client;
