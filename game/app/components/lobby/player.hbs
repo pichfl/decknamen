@@ -2,6 +2,7 @@
   {{#if this.isEditMode}}
     <form local-class="form" {{on "submit" this.updateUserName}}>
       <Ui::Input
+        autofocus
         @type="text"
         @autocomplete="given-name"
         @value={{this.user.name}}

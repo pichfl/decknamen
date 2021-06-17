@@ -2,10 +2,10 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 export default class GameIndexRoute extends Route {
+  @service router;
   @service socket;
   @service state;
   @service user;
-  @service router;
 
   beforeModel() {
     if (!this.socket.room) {

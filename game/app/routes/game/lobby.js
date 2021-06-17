@@ -22,7 +22,7 @@ export default class GameLobbyRoute extends Route {
   }
 
   deactivate() {
-    const controller = getOwner(this).inject('controller:game.lobby');
+    const controller = getOwner(this).lookup('controller:game.lobby');
 
     controller.isLoading = false;
   }

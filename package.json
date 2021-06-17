@@ -10,6 +10,8 @@
   },
   "scripts": {
     "ember": "yarn workspace game run ember",
-    "start:ui": "yarn workspace game run start"
-  }
+    "start:ui": "yarn workspace game run start",
+    "start:api": "yarn workspace api dev"
+  },
+  "dependencies": {}
 }

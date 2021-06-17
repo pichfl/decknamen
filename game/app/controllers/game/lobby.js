@@ -6,6 +6,7 @@ import { TEAMS } from 'game/utils/enums';
 
 export default class GameLobbyController extends Controller {
   @service intl;
+  @service router;
   @service socket;
   @service state;
   @service words;

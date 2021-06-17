@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { camelize } from '@ember/string';
 import { tracked } from '@glimmer/tracking';
 import fetch from 'fetch';
+import sortBy from 'lodash-es/sortBy';
 
 export default class WordsService extends Service {
   @tracked list = [];
@@ -10,20 +11,23 @@ export default class WordsService extends Service {
     const response = await fetch('/words.json');
     const json = await response.json();
 
-    this.list = Object.keys(json).map((title) => ({
-      id: camelize(title),
-      title,
-      list: json[title],
-      plain: json[title]
-        .map((word) =>
-          word
-            .toLowerCase()
-            .split(' ')
-            .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
-            .join(' ')
-        )
-        .join(', '),
-    }));
+    this.list = sortBy(
+      Object.keys(json).map((title) => ({
+        id: camelize(title),
+        title,
+        list: json[title],
+        plain: json[title]
+          .map((word) =>
+            word
+              .toLowerCase()
+              .split(' ')
+              .map((w) => `${w.charAt(0).toUpperCase()}${w.slice(1)}`)
+              .join(' ')
+          )
+          .join(', '),
+      })),
+      'title'
+    );
   }
 
   get byId() {
