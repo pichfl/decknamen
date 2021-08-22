@@ -1,5 +1,6 @@
 'use strict';
 
+// const { Webpack } = require('@embroider/webpack');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
@@ -9,6 +10,8 @@ module.exports = function (defaults) {
       include: [
         'proposal-nullish-coalescing-operator',
         'proposal-optional-chaining',
+        'proposal-private-methods',
+        'proposal-class-properties',
       ],
     },
     cssModules: {
@@ -30,4 +33,7 @@ module.exports = function (defaults) {
   });
 
   return app.toTree();
+  // return require('@embroider/compat').compatBuild(app, Webpack, {
+  //   compatAdapters: new Map([['ember-get-config', null]]),
+  // });
 };

@@ -10,6 +10,8 @@ export default class ApplicationRoute extends Route {
   async beforeModel() {
     this.user.restore();
 
+    document.querySelector('.ember-load-indicator').remove();
+
     await this.loadAndSetLanguage();
     await this.words.load();
   }

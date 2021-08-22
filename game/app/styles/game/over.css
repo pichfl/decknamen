@@ -30,6 +30,10 @@
   color: var(--metal-1);
 }
 
+.\4x {
+  font-size: 4em
+}
+
 .icon.party {
   animation: party 2s linear infinite;
 }

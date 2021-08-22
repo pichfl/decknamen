@@ -17,7 +17,7 @@
     <div local-class="name">
       {{#if @player.lead}}
         <span local-class="leader">
-          <FaIcon @icon="spy" />
+          <Icon @icon="spy" />
         </span>
       {{/if}}
 
@@ -29,7 +29,7 @@
           @onClick={{fn (mut this.isEditMode) true}}
           local-class="dim"
         >
-          <FaIcon
+          <Icon
             @icon="pencil-alt"
             @title={{t "LobbyPlayer.action.changeName"}}
           />
@@ -46,7 +46,7 @@
             @onClick={{fn this.changeTeam this.TEAMS.TEAM_A}}
             title={{t "Teams.teamA"}}
           >
-            <FaIcon @icon="circle" />
+            <Icon @icon="circle" />
           </Ui::Button>
 
           <Ui::Button
@@ -55,7 +55,7 @@
             @onClick={{fn this.changeTeam this.TEAMS.TEAM_B}}
             title={{t "Teams.teamB"}}
           >
-            <FaIcon @icon="circle" />
+            <Icon @icon="circle" />
           </Ui::Button>
         {{else}}
           {{#if (not @player.lead)}}
@@ -65,7 +65,7 @@
                 @onClick={{this.toggleLead}}
                 title={{t "LobbyPlayer.action.promote"}}
               >
-                <FaIcon @icon="spy" />
+                <Icon @icon="spy" />
               </Ui::Button>
             {{/if}}
 
@@ -74,7 +74,7 @@
               @onClick={{fn this.changeTeam @otherTeam}}
               title={{t "LobbyPlayer.action.switchTeam"}}
             >
-              <FaIcon @icon="exchange-alt" @rotation={{90}} />
+              <Icon @icon="exchange" />
             </Ui::Button>
           {{else}}
             <Ui::Button
@@ -82,7 +82,7 @@
               @onClick={{this.toggleLead}}
               title={{t "LobbyPlayer.action.demote"}}
             >
-              <FaIcon @icon="level-down-alt" />
+              <Icon @icon="level-down-alt" />
             </Ui::Button>
           {{/if}}
         {{/if}}
@@ -94,7 +94,7 @@
             title={{t "LobbyPlayer.action.kick"}}
             local-class="dim"
           >
-            <FaIcon @icon="times-circle" />
+            <Icon @icon="times-circle" />
           </Ui::Button>
         {{else}}
           <div local-class="button-spacer"></div>

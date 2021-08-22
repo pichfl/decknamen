@@ -1,5 +1,6 @@
 .loading {
   display: block;
+  font-size: 5em;
   margin: auto;
   color: var(--metal-3);
 }

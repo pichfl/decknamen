@@ -1,7 +1,6 @@
 import Service, { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { nanoid } from 'nanoid';
-import fetch from 'fetch';
 import getServer from 'game/utils/get-server';
 import { defer } from 'rsvp';
 

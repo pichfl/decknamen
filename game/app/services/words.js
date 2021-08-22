@@ -1,7 +1,6 @@
 import Service from '@ember/service';
 import { camelize } from '@ember/string';
 import { tracked } from '@glimmer/tracking';
-import fetch from 'fetch';
 import sortBy from 'lodash-es/sortBy';
 
 export default class WordsService extends Service {
