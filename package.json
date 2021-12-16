@@ -1,17 +1,7 @@
 {
   "private": true,
   "license": "gpl-3.0",
-  "workspaces": [
-    "api",
-    "game"
-  ],
   "engines": {
-    "node": "14.x"
-  },
-  "scripts": {
-    "ember": "yarn workspace game run ember",
-    "start:ui": "yarn workspace game run start",
-    "start:api": "yarn workspace api dev"
-  },
-  "dependencies": {}
+    "node": ">=14.x"
+  }
 }
